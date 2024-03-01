@@ -30,12 +30,12 @@ Opensouce Git GUI client.
 
 **To use this tool, you need to install Git first.**
 
-Download pre-build binaries：[Releases](https://github.com/sourcegit-scm/sourcegit/releases)
+Download pre-build binaries：[Releases](https://github.com/protoface/sourcegit/releases)
 
 For **macOS** users:
 
-This version of SourceGit isnt precompiled to macOS.
-Please use the original version of SourceGit or compile it yourself.
+* This version of SourceGit isnt pre-built for macOS.
+* Please use the [original version](https://github.com/sourcegit-scm/sourcegit) of SourceGit or compile it yourself.
 
 ## Screen Shots
 
