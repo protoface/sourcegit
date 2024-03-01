@@ -1,9 +1,12 @@
 using Avalonia.Controls;
 
-namespace SourceGit.Views {
-    public partial class Checkout : UserControl {
-        public Checkout() {
-            InitializeComponent();
-        }
-    }
+namespace SourceGit.Views
+{
+	public partial class Checkout : UserControl
+	{
+		public Checkout()
+		{
+			InitializeComponent();
+		}
+	}
 }

@@ -1,9 +1,12 @@
 using Avalonia.Controls;
 
-namespace SourceGit.Views {
-    public partial class Merge : UserControl {
-        public Merge() {
-            InitializeComponent();
-        }
-    }
+namespace SourceGit.Views
+{
+	public partial class Merge : UserControl
+	{
+		public Merge()
+		{
+			InitializeComponent();
+		}
+	}
 }

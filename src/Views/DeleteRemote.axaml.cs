@@ -1,9 +1,12 @@
 using Avalonia.Controls;
 
-namespace SourceGit.Views {
-    public partial class DeleteRemote : UserControl {
-        public DeleteRemote() {
-            InitializeComponent();
-        }
-    }
+namespace SourceGit.Views
+{
+	public partial class DeleteRemote : UserControl
+	{
+		public DeleteRemote()
+		{
+			InitializeComponent();
+		}
+	}
 }
