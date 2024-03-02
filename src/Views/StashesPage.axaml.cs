@@ -1,6 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using System;
 
 namespace SourceGit.Views
 {
@@ -9,12 +7,6 @@ namespace SourceGit.Views
 		public StashesPage()
 		{
 			InitializeComponent();
-		}
-
-		protected override void OnUnloaded(RoutedEventArgs e)
-		{
-			base.OnUnloaded(e);
-			GC.Collect();
 		}
 	}
 }

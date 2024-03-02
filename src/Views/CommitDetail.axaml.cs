@@ -26,6 +26,12 @@ namespace SourceGit.Views
 			if (DataContext is ViewModels.CommitDetail detail)
 			{
 				var datagrid = sender as DataGrid;
+				if (datagrid.SelectedItem == null)
+				{
+					e.Handled = true;
+					return;
+				}
+
 				var menu = detail.CreateChangeContextMenu(datagrid.SelectedItem as Models.Change);
 				menu.Open(datagrid);
 			}
