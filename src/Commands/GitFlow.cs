@@ -1,18 +1,14 @@
 ﻿using Avalonia.Threading;
 using System.Collections.Generic;
 
-namespace SourceGit.Commands
-{
-	public class GitFlow : Command
-	{
-		public GitFlow(string repo)
-		{
+namespace SourceGit.Commands {
+	public class GitFlow : Command {
+		public GitFlow(string repo) {
 			WorkingDirectory = repo;
 			Context = repo;
 		}
 
-		public bool Init(List<Models.Branch> branches, string master, string develop, string feature, string release, string hotfix, string version)
-		{
+		public bool Init(List<Models.Branch> branches, string master, string develop, string feature, string release, string hotfix, string version) {
 			var current = branches.Find(x => x.IsCurrent);
 
 			var masterBranch = branches.Find(x => x.Name == master);
@@ -37,10 +33,8 @@ namespace SourceGit.Commands
 			return Exec();
 		}
 
-		public bool Start(Models.GitFlowBranchType type, string name)
-		{
-			switch (type)
-			{
+		public bool Start(Models.GitFlowBranchType type, string name) {
+			switch (type) {
 				case Models.GitFlowBranchType.Feature:
 					Args = $"flow feature start {name}";
 					break;
@@ -51,8 +45,7 @@ namespace SourceGit.Commands
 					Args = $"flow hotfix start {name}";
 					break;
 				default:
-					Dispatcher.UIThread.Invoke(() =>
-					{
+					Dispatcher.UIThread.Invoke(() => {
 						App.RaiseException(Context, "Bad branch type!!!");
 					});
 					return false;
@@ -61,11 +54,9 @@ namespace SourceGit.Commands
 			return Exec();
 		}
 
-		public bool Finish(Models.GitFlowBranchType type, string name, bool keepBranch)
-		{
+		public bool Finish(Models.GitFlowBranchType type, string name, bool keepBranch) {
 			var option = keepBranch ? "-k" : string.Empty;
-			switch (type)
-			{
+			switch (type) {
 				case Models.GitFlowBranchType.Feature:
 					Args = $"flow feature finish {option} {name}";
 					break;
@@ -76,8 +67,7 @@ namespace SourceGit.Commands
 					Args = $"flow hotfix finish {option} {name} -m \"HOTFIX_DONE\"";
 					break;
 				default:
-					Dispatcher.UIThread.Invoke(() =>
-					{
+					Dispatcher.UIThread.Invoke(() => {
 						App.RaiseException(Context, "Bad branch type!!!");
 					});
 					return false;

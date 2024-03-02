@@ -1,11 +1,8 @@
 using Avalonia.Controls;
 
-namespace SourceGit.Views
-{
-	public partial class CherryPick : UserControl
-	{
-		public CherryPick()
-		{
+namespace SourceGit.Views {
+	public partial class CherryPick : UserControl {
+		public CherryPick() {
 			InitializeComponent();
 		}
 	}

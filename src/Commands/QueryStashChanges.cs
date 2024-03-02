@@ -1,27 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SourceGit.Commands
-{
-	public class QueryStashChanges : Command
-	{
+namespace SourceGit.Commands {
+	public class QueryStashChanges : Command {
 		private static readonly Regex REG_FORMAT = new Regex(@"^(\s?[\w\?]{1,4})\s+(.+)$");
 
-		public QueryStashChanges(string repo, string sha)
-		{
+		public QueryStashChanges(string repo, string sha) {
 			WorkingDirectory = repo;
 			Context = repo;
 			Args = $"diff --name-status --pretty=format: {sha}^ {sha}";
 		}
 
-		public List<Models.Change> Result()
-		{
+		public List<Models.Change> Result() {
 			Exec();
 			return _changes;
 		}
 
-		protected override void OnReadline(string line)
-		{
+		protected override void OnReadline(string line) {
 			var match = REG_FORMAT.Match(line);
 			if (!match.Success)
 				return;
@@ -29,8 +24,7 @@ namespace SourceGit.Commands
 			var change = new Models.Change() { Path = match.Groups[2].Value };
 			var status = match.Groups[1].Value;
 
-			switch (status[0])
-			{
+			switch (status[0]) {
 				case 'M':
 					change.Set(Models.ChangeState.Modified);
 					_changes.Add(change);

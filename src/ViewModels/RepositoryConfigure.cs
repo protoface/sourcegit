@@ -1,42 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SourceGit.ViewModels
-{
-	public class RepositoryConfigure : Popup
-	{
-		public string UserName
-		{
+namespace SourceGit.ViewModels {
+	public class RepositoryConfigure : Popup {
+		public string UserName {
 			get;
 			set;
 		}
 
-		public string UserEmail
-		{
+		public string UserEmail {
 			get;
 			set;
 		}
 
-		public bool GPGSigningEnabled
-		{
+		public bool GPGSigningEnabled {
 			get;
 			set;
 		}
 
-		public string GPGUserSigningKey
-		{
+		public string GPGUserSigningKey {
 			get;
 			set;
 		}
 
-		public string HttpProxy
-		{
+		public string HttpProxy {
 			get;
 			set;
 		}
 
-		public RepositoryConfigure(Repository repo)
-		{
+		public RepositoryConfigure(Repository repo) {
 			_repo = repo;
 
 			_cached = new Commands.Config(repo.FullPath).ListAll();
@@ -54,8 +46,7 @@ namespace SourceGit.ViewModels
 			View = new Views.RepositoryConfigure() { DataContext = this };
 		}
 
-		public override Task<bool> Sure()
-		{
+		public override Task<bool> Sure() {
 			SetIfChanged("user.name", UserName);
 			SetIfChanged("user.email", UserEmail);
 			SetIfChanged("commit.gpgsign", GPGSigningEnabled ? "true" : "false");
@@ -64,20 +55,16 @@ namespace SourceGit.ViewModels
 			return null;
 		}
 
-		private void SetIfChanged(string key, string value)
-		{
+		private void SetIfChanged(string key, string value) {
 			bool changed = false;
-			if (_cached.ContainsKey(key))
-			{
+			if (_cached.ContainsKey(key)) {
 				changed = value != _cached[key];
 			}
-			else if (!string.IsNullOrEmpty(value))
-			{
+			else if (!string.IsNullOrEmpty(value)) {
 				changed = true;
 			}
 
-			if (changed)
-			{
+			if (changed) {
 				new Commands.Config(_repo.FullPath).Set(key, value);
 			}
 		}

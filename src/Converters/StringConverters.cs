@@ -3,46 +3,35 @@ using Avalonia.Styling;
 using System;
 using System.Globalization;
 
-namespace SourceGit.Converters
-{
-	public static class StringConverters
-	{
-		public class ToLocaleConverter : IValueConverter
-		{
-			public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+namespace SourceGit.Converters {
+	public static class StringConverters {
+		public class ToLocaleConverter : IValueConverter {
+			public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 				return Models.Locale.Supported.Find(x => x.Key == value as string);
 			}
 
-			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
 				return (value as Models.Locale).Key;
 			}
 		}
 
 		public static ToLocaleConverter ToLocale = new ToLocaleConverter();
 
-		public class ToThemeConverter : IValueConverter
-		{
-			public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+		public class ToThemeConverter : IValueConverter {
+			public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 				var theme = (string)value;
-				if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase))
-				{
+				if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase)) {
 					return ThemeVariant.Light;
 				}
-				else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
-				{
+				else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
 					return ThemeVariant.Dark;
 				}
-				else
-				{
+				else {
 					return ThemeVariant.Default;
 				}
 			}
 
-			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
 				var theme = (ThemeVariant)value;
 				return theme.Key;
 			}
@@ -50,16 +39,13 @@ namespace SourceGit.Converters
 
 		public static ToThemeConverter ToTheme = new ToThemeConverter();
 
-		public class FormatByResourceKeyConverter : IValueConverter
-		{
-			public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+		public class FormatByResourceKeyConverter : IValueConverter {
+			public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 				var key = parameter as string;
 				return App.Text(key, value);
 			}
 
-			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			{
+			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
 				throw new NotImplementedException();
 			}
 		}

@@ -1,9 +1,7 @@
 ﻿using Avalonia.Media;
 
-namespace SourceGit.Models
-{
-	public enum DecoratorType
-	{
+namespace SourceGit.Models {
+	public enum DecoratorType {
 		None,
 		CurrentBranchHead,
 		LocalBranchHead,
@@ -11,14 +9,12 @@ namespace SourceGit.Models
 		Tag,
 	}
 
-	public class Decorator
-	{
+	public class Decorator {
 		public DecoratorType Type { get; set; } = DecoratorType.None;
 		public string Name { get; set; } = "";
 	}
 
-	public static class DecoratorResources
-	{
+	public static class DecoratorResources {
 		public static readonly IBrush[] Backgrounds = [
 			new SolidColorBrush(0xFF02C302),
 			new SolidColorBrush(0xFFFFB835),

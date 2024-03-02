@@ -3,47 +3,37 @@ using System.IO;
 using System.Runtime.Versioning;
 using System.Text;
 
-namespace SourceGit.Native
-{
+namespace SourceGit.Native {
 	[SupportedOSPlatform("macOS")]
-	internal class MacOS : OS.IBackend
-	{
-		public string FindGitExecutable()
-		{
+	internal class MacOS : OS.IBackend {
+		public string FindGitExecutable() {
 			if (File.Exists("/usr/bin/git"))
 				return "/usr/bin/git";
 			return string.Empty;
 		}
 
-		public string FindVSCode()
-		{
-			if (File.Exists("/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"))
-			{
+		public string FindVSCode() {
+			if (File.Exists("/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code")) {
 				return "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code";
 			}
 
 			return string.Empty;
 		}
 
-		public void OpenBrowser(string url)
-		{
+		public void OpenBrowser(string url) {
 			Process.Start("open", url);
 		}
 
-		public void OpenInFileManager(string path, bool select)
-		{
-			if (Directory.Exists(path))
-			{
+		public void OpenInFileManager(string path, bool select) {
+			if (Directory.Exists(path)) {
 				Process.Start("open", path);
 			}
-			else if (File.Exists(path))
-			{
+			else if (File.Exists(path)) {
 				Process.Start("open", $"\"{path}\" -R");
 			}
 		}
 
-		public void OpenTerminal(string workdir)
-		{
+		public void OpenTerminal(string workdir) {
 			var dir = string.IsNullOrEmpty(workdir) ? "~" : workdir;
 			var builder = new StringBuilder();
 			builder.AppendLine("on run argv");
@@ -60,8 +50,7 @@ namespace SourceGit.Native
 			proc.Exited += (o, e) => File.Delete(tmp);
 		}
 
-		public void OpenWithDefaultEditor(string file)
-		{
+		public void OpenWithDefaultEditor(string file) {
 			Process.Start("open", file);
 		}
 	}

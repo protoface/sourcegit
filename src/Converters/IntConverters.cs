@@ -1,9 +1,7 @@
 ﻿using Avalonia.Data.Converters;
 
-namespace SourceGit.Converters
-{
-	public static class IntConverters
-	{
+namespace SourceGit.Converters {
+	public static class IntConverters {
 		public static FuncValueConverter<int, bool> IsGreaterThanZero =
 			new FuncValueConverter<int, bool>(v => v > 0);
 

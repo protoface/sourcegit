@@ -1,9 +1,6 @@
-﻿namespace SourceGit.Commands
-{
-	public class Rebase : Command
-	{
-		public Rebase(string repo, string basedOn, bool autoStash)
-		{
+﻿namespace SourceGit.Commands {
+	public class Rebase : Command {
+		public Rebase(string repo, string basedOn, bool autoStash) {
 			WorkingDirectory = repo;
 			Context = repo;
 			Args = "rebase ";

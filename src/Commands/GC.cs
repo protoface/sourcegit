@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace SourceGit.Commands
-{
-	public class GC : Command
-	{
-		public GC(string repo, Action<string> outputHandler)
-		{
+namespace SourceGit.Commands {
+	public class GC : Command {
+		public GC(string repo, Action<string> outputHandler) {
 			_outputHandler = outputHandler;
 			WorkingDirectory = repo;
 			Context = repo;
@@ -13,8 +10,7 @@ namespace SourceGit.Commands
 			Args = "gc";
 		}
 
-		protected override void OnReadline(string line)
-		{
+		protected override void OnReadline(string line) {
 			_outputHandler?.Invoke(line);
 		}
 

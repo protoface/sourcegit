@@ -7,64 +7,50 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SourceGit.ViewModels
-{
-	public class CommitDetail : ObservableObject
-	{
-		public DiffContext DiffContext
-		{
+namespace SourceGit.ViewModels {
+	public class CommitDetail : ObservableObject {
+		public DiffContext DiffContext {
 			get => _diffContext;
 			private set => SetProperty(ref _diffContext, value);
 		}
 
-		public int ActivePageIndex
-		{
+		public int ActivePageIndex {
 			get => _activePageIndex;
 			set => SetProperty(ref _activePageIndex, value);
 		}
 
-		public Models.Commit Commit
-		{
+		public Models.Commit Commit {
 			get => _commit;
-			set
-			{
+			set {
 				if (SetProperty(ref _commit, value))
 					Refresh();
 			}
 		}
 
-		public List<Models.Change> Changes
-		{
+		public List<Models.Change> Changes {
 			get => _changes;
 			set => SetProperty(ref _changes, value);
 		}
 
-		public List<Models.Change> VisibleChanges
-		{
+		public List<Models.Change> VisibleChanges {
 			get => _visibleChanges;
 			set => SetProperty(ref _visibleChanges, value);
 		}
 
-		public List<FileTreeNode> ChangeTree
-		{
+		public List<FileTreeNode> ChangeTree {
 			get => _changeTree;
 			set => SetProperty(ref _changeTree, value);
 		}
 
-		public Models.Change SelectedChange
-		{
+		public Models.Change SelectedChange {
 			get => _selectedChange;
-			set
-			{
-				if (SetProperty(ref _selectedChange, value))
-				{
-					if (value == null)
-					{
+			set {
+				if (SetProperty(ref _selectedChange, value)) {
+					if (value == null) {
 						SelectedChangeNode = null;
 						DiffContext = null;
 					}
-					else
-					{
+					else {
 						SelectedChangeNode = FileTreeNode.SelectByPath(_changeTree, value.Path);
 						DiffContext = new DiffContext(_repo, new Models.DiffOption(_commit, value));
 					}
@@ -72,84 +58,65 @@ namespace SourceGit.ViewModels
 			}
 		}
 
-		public FileTreeNode SelectedChangeNode
-		{
+		public FileTreeNode SelectedChangeNode {
 			get => _selectedChangeNode;
-			set
-			{
-				if (SetProperty(ref _selectedChangeNode, value))
-				{
-					if (value == null)
-					{
+			set {
+				if (SetProperty(ref _selectedChangeNode, value)) {
+					if (value == null) {
 						SelectedChange = null;
 					}
-					else
-					{
+					else {
 						SelectedChange = value.Backend as Models.Change;
 					}
 				}
 			}
 		}
 
-		public string SearchChangeFilter
-		{
+		public string SearchChangeFilter {
 			get => _searchChangeFilter;
-			set
-			{
-				if (SetProperty(ref _searchChangeFilter, value))
-				{
+			set {
+				if (SetProperty(ref _searchChangeFilter, value)) {
 					RefreshVisibleChanges();
 				}
 			}
 		}
 
-		public List<FileTreeNode> RevisionFilesTree
-		{
+		public List<FileTreeNode> RevisionFilesTree {
 			get => _revisionFilesTree;
 			set => SetProperty(ref _revisionFilesTree, value);
 		}
 
-		public FileTreeNode SelectedRevisionFileNode
-		{
+		public FileTreeNode SelectedRevisionFileNode {
 			get => _selectedRevisionFileNode;
-			set
-			{
-				if (SetProperty(ref _selectedRevisionFileNode, value) && value != null && !value.IsFolder)
-				{
+			set {
+				if (SetProperty(ref _selectedRevisionFileNode, value) && value != null && !value.IsFolder) {
 					RefreshViewRevisionFile(value.Backend as Models.Object);
 				}
-				else
-				{
+				else {
 					ViewRevisionFileContent = null;
 				}
 			}
 		}
 
-		public string SearchFileFilter
-		{
+		public string SearchFileFilter {
 			get => _searchFileFilter;
-			set
-			{
-				if (SetProperty(ref _searchFileFilter, value))
-				{
+			set {
+				if (SetProperty(ref _searchFileFilter, value)) {
 					RefreshVisibleFiles();
 				}
 			}
 		}
 
-		public object ViewRevisionFileContent
-		{
+		public object ViewRevisionFileContent {
 			get => _viewRevisionFileContent;
 			set => SetProperty(ref _viewRevisionFileContent, value);
 		}
 
-		public CommitDetail(string repo)
-		{
+		public CommitDetail(string repo) {
 			_repo = repo;
 		}
 
-		public void Cleanup()
-		{
+		public void Cleanup() {
 			_repo = null;
 			_commit = null;
 			if (_changes != null)
@@ -172,34 +139,28 @@ namespace SourceGit.ViewModels
 			_cancelToken = null;
 		}
 
-		public void NavigateTo(string commitSHA)
-		{
+		public void NavigateTo(string commitSHA) {
 			var repo = Preference.FindRepository(_repo);
 			if (repo != null)
 				repo.NavigateToCommit(commitSHA);
 		}
 
-		public void ClearSearchChangeFilter()
-		{
+		public void ClearSearchChangeFilter() {
 			SearchChangeFilter = string.Empty;
 		}
 
-		public void ClearSearchFileFilter()
-		{
+		public void ClearSearchFileFilter() {
 			SearchFileFilter = string.Empty;
 		}
 
-		public ContextMenu CreateChangeContextMenu(Models.Change change)
-		{
+		public ContextMenu CreateChangeContextMenu(Models.Change change) {
 			var menu = new ContextMenu();
 
-			if (change.Index != Models.ChangeState.Deleted)
-			{
+			if (change.Index != Models.ChangeState.Deleted) {
 				var history = new MenuItem();
 				history.Header = App.Text("FileHistory");
 				history.Icon = App.CreateMenuIcon("Icons.Histories");
-				history.Click += (_, ev) =>
-				{
+				history.Click += (_, ev) => {
 					var window = new Views.FileHistories() { DataContext = new FileHistories(_repo, change.Path) };
 					window.Show();
 					ev.Handled = true;
@@ -208,8 +169,7 @@ namespace SourceGit.ViewModels
 				var blame = new MenuItem();
 				blame.Header = App.Text("Blame");
 				blame.Icon = App.CreateMenuIcon("Icons.Blame");
-				blame.Click += (o, ev) =>
-				{
+				blame.Click += (o, ev) => {
 					var window = new Views.Blame() { DataContext = new Blame(_repo, change.Path, _commit.SHA) };
 					window.Show();
 					ev.Handled = true;
@@ -220,8 +180,7 @@ namespace SourceGit.ViewModels
 				explore.Header = App.Text("RevealFile");
 				explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
 				explore.IsEnabled = File.Exists(full);
-				explore.Click += (_, ev) =>
-				{
+				explore.Click += (_, ev) => {
 					Native.OS.OpenInFileManager(full, true);
 					ev.Handled = true;
 				};
@@ -234,8 +193,7 @@ namespace SourceGit.ViewModels
 			var copyPath = new MenuItem();
 			copyPath.Header = App.Text("CopyPath");
 			copyPath.Icon = App.CreateMenuIcon("Icons.Copy");
-			copyPath.Click += (_, ev) =>
-			{
+			copyPath.Click += (_, ev) => {
 				App.CopyText(change.Path);
 				ev.Handled = true;
 			};
@@ -244,13 +202,11 @@ namespace SourceGit.ViewModels
 			return menu;
 		}
 
-		public ContextMenu CreateRevisionFileContextMenu(Models.Object file)
-		{
+		public ContextMenu CreateRevisionFileContextMenu(Models.Object file) {
 			var history = new MenuItem();
 			history.Header = App.Text("FileHistory");
 			history.Icon = App.CreateMenuIcon("Icons.Histories");
-			history.Click += (_, ev) =>
-			{
+			history.Click += (_, ev) => {
 				var window = new Views.FileHistories() { DataContext = new FileHistories(_repo, file.Path) };
 				window.Show();
 				ev.Handled = true;
@@ -259,8 +215,7 @@ namespace SourceGit.ViewModels
 			var blame = new MenuItem();
 			blame.Header = App.Text("Blame");
 			blame.Icon = App.CreateMenuIcon("Icons.Blame");
-			blame.Click += (o, ev) =>
-			{
+			blame.Click += (o, ev) => {
 				var window = new Views.Blame() { DataContext = new Blame(_repo, file.Path, _commit.SHA) };
 				window.Show();
 				ev.Handled = true;
@@ -270,8 +225,7 @@ namespace SourceGit.ViewModels
 			var explore = new MenuItem();
 			explore.Header = App.Text("RevealFile");
 			explore.Icon = App.CreateMenuIcon("Icons.Folder.Open");
-			explore.Click += (_, ev) =>
-			{
+			explore.Click += (_, ev) => {
 				Native.OS.OpenInFileManager(full, file.Type == Models.ObjectType.Blob);
 				ev.Handled = true;
 			};
@@ -280,16 +234,14 @@ namespace SourceGit.ViewModels
 			saveAs.Header = App.Text("SaveAs");
 			saveAs.Icon = App.CreateMenuIcon("Icons.Save");
 			saveAs.IsEnabled = file.Type == Models.ObjectType.Blob;
-			saveAs.Click += async (_, ev) =>
-			{
+			saveAs.Click += async (_, ev) => {
 				var topLevel = App.GetTopLevel();
 				if (topLevel == null)
 					return;
 
 				var options = new FolderPickerOpenOptions() { AllowMultiple = false };
 				var selected = await topLevel.StorageProvider.OpenFolderPickerAsync(options);
-				if (selected.Count == 1)
-				{
+				if (selected.Count == 1) {
 					var saveTo = Path.Combine(selected[0].Path.LocalPath, Path.GetFileName(file.Path));
 					Commands.SaveRevisionFile.Run(_repo, _commit.SHA, file.Path, saveTo);
 				}
@@ -300,8 +252,7 @@ namespace SourceGit.ViewModels
 			var copyPath = new MenuItem();
 			copyPath.Header = App.Text("CopyPath");
 			copyPath.Icon = App.CreateMenuIcon("Icons.Copy");
-			copyPath.Click += (_, ev) =>
-			{
+			copyPath.Click += (_, ev) => {
 				App.CopyText(file.Path);
 				ev.Handled = true;
 			};
@@ -315,8 +266,7 @@ namespace SourceGit.ViewModels
 			return menu;
 		}
 
-		private void Refresh()
-		{
+		private void Refresh() {
 			_changes = null;
 			VisibleChanges = null;
 			SelectedChange = null;
@@ -331,78 +281,63 @@ namespace SourceGit.ViewModels
 			var cmdChanges = new Commands.QueryCommitChanges(_repo, _commit.SHA) { Cancel = _cancelToken };
 			var cmdRevisionFiles = new Commands.QueryRevisionObjects(_repo, _commit.SHA) { Cancel = _cancelToken };
 
-			Task.Run(() =>
-			{
+			Task.Run(() => {
 				var changes = cmdChanges.Result();
 				if (cmdChanges.Cancel.Requested)
 					return;
 
 				var visible = changes;
-				if (!string.IsNullOrWhiteSpace(_searchChangeFilter))
-				{
+				if (!string.IsNullOrWhiteSpace(_searchChangeFilter)) {
 					visible = new List<Models.Change>();
-					foreach (var c in changes)
-					{
-						if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase))
-						{
+					foreach (var c in changes) {
+						if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase)) {
 							visible.Add(c);
 						}
 					}
 				}
 
 				var tree = FileTreeNode.Build(visible);
-				Dispatcher.UIThread.Invoke(() =>
-				{
+				Dispatcher.UIThread.Invoke(() => {
 					Changes = changes;
 					VisibleChanges = visible;
 					ChangeTree = tree;
 				});
 			});
 
-			Task.Run(() =>
-			{
+			Task.Run(() => {
 				var files = cmdRevisionFiles.Result();
 				if (cmdRevisionFiles.Cancel.Requested)
 					return;
 
 				var visible = files;
-				if (!string.IsNullOrWhiteSpace(_searchFileFilter))
-				{
+				if (!string.IsNullOrWhiteSpace(_searchFileFilter)) {
 					visible = new List<Models.Object>();
-					foreach (var f in files)
-					{
-						if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase))
-						{
+					foreach (var f in files) {
+						if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase)) {
 							visible.Add(f);
 						}
 					}
 				}
 
 				var tree = FileTreeNode.Build(visible);
-				Dispatcher.UIThread.Invoke(() =>
-				{
+				Dispatcher.UIThread.Invoke(() => {
 					_revisionFiles = files;
 					RevisionFilesTree = tree;
 				});
 			});
 		}
 
-		private void RefreshVisibleChanges()
-		{
+		private void RefreshVisibleChanges() {
 			if (_changes == null)
 				return;
 
-			if (string.IsNullOrEmpty(_searchChangeFilter))
-			{
+			if (string.IsNullOrEmpty(_searchChangeFilter)) {
 				VisibleChanges = _changes;
 			}
-			else
-			{
+			else {
 				var visible = new List<Models.Change>();
-				foreach (var c in _changes)
-				{
-					if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase))
-					{
+				foreach (var c in _changes) {
+					if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase)) {
 						visible.Add(c);
 					}
 				}
@@ -413,19 +348,15 @@ namespace SourceGit.ViewModels
 			ChangeTree = FileTreeNode.Build(_visibleChanges);
 		}
 
-		private void RefreshVisibleFiles()
-		{
+		private void RefreshVisibleFiles() {
 			if (_revisionFiles == null)
 				return;
 
 			var visible = _revisionFiles;
-			if (!string.IsNullOrWhiteSpace(_searchFileFilter))
-			{
+			if (!string.IsNullOrWhiteSpace(_searchFileFilter)) {
 				visible = new List<Models.Object>();
-				foreach (var f in _revisionFiles)
-				{
-					if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase))
-					{
+				foreach (var f in _revisionFiles) {
+					if (f.Path.Contains(_searchFileFilter, StringComparison.OrdinalIgnoreCase)) {
 						visible.Add(f);
 					}
 				}
@@ -434,53 +365,40 @@ namespace SourceGit.ViewModels
 			RevisionFilesTree = FileTreeNode.Build(visible);
 		}
 
-		private void RefreshViewRevisionFile(Models.Object file)
-		{
-			switch (file.Type)
-			{
+		private void RefreshViewRevisionFile(Models.Object file) {
+			switch (file.Type) {
 				case Models.ObjectType.Blob:
-					Task.Run(() =>
-					{
+					Task.Run(() => {
 						var isBinary = new Commands.IsBinary(_repo, _commit.SHA, file.Path).Result();
-						if (isBinary)
-						{
-							Dispatcher.UIThread.Invoke(() =>
-							{
+						if (isBinary) {
+							Dispatcher.UIThread.Invoke(() => {
 								ViewRevisionFileContent = new Models.RevisionBinaryFile();
 							});
 							return;
 						}
 
 						var content = new Commands.QueryFileContent(_repo, _commit.SHA, file.Path).Result();
-						if (content.StartsWith("version https://git-lfs.github.com/spec/", StringComparison.OrdinalIgnoreCase))
-						{
+						if (content.StartsWith("version https://git-lfs.github.com/spec/", StringComparison.OrdinalIgnoreCase)) {
 							var obj = new Models.RevisionLFSObject() { Object = new Models.LFSObject() };
 							var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-							if (lines.Length == 3)
-							{
-								foreach (var line in lines)
-								{
-									if (line.StartsWith("oid sha256:"))
-									{
+							if (lines.Length == 3) {
+								foreach (var line in lines) {
+									if (line.StartsWith("oid sha256:")) {
 										obj.Object.Oid = line.Substring(11);
 									}
-									else if (line.StartsWith("size "))
-									{
+									else if (line.StartsWith("size ")) {
 										obj.Object.Size = long.Parse(line.Substring(5));
 									}
 								}
-								Dispatcher.UIThread.Invoke(() =>
-								{
+								Dispatcher.UIThread.Invoke(() => {
 									ViewRevisionFileContent = obj;
 								});
 								return;
 							}
 						}
 
-						Dispatcher.UIThread.Invoke(() =>
-						{
-							ViewRevisionFileContent = new Models.RevisionTextFile()
-							{
+						Dispatcher.UIThread.Invoke(() => {
+							ViewRevisionFileContent = new Models.RevisionTextFile() {
 								FileName = file.Path,
 								Content = content
 							};

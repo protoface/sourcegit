@@ -2,28 +2,23 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SourceGit.Commands
-{
-	public class QueryLocalChanges : Command
-	{
+namespace SourceGit.Commands {
+	public class QueryLocalChanges : Command {
 		private static readonly Regex REG_FORMAT = new Regex(@"^(\s?[\w\?]{1,4})\s+(.+)$");
 		private static readonly string[] UNTRACKED = ["no", "all"];
 
-		public QueryLocalChanges(string repo, bool includeUntracked = true)
-		{
+		public QueryLocalChanges(string repo, bool includeUntracked = true) {
 			WorkingDirectory = repo;
 			Context = repo;
 			Args = $"status -u{UNTRACKED[includeUntracked ? 1 : 0]} --ignore-submodules=dirty --porcelain";
 		}
 
-		public List<Models.Change> Result()
-		{
+		public List<Models.Change> Result() {
 			Exec();
 			return _changes;
 		}
 
-		protected override void OnReadline(string line)
-		{
+		protected override void OnReadline(string line) {
 			var match = REG_FORMAT.Match(line);
 			if (!match.Success)
 				return;
@@ -33,8 +28,7 @@ namespace SourceGit.Commands
 			var change = new Models.Change() { Path = match.Groups[2].Value };
 			var status = match.Groups[1].Value;
 
-			switch (status)
-			{
+			switch (status) {
 				case " M":
 					change.Set(Models.ChangeState.None, Models.ChangeState.Modified);
 					break;

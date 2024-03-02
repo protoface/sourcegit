@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace SourceGit.Commands
-{
-	public class Restore : Command
-	{
-		public Restore(string repo, List<string> files, string extra)
-		{
+namespace SourceGit.Commands {
+	public class Restore : Command {
+		public Restore(string repo, List<string> files, string extra) {
 			WorkingDirectory = repo;
 			Context = repo;
 

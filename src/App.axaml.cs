@@ -10,20 +10,15 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace SourceGit
-{
-	public partial class App : Application
-	{
+namespace SourceGit {
+	public partial class App : Application {
 
 		[STAThread]
-		public static void Main(string[] args)
-		{
-			try
-			{
+		public static void Main(string[] args) {
+			try {
 				BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				var builder = new StringBuilder();
 				builder.Append("Crash: ");
 				builder.Append(ex.Message);
@@ -44,30 +39,24 @@ namespace SourceGit
 			}
 		}
 
-		public static AppBuilder BuildAvaloniaApp()
-		{
+		public static AppBuilder BuildAvaloniaApp() {
 			var builder = AppBuilder.Configure<App>();
 			builder.UsePlatformDetect();
 
-			if (OperatingSystem.IsWindows())
-			{
-				builder.With(new FontManagerOptions()
-				{
+			if (OperatingSystem.IsWindows()) {
+				builder.With(new FontManagerOptions() {
 					FontFallbacks = [
 						new FontFallback { FontFamily = new FontFamily("Microsoft YaHei UI") }
 					]
 				});
 			}
-			else if (OperatingSystem.IsMacOS())
-			{
-				builder.With(new FontManagerOptions()
-				{
+			else if (OperatingSystem.IsMacOS()) {
+				builder.With(new FontManagerOptions() {
 					FontFallbacks = [
 						new FontFallback { FontFamily = new FontFamily("PingFang SC") }
 					]
 				});
-				builder.With(new MacOSPlatformOptions()
-				{
+				builder.With(new MacOSPlatformOptions() {
 					DisableDefaultApplicationMenuItems = true,
 					DisableNativeMenus = true,
 				});
@@ -77,35 +66,28 @@ namespace SourceGit
 			return builder;
 		}
 
-		public static void RaiseException(string context, string message)
-		{
-			if (Current is App app && app._notificationReceiver != null)
-			{
+		public static void RaiseException(string context, string message) {
+			if (Current is App app && app._notificationReceiver != null) {
 				var notice = new Models.Notification() { IsError = true, Message = message };
 				app._notificationReceiver.OnReceiveNotification(context, notice);
 			}
 		}
 
-		public static void SendNotification(string context, string message)
-		{
-			if (Current is App app && app._notificationReceiver != null)
-			{
+		public static void SendNotification(string context, string message) {
+			if (Current is App app && app._notificationReceiver != null) {
 				var notice = new Models.Notification() { IsError = false, Message = message };
 				app._notificationReceiver.OnReceiveNotification(context, notice);
 			}
 		}
 
-		public static void SetLocale(string localeKey)
-		{
+		public static void SetLocale(string localeKey) {
 			var app = Current as App;
 			var targetLocale = app.Resources[localeKey] as ResourceDictionary;
-			if (targetLocale == null || targetLocale == app._activeLocale)
-			{
+			if (targetLocale == null || targetLocale == app._activeLocale) {
 				return;
 			}
 
-			if (app._activeLocale != null)
-			{
+			if (app._activeLocale != null) {
 				app.Resources.MergedDictionaries.Remove(app._activeLocale);
 			}
 
@@ -113,43 +95,34 @@ namespace SourceGit
 			app._activeLocale = targetLocale;
 		}
 
-		public static void SetTheme(string theme)
-		{
-			if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase))
-			{
+		public static void SetTheme(string theme) {
+			if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase)) {
 				App.Current.RequestedThemeVariant = ThemeVariant.Light;
 			}
-			else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
-			{
+			else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
 				App.Current.RequestedThemeVariant = ThemeVariant.Dark;
 			}
-			else
-			{
+			else {
 				App.Current.RequestedThemeVariant = ThemeVariant.Default;
 			}
 		}
 
-		public static async void CopyText(string data)
-		{
-			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
-				if (desktop.MainWindow.Clipboard is { } clipbord)
-				{
+		public static async void CopyText(string data) {
+			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
+				if (desktop.MainWindow.Clipboard is { } clipbord) {
 					await clipbord.SetTextAsync(data);
 				}
 			}
 		}
 
-		public static string Text(string key, params object[] args)
-		{
+		public static string Text(string key, params object[] args) {
 			var fmt = Current.FindResource($"Text.{key}") as string;
 			if (string.IsNullOrWhiteSpace(fmt))
 				return $"Text.{key}";
 			return string.Format(fmt, args);
 		}
 
-		public static Avalonia.Controls.Shapes.Path CreateMenuIcon(string key)
-		{
+		public static Avalonia.Controls.Shapes.Path CreateMenuIcon(string key) {
 			var icon = new Avalonia.Controls.Shapes.Path();
 			icon.Width = 12;
 			icon.Height = 12;
@@ -158,36 +131,29 @@ namespace SourceGit
 			return icon;
 		}
 
-		public static TopLevel GetTopLevel()
-		{
-			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
+		public static TopLevel GetTopLevel() {
+			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 				return desktop.MainWindow;
 			}
 			return null;
 		}
 
-		public static void Quit()
-		{
-			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
+		public static void Quit() {
+			if (Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 				desktop.MainWindow.Close();
 				desktop.Shutdown();
 			}
 		}
 
-		public override void Initialize()
-		{
+		public override void Initialize() {
 			AvaloniaXamlLoader.Load(this);
 
 			SetLocale(ViewModels.Preference.Instance.Locale);
 			SetTheme(ViewModels.Preference.Instance.Theme);
 		}
 
-		public override void OnFrameworkInitializationCompleted()
-		{
-			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
+		public override void OnFrameworkInitializationCompleted() {
+			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 				BindingPlugins.DataValidators.RemoveAt(0);
 
 				var launcher = new Views.Launcher();

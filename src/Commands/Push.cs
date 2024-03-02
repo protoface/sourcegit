@@ -1,23 +1,18 @@
 ﻿using System;
 
-namespace SourceGit.Commands
-{
-	public class Push : Command
-	{
-		public Push(string repo, string local, string remote, string remoteBranch, bool withTags, bool force, bool track, Action<string> onProgress)
-		{
+namespace SourceGit.Commands {
+	public class Push : Command {
+		public Push(string repo, string local, string remote, string remoteBranch, bool withTags, bool force, bool track, Action<string> onProgress) {
 			WorkingDirectory = repo;
 			Context = repo;
 			TraitErrorAsOutput = true;
 			_outputHandler = onProgress;
 
 			var sshKey = new Config(repo).Get($"remote.{remote}.sshkey");
-			if (!string.IsNullOrEmpty(sshKey))
-			{
+			if (!string.IsNullOrEmpty(sshKey)) {
 				Args = $"-c core.sshCommand=\"ssh -i '{sshKey}'\" ";
 			}
-			else
-			{
+			else {
 				Args = "-c credential.helper=manager ";
 			}
 
@@ -39,37 +34,31 @@ namespace SourceGit.Commands
 		/// <param name="repo"></param>
 		/// <param name="remote"></param>
 		/// <param name="branch"></param>
-		public Push(string repo, string remote, string branch)
-		{
+		public Push(string repo, string remote, string branch) {
 			WorkingDirectory = repo;
 			Context = repo;
 			TraitErrorAsOutput = true;
 
 			var sshKey = new Config(repo).Get($"remote.{remote}.sshkey");
-			if (!string.IsNullOrEmpty(sshKey))
-			{
+			if (!string.IsNullOrEmpty(sshKey)) {
 				Args = $"-c core.sshCommand=\"ssh -i '{sshKey}'\" ";
 			}
-			else
-			{
+			else {
 				Args = "-c credential.helper=manager ";
 			}
 
 			Args += $"push {remote} --delete {branch}";
 		}
 
-		public Push(string repo, string remote, string tag, bool isDelete)
-		{
+		public Push(string repo, string remote, string tag, bool isDelete) {
 			WorkingDirectory = repo;
 			Context = repo;
 
 			var sshKey = new Config(repo).Get($"remote.{remote}.sshkey");
-			if (!string.IsNullOrEmpty(sshKey))
-			{
+			if (!string.IsNullOrEmpty(sshKey)) {
 				Args = $"-c core.sshCommand=\"ssh -i '{sshKey}'\" ";
 			}
-			else
-			{
+			else {
 				Args = "-c credential.helper=manager ";
 			}
 
@@ -79,8 +68,7 @@ namespace SourceGit.Commands
 			Args += $"{remote} refs/tags/{tag}";
 		}
 
-		protected override void OnReadline(string line)
-		{
+		protected override void OnReadline(string line) {
 			_outputHandler?.Invoke(line);
 		}
 

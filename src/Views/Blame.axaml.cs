@@ -17,31 +17,24 @@ using System.Globalization;
 using System.IO;
 using TextMateSharp.Grammars;
 
-namespace SourceGit.Views
-{
-	public class BlameTextEditor : TextEditor
-	{
-		public class CommitInfoMargin : AbstractMargin
-		{
-			public CommitInfoMargin(BlameTextEditor editor)
-			{
+namespace SourceGit.Views {
+	public class BlameTextEditor : TextEditor {
+		public class CommitInfoMargin : AbstractMargin {
+			public CommitInfoMargin(BlameTextEditor editor) {
 				_editor = editor;
 				ClipToBounds = true;
 			}
 
-			public override void Render(DrawingContext context)
-			{
+			public override void Render(DrawingContext context) {
 				if (_editor.BlameData == null)
 					return;
 
 				var view = TextView;
-				if (view != null && view.VisualLinesValid)
-				{
+				if (view != null && view.VisualLinesValid) {
 					var typeface = view.CreateTypeface();
 					var underlinePen = new Pen(Brushes.DarkOrange, 1);
 
-					foreach (var line in view.VisualLines)
-					{
+					foreach (var line in view.VisualLines) {
 						var lineNumber = line.FirstDocumentLine.LineNumber;
 						if (lineNumber > _editor.BlameData.LineInfos.Count)
 							break;
@@ -85,16 +78,13 @@ namespace SourceGit.Views
 				}
 			}
 
-			protected override Size MeasureOverride(Size availableSize)
-			{
+			protected override Size MeasureOverride(Size availableSize) {
 				var view = TextView;
 				var maxWidth = 0.0;
-				if (view != null && view.VisualLinesValid && _editor.BlameData != null)
-				{
+				if (view != null && view.VisualLinesValid && _editor.BlameData != null) {
 					var typeface = view.CreateTypeface();
 					var calculated = new HashSet<string>();
-					foreach (var line in view.VisualLines)
-					{
+					foreach (var line in view.VisualLines) {
 						var lineNumber = line.FirstDocumentLine.LineNumber;
 						if (lineNumber > _editor.BlameData.LineInfos.Count)
 							break;
@@ -141,18 +131,15 @@ namespace SourceGit.Views
 				return new Size(maxWidth, 0);
 			}
 
-			protected override void OnPointerPressed(PointerPressedEventArgs e)
-			{
+			protected override void OnPointerPressed(PointerPressedEventArgs e) {
 				base.OnPointerPressed(e);
 
 				var view = TextView;
-				if (!e.Handled && e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && view != null && view.VisualLinesValid)
-				{
+				if (!e.Handled && e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && view != null && view.VisualLinesValid) {
 					var pos = e.GetPosition(this);
 					var typeface = view.CreateTypeface();
 
-					foreach (var line in view.VisualLines)
-					{
+					foreach (var line in view.VisualLines) {
 						var lineNumber = line.FirstDocumentLine.LineNumber;
 						if (lineNumber >= _editor.BlameData.LineInfos.Count)
 							break;
@@ -168,8 +155,7 @@ namespace SourceGit.Views
 							Brushes.DarkOrange);
 
 						var rect = new Rect(0, y, shaLink.Width, shaLink.Height);
-						if (rect.Contains(pos))
-						{
+						if (rect.Contains(pos)) {
 							_editor.OnCommitSHAClicked(info.CommitSHA);
 							e.Handled = true;
 							break;
@@ -181,21 +167,17 @@ namespace SourceGit.Views
 			private BlameTextEditor _editor = null;
 		}
 
-		public class VerticalSeperatorMargin : AbstractMargin
-		{
-			public VerticalSeperatorMargin(BlameTextEditor editor)
-			{
+		public class VerticalSeperatorMargin : AbstractMargin {
+			public VerticalSeperatorMargin(BlameTextEditor editor) {
 				_editor = editor;
 			}
 
-			public override void Render(DrawingContext context)
-			{
+			public override void Render(DrawingContext context) {
 				var pen = new Pen(_editor.BorderBrush, 1);
 				context.DrawLine(pen, new Point(0, 0), new Point(0, Bounds.Height));
 			}
 
-			protected override Size MeasureOverride(Size availableSize)
-			{
+			protected override Size MeasureOverride(Size availableSize) {
 				return new Size(1, 0);
 			}
 
@@ -205,31 +187,26 @@ namespace SourceGit.Views
 		public static readonly StyledProperty<Models.BlameData> BlameDataProperty =
 			AvaloniaProperty.Register<BlameTextEditor, Models.BlameData>(nameof(BlameData));
 
-		public Models.BlameData BlameData
-		{
+		public Models.BlameData BlameData {
 			get => GetValue(BlameDataProperty);
 			set => SetValue(BlameDataProperty, value);
 		}
 
 		protected override Type StyleKeyOverride => typeof(TextEditor);
 
-		public BlameTextEditor() : base(new TextArea(), new TextDocument())
-		{
+		public BlameTextEditor() : base(new TextArea(), new TextDocument()) {
 			IsReadOnly = true;
 			ShowLineNumbers = false;
 			WordWrap = false;
 		}
 
-		public void OnCommitSHAClicked(string sha)
-		{
-			if (DataContext is ViewModels.Blame blame)
-			{
+		public void OnCommitSHAClicked(string sha) {
+			if (DataContext is ViewModels.Blame blame) {
 				blame.NavigateToCommit(sha);
 			}
 		}
 
-		protected override void OnLoaded(RoutedEventArgs e)
-		{
+		protected override void OnLoaded(RoutedEventArgs e) {
 			base.OnLoaded(e);
 
 			TextArea.LeftMargins.Add(new LineNumberMargin() { Margin = new Thickness(8, 0) });
@@ -240,12 +217,10 @@ namespace SourceGit.Views
 			TextArea.TextView.VisualLinesChanged += OnTextViewVisualLinesChanged;
 			TextArea.TextView.Margin = new Thickness(4, 0);
 
-			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark)
-			{
+			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
 			}
-			else
-			{
+			else {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
@@ -253,8 +228,7 @@ namespace SourceGit.Views
 			UpdateGrammar();
 		}
 
-		protected override void OnUnloaded(RoutedEventArgs e)
-		{
+		protected override void OnUnloaded(RoutedEventArgs e) {
 			base.OnUnloaded(e);
 
 			TextArea.LeftMargins.Clear();
@@ -266,37 +240,29 @@ namespace SourceGit.Views
 			_textMate = null;
 		}
 
-		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-		{
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change) {
 			base.OnPropertyChanged(change);
 
-			if (change.Property == BlameDataProperty)
-			{
-				if (BlameData != null)
-				{
+			if (change.Property == BlameDataProperty) {
+				if (BlameData != null) {
 					Text = BlameData.Content;
 					UpdateGrammar();
 				}
-				else
-				{
+				else {
 					Text = string.Empty;
 				}
 			}
-			else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null)
-			{
-				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark)
-				{
+			else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
+				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.DarkPlus));
 				}
-				else
-				{
+				else {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.LightPlus));
 				}
 			}
 		}
 
-		private void OnTextViewContextRequested(object sender, ContextRequestedEventArgs e)
-		{
+		private void OnTextViewContextRequested(object sender, ContextRequestedEventArgs e) {
 			var selected = SelectedText;
 			if (string.IsNullOrEmpty(selected))
 				return;
@@ -310,8 +276,7 @@ namespace SourceGit.Views
 			var copy = new MenuItem();
 			copy.Header = App.Text("Copy");
 			copy.Icon = icon;
-			copy.Click += (o, ev) =>
-			{
+			copy.Click += (o, ev) => {
 				App.CopyText(selected);
 				ev.Handled = true;
 			};
@@ -322,30 +287,24 @@ namespace SourceGit.Views
 			e.Handled = true;
 		}
 
-		private void OnTextViewVisualLinesChanged(object sender, EventArgs e)
-		{
-			foreach (var margin in TextArea.LeftMargins)
-			{
-				if (margin is CommitInfoMargin commitInfo)
-				{
+		private void OnTextViewVisualLinesChanged(object sender, EventArgs e) {
+			foreach (var margin in TextArea.LeftMargins) {
+				if (margin is CommitInfoMargin commitInfo) {
 					commitInfo.InvalidateMeasure();
 					break;
 				}
 			}
 		}
 
-		private void UpdateGrammar()
-		{
+		private void UpdateGrammar() {
 			if (_textMate == null || BlameData == null)
 				return;
 
 			var ext = Path.GetExtension(BlameData.File);
-			if (ext == ".h")
-			{
+			if (ext == ".h") {
 				_textMate.SetGrammar(_registryOptions.GetScopeByLanguageId("cpp"));
 			}
-			else
-			{
+			else {
 				_textMate.SetGrammar(_registryOptions.GetScopeByExtension(ext));
 			}
 		}
@@ -354,28 +313,22 @@ namespace SourceGit.Views
 		private TextMate.Installation _textMate = null;
 	}
 
-	public partial class Blame : Window
-	{
-		public Blame()
-		{
-			if (App.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-			{
+	public partial class Blame : Window {
+		public Blame() {
+			if (App.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 				Owner = desktop.MainWindow;
 			}
 
 			InitializeComponent();
 		}
 
-		protected override void OnClosed(EventArgs e)
-		{
+		protected override void OnClosed(EventArgs e) {
 			base.OnClosed(e);
 			GC.Collect();
 		}
 
-		private void OnCommitSHAPointerPressed(object sender, PointerPressedEventArgs e)
-		{
-			if (DataContext is ViewModels.Blame blame)
-			{
+		private void OnCommitSHAPointerPressed(object sender, PointerPressedEventArgs e) {
+			if (DataContext is ViewModels.Blame blame) {
 				var txt = sender as TextBlock;
 				blame.NavigateToCommit(txt.Text);
 			}

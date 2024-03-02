@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace SourceGit.Models
-{
-	public class Locale
-	{
+namespace SourceGit.Models {
+	public class Locale {
 		public string Name { get; set; }
 		public string Key { get; set; }
 
@@ -12,8 +10,7 @@ namespace SourceGit.Models
 			new Locale("简体中文", "zh_CN"),
 		};
 
-		public Locale(string name, string key)
-		{
+		public Locale(string name, string key) {
 			Name = name;
 			Key = key;
 		}

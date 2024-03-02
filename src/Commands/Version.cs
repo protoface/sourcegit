@@ -1,15 +1,11 @@
-﻿namespace SourceGit.Commands
-{
-	public class Version : Command
-	{
-		public Version()
-		{
+﻿namespace SourceGit.Commands {
+	public class Version : Command {
+		public Version() {
 			Args = "-v";
 			RaiseError = false;
 		}
 
-		public string Query()
-		{
+		public string Query() {
 			var rs = ReadToEnd();
 			if (!rs.IsSuccess || string.IsNullOrWhiteSpace(rs.StdOut))
 				return string.Empty;

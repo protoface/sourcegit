@@ -2,18 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace SourceGit.Models
-{
-	public class CommitGraph
-	{
-		public class Path
-		{
+namespace SourceGit.Models {
+	public class CommitGraph {
+		public class Path {
 			public List<Point> Points = new List<Point>();
 			public int Color = 0;
 		}
 
-		public class PathHelper
-		{
+		public class PathHelper {
 			public string Next;
 			public bool IsMerged;
 			public double LastX;
@@ -21,8 +17,7 @@ namespace SourceGit.Models
 			public double EndY;
 			public Path Path;
 
-			public PathHelper(string next, bool isMerged, int color, Point start)
-			{
+			public PathHelper(string next, bool isMerged, int color, Point start) {
 				Next = next;
 				IsMerged = isMerged;
 				LastX = start.X;
@@ -34,8 +29,7 @@ namespace SourceGit.Models
 				Path.Points.Add(start);
 			}
 
-			public PathHelper(string next, bool isMerged, int color, Point start, Point to)
-			{
+			public PathHelper(string next, bool isMerged, int color, Point start, Point to) {
 				Next = next;
 				IsMerged = isMerged;
 				LastX = to.X;
@@ -48,23 +42,19 @@ namespace SourceGit.Models
 				Path.Points.Add(to);
 			}
 
-			public void Add(double x, double y, double halfHeight, bool isEnd = false)
-			{
-				if (x > LastX)
-				{
+			public void Add(double x, double y, double halfHeight, bool isEnd = false) {
+				if (x > LastX) {
 					Add(new Point(LastX, LastY));
 					Add(new Point(x, y - halfHeight));
 					if (isEnd)
 						Add(new Point(x, y));
 				}
-				else if (x < LastX)
-				{
+				else if (x < LastX) {
 					if (y > LastY + halfHeight)
 						Add(new Point(LastX, LastY + halfHeight));
 					Add(new Point(x, y));
 				}
-				else if (isEnd)
-				{
+				else if (isEnd) {
 					Add(new Point(x, y));
 				}
 
@@ -72,26 +62,22 @@ namespace SourceGit.Models
 				LastY = y;
 			}
 
-			private void Add(Point p)
-			{
-				if (EndY < p.Y)
-				{
+			private void Add(Point p) {
+				if (EndY < p.Y) {
 					Path.Points.Add(p);
 					EndY = p.Y;
 				}
 			}
 		}
 
-		public class Link
-		{
+		public class Link {
 			public Point Start;
 			public Point Control;
 			public Point End;
 			public int Color;
 		}
 
-		public class Dot
-		{
+		public class Dot {
 			public Point Center;
 			public int Color;
 		}
@@ -100,8 +86,7 @@ namespace SourceGit.Models
 		public List<Link> Links { get; set; } = new List<Link>();
 		public List<Dot> Dots { get; set; } = new List<Dot>();
 
-		public static CommitGraph Parse(List<Commit> commits, double rowHeight, int colorCount)
-		{
+		public static CommitGraph Parse(List<Commit> commits, double rowHeight, int colorCount) {
 			double UNIT_WIDTH = 12;
 			double HALF_WIDTH = 6;
 			double UNIT_HEIGHT = rowHeight;
@@ -114,8 +99,7 @@ namespace SourceGit.Models
 			var offsetY = -HALF_HEIGHT;
 			var colorIdx = 0;
 
-			foreach (var commit in commits)
-			{
+			foreach (var commit in commits) {
 				var major = null as PathHelper;
 				var isMerged = commit.IsMerged;
 				var oldCount = unsolved.Count;
@@ -125,38 +109,31 @@ namespace SourceGit.Models
 
 				// Find first curves that links to this commit and marks others that links to this commit ended.
 				double offsetX = -HALF_WIDTH;
-				foreach (var l in unsolved)
-				{
-					if (l.Next == commit.SHA)
-					{
-						if (major == null)
-						{
+				foreach (var l in unsolved) {
+					if (l.Next == commit.SHA) {
+						if (major == null) {
 							offsetX += UNIT_WIDTH;
 							major = l;
 
-							if (commit.Parents.Count > 0)
-							{
+							if (commit.Parents.Count > 0) {
 								major.Next = commit.Parents[0];
 								if (!mapUnsolved.ContainsKey(major.Next))
 									mapUnsolved.Add(major.Next, major);
 							}
-							else
-							{
+							else {
 								major.Next = "ENDED";
 								ended.Add(l);
 							}
 
 							major.Add(offsetX, offsetY, HALF_HEIGHT);
 						}
-						else
-						{
+						else {
 							ended.Add(l);
 						}
 
 						isMerged = isMerged || l.IsMerged;
 					}
-					else
-					{
+					else {
 						if (!mapUnsolved.ContainsKey(l.Next))
 							mapUnsolved.Add(l.Next, l);
 						offsetX += UNIT_WIDTH;
@@ -165,8 +142,7 @@ namespace SourceGit.Models
 				}
 
 				// Create new curve for branch head
-				if (major == null && commit.Parents.Count > 0)
-				{
+				if (major == null && commit.Parents.Count > 0) {
 					offsetX += UNIT_WIDTH;
 					major = new PathHelper(commit.Parents[0], isMerged, colorIdx, new Point(offsetX, offsetY));
 					unsolved.Add(major);
@@ -176,23 +152,19 @@ namespace SourceGit.Models
 
 				// Calculate link position of this commit.
 				Point position = new Point(offsetX, offsetY);
-				if (major != null)
-				{
+				if (major != null) {
 					major.IsMerged = isMerged;
 					position = new Point(major.LastX, offsetY);
 					temp.Dots.Add(new Dot() { Center = position, Color = major.Path.Color });
 				}
-				else
-				{
+				else {
 					temp.Dots.Add(new Dot() { Center = position, Color = 0 });
 				}
 
 				// Deal with parents
-				for (int j = 1; j < commit.Parents.Count; j++)
-				{
+				for (int j = 1; j < commit.Parents.Count; j++) {
 					var parent = commit.Parents[j];
-					if (mapUnsolved.ContainsKey(parent))
-					{
+					if (mapUnsolved.ContainsKey(parent)) {
 						var l = mapUnsolved[parent];
 						var link = new Link();
 
@@ -202,8 +174,7 @@ namespace SourceGit.Models
 						link.Color = l.Path.Color;
 						temp.Links.Add(link);
 					}
-					else
-					{
+					else {
 						offsetX += UNIT_WIDTH;
 
 						// Create new curve for parent commit that not includes before
@@ -215,8 +186,7 @@ namespace SourceGit.Models
 				}
 
 				// Remove ended curves from unsolved
-				foreach (var l in ended)
-				{
+				foreach (var l in ended) {
 					l.Add(position.X, position.Y, HALF_HEIGHT, true);
 					unsolved.Remove(l);
 				}
@@ -231,8 +201,7 @@ namespace SourceGit.Models
 			}
 
 			// Deal with curves haven't ended yet.
-			for (int i = 0; i < unsolved.Count; i++)
-			{
+			for (int i = 0; i < unsolved.Count; i++) {
 				var path = unsolved[i];
 				var endY = (commits.Count - 0.5) * UNIT_HEIGHT;
 

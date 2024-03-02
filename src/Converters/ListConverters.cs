@@ -1,10 +1,8 @@
 ﻿using Avalonia.Data.Converters;
 using System.Collections;
 
-namespace SourceGit.Converters
-{
-	public static class ListConverters
-	{
+namespace SourceGit.Converters {
+	public static class ListConverters {
 		public static FuncValueConverter<IList, string> ToCount =
 			new FuncValueConverter<IList, string>(v => $" ({v.Count})");
 

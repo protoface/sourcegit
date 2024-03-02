@@ -2,15 +2,11 @@
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
-namespace SourceGit.Converters
-{
-	public static class ChangeViewModeConverters
-	{
+namespace SourceGit.Converters {
+	public static class ChangeViewModeConverters {
 		public static FuncValueConverter<Models.ChangeViewMode, StreamGeometry> ToIcon =
-			new FuncValueConverter<Models.ChangeViewMode, StreamGeometry>(v =>
-			{
-				switch (v)
-				{
+			new FuncValueConverter<Models.ChangeViewMode, StreamGeometry>(v => {
+				switch (v) {
 					case Models.ChangeViewMode.List:
 						return App.Current?.FindResource("Icons.List") as StreamGeometry;
 					case Models.ChangeViewMode.Grid:

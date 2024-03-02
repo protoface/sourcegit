@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace SourceGit.Models
-{
-	public static class Bookmarks
-	{
+namespace SourceGit.Models {
+	public static class Bookmarks {
 		public static readonly Avalonia.Media.IBrush[] Brushes = [
 			Avalonia.Media.Brushes.Transparent,
 			Avalonia.Media.Brushes.Red,
@@ -17,8 +15,7 @@ namespace SourceGit.Models
 
 		public static readonly List<int> Supported = new List<int>();
 
-		static Bookmarks()
-		{
+		static Bookmarks() {
 			for (int i = 0; i < Brushes.Length; i++)
 				Supported.Add(i);
 		}

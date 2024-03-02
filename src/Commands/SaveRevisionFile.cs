@@ -3,30 +3,23 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace SourceGit.Commands
-{
-	public static class SaveRevisionFile
-	{
-		public static void Run(string repo, string revision, string file, string saveTo)
-		{
+namespace SourceGit.Commands {
+	public static class SaveRevisionFile {
+		public static void Run(string repo, string revision, string file, string saveTo) {
 			var isLFSFiltered = new IsLFSFiltered(repo, file).Result();
-			if (isLFSFiltered)
-			{
+			if (isLFSFiltered) {
 				var tmpFile = saveTo + ".tmp";
-				if (ExecCmd(repo, $"show {revision}:\"{file}\"", tmpFile))
-				{
+				if (ExecCmd(repo, $"show {revision}:\"{file}\"", tmpFile)) {
 					ExecCmd(repo, $"lfs smudge", saveTo, tmpFile);
 				}
 				File.Delete(tmpFile);
 			}
-			else
-			{
+			else {
 				ExecCmd(repo, $"show {revision}:\"{file}\"", saveTo);
 			}
 		}
 
-		private static bool ExecCmd(string repo, string args, string outputFile, string inputFile = null)
-		{
+		private static bool ExecCmd(string repo, string args, string outputFile, string inputFile = null) {
 			var starter = new ProcessStartInfo();
 			starter.WorkingDirectory = repo;
 			starter.FileName = Native.OS.GitInstallPath;
@@ -38,19 +31,14 @@ namespace SourceGit.Commands
 			starter.RedirectStandardOutput = true;
 			starter.RedirectStandardError = true;
 
-			using (var sw = File.OpenWrite(outputFile))
-			{
-				try
-				{
+			using (var sw = File.OpenWrite(outputFile)) {
+				try {
 					var proc = new Process() { StartInfo = starter };
 					proc.Start();
 
-					if (inputFile != null)
-					{
-						using (StreamReader sr = new StreamReader(inputFile))
-						{
-							while (true)
-							{
+					if (inputFile != null) {
+						using (StreamReader sr = new StreamReader(inputFile)) {
+							while (true) {
 								var line = sr.ReadLine();
 								if (line == null)
 									break;
@@ -66,10 +54,8 @@ namespace SourceGit.Commands
 
 					return rs;
 				}
-				catch (Exception e)
-				{
-					Dispatcher.UIThread.Invoke(() =>
-					{
+				catch (Exception e) {
+					Dispatcher.UIThread.Invoke(() => {
 						App.RaiseException(repo, "Save file failed: " + e.Message);
 					});
 					return false;

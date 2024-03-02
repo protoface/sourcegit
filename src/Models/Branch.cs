@@ -1,7 +1,5 @@
-﻿namespace SourceGit.Models
-{
-	public class Branch
-	{
+﻿namespace SourceGit.Models {
+	public class Branch {
 		public string Name { get; set; }
 		public string FullName { get; set; }
 		public string Head { get; set; }

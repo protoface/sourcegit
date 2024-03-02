@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace SourceGit.Models
-{
-	public class Commit
-	{
+namespace SourceGit.Models {
+	public class Commit {
 		public string SHA { get; set; } = string.Empty;
 		public User Author { get; set; } = User.Invalid;
 		public ulong AuthorTime { get; set; } = 0;
@@ -24,18 +22,15 @@ namespace SourceGit.Models
 		public string AuthorTimeShortStr => _utcStart.AddSeconds(AuthorTime).ToString("yyyy/MM/dd");
 		public string CommitterTimeShortStr => _utcStart.AddSeconds(CommitterTime).ToString("yyyy/MM/dd");
 
-		public bool IsCommitterVisible
-		{
+		public bool IsCommitterVisible {
 			get => Author != Committer || AuthorTime != CommitterTime;
 		}
 
-		public string FullMessage
-		{
+		public string FullMessage {
 			get => string.IsNullOrWhiteSpace(Message) ? Subject : $"{Subject}\n\n{Message}";
 		}
 
-		public static void ParseUserAndTime(string data, ref User user, ref ulong time)
-		{
+		public static void ParseUserAndTime(string data, ref User user, ref ulong time) {
 			var userEndIdx = data.IndexOf('>');
 			if (userEndIdx < 0)
 				return;

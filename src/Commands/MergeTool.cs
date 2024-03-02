@@ -1,25 +1,18 @@
 ﻿using Avalonia.Threading;
 using System.IO;
 
-namespace SourceGit.Commands
-{
-	public static class MergeTool
-	{
-		public static bool OpenForMerge(string repo, string tool, string mergeCmd, string file)
-		{
-			if (string.IsNullOrWhiteSpace(tool) || string.IsNullOrWhiteSpace(mergeCmd))
-			{
-				Dispatcher.UIThread.Invoke(() =>
-				{
+namespace SourceGit.Commands {
+	public static class MergeTool {
+		public static bool OpenForMerge(string repo, string tool, string mergeCmd, string file) {
+			if (string.IsNullOrWhiteSpace(tool) || string.IsNullOrWhiteSpace(mergeCmd)) {
+				Dispatcher.UIThread.Invoke(() => {
 					App.RaiseException(repo, "Invalid external merge tool settings!");
 				});
 				return false;
 			}
 
-			if (!File.Exists(tool))
-			{
-				Dispatcher.UIThread.Invoke(() =>
-				{
+			if (!File.Exists(tool)) {
+				Dispatcher.UIThread.Invoke(() => {
 					App.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
 				});
 				return false;
@@ -32,21 +25,16 @@ namespace SourceGit.Commands
 			return cmd.Exec();
 		}
 
-		public static bool OpenForDiff(string repo, string tool, string diffCmd, Models.DiffOption option)
-		{
-			if (string.IsNullOrWhiteSpace(tool) || string.IsNullOrWhiteSpace(diffCmd))
-			{
-				Dispatcher.UIThread.Invoke(() =>
-				{
+		public static bool OpenForDiff(string repo, string tool, string diffCmd, Models.DiffOption option) {
+			if (string.IsNullOrWhiteSpace(tool) || string.IsNullOrWhiteSpace(diffCmd)) {
+				Dispatcher.UIThread.Invoke(() => {
 					App.RaiseException(repo, "Invalid external merge tool settings!");
 				});
 				return false;
 			}
 
-			if (!File.Exists(tool))
-			{
-				Dispatcher.UIThread.Invoke(() =>
-				{
+			if (!File.Exists(tool)) {
+				Dispatcher.UIThread.Invoke(() => {
 					App.RaiseException(repo, $"Can NOT found external merge tool in '{tool}'!");
 				});
 				return false;

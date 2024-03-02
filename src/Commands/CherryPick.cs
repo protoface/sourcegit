@@ -1,9 +1,6 @@
-﻿namespace SourceGit.Commands
-{
-	public class CherryPick : Command
-	{
-		public CherryPick(string repo, string commit, bool noCommit)
-		{
+﻿namespace SourceGit.Commands {
+	public class CherryPick : Command {
+		public CherryPick(string repo, string commit, bool noCommit) {
 			var mode = noCommit ? "-n" : "--ff";
 			WorkingDirectory = repo;
 			Context = repo;

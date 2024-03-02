@@ -7,82 +7,65 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SourceGit.Models
-{
-	public interface IAvatarHost
-	{
+namespace SourceGit.Models {
+	public interface IAvatarHost {
 		void OnAvatarResourceChanged(string md5);
 	}
 
-	public static class AvatarManager
-	{
-		public static string SelectedServer
-		{
+	public static class AvatarManager {
+		public static string SelectedServer {
 			get;
 			set;
 		} = "https://www.gravatar.com/avatar/";
 
-		static AvatarManager()
-		{
+		static AvatarManager() {
 			_storePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SourceGit", "avatars");
 			if (!Directory.Exists(_storePath))
 				Directory.CreateDirectory(_storePath);
 
-			Task.Run(() =>
-			{
-				while (true)
-				{
+			Task.Run(() => {
+				while (true) {
 					var md5 = null as string;
 
-					lock (_synclock)
-					{
-						foreach (var one in _requesting)
-						{
+					lock (_synclock) {
+						foreach (var one in _requesting) {
 							md5 = one;
 							break;
 						}
 					}
 
-					if (md5 == null)
-					{
+					if (md5 == null) {
 						Thread.Sleep(100);
 						continue;
 					}
 
 					var localFile = Path.Combine(_storePath, md5);
 					var img = null as Bitmap;
-					try
-					{
+					try {
 						var client = new HttpClient() { Timeout = TimeSpan.FromSeconds(2) };
 						var task = client.GetAsync($"{SelectedServer}{md5}?d=404");
 						task.Wait();
 
 						var rsp = task.Result;
-						if (rsp.IsSuccessStatusCode)
-						{
-							using (var stream = rsp.Content.ReadAsStream())
-							{
-								using (var writer = File.OpenWrite(localFile))
-								{
+						if (rsp.IsSuccessStatusCode) {
+							using (var stream = rsp.Content.ReadAsStream()) {
+								using (var writer = File.OpenWrite(localFile)) {
 									stream.CopyTo(writer);
 								}
 							}
 
-							using (var reader = File.OpenRead(localFile))
-							{
+							using (var reader = File.OpenRead(localFile)) {
 								img = Bitmap.DecodeToWidth(reader, 128);
 							}
 						}
 					}
 					catch { }
 
-					lock (_synclock)
-					{
+					lock (_synclock) {
 						_requesting.Remove(md5);
 					}
 
-					Dispatcher.UIThread.InvokeAsync(() =>
-					{
+					Dispatcher.UIThread.InvokeAsync(() => {
 						if (_resources.ContainsKey(md5))
 							_resources[md5] = img;
 						else
@@ -93,20 +76,16 @@ namespace SourceGit.Models
 			});
 		}
 
-		public static void Subscribe(IAvatarHost host)
-		{
+		public static void Subscribe(IAvatarHost host) {
 			_avatars.Add(host);
 		}
 
-		public static void Unsubscribe(IAvatarHost host)
-		{
+		public static void Unsubscribe(IAvatarHost host) {
 			_avatars.Remove(host);
 		}
 
-		public static Bitmap Request(string md5, bool forceRefetch = false)
-		{
-			if (forceRefetch)
-			{
+		public static Bitmap Request(string md5, bool forceRefetch = false) {
+			if (forceRefetch) {
 				if (_resources.ContainsKey(md5))
 					_resources.Remove(md5);
 
@@ -116,18 +95,14 @@ namespace SourceGit.Models
 
 				NotifyResourceChanged(md5);
 			}
-			else
-			{
+			else {
 				if (_resources.ContainsKey(md5))
 					return _resources[md5];
 
 				var localFile = Path.Combine(_storePath, md5);
-				if (File.Exists(localFile))
-				{
-					try
-					{
-						using (var stream = File.OpenRead(localFile))
-						{
+				if (File.Exists(localFile)) {
+					try {
+						using (var stream = File.OpenRead(localFile)) {
 							var img = Bitmap.DecodeToWidth(stream, 128);
 							_resources.Add(md5, img);
 							return img;
@@ -137,8 +112,7 @@ namespace SourceGit.Models
 				}
 			}
 
-			lock (_synclock)
-			{
+			lock (_synclock) {
 				if (!_requesting.Contains(md5))
 					_requesting.Add(md5);
 			}
@@ -146,10 +120,8 @@ namespace SourceGit.Models
 			return null;
 		}
 
-		private static void NotifyResourceChanged(string md5)
-		{
-			foreach (var avatar in _avatars)
-			{
+		private static void NotifyResourceChanged(string md5) {
+			foreach (var avatar in _avatars) {
 				avatar.OnAvatarResourceChanged(md5);
 			}
 		}

@@ -1,34 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace SourceGit.ViewModels
-{
-	public class PopupHost : ObservableObject
-	{
-		public static PopupHost Active
-		{
+namespace SourceGit.ViewModels {
+	public class PopupHost : ObservableObject {
+		public static PopupHost Active {
 			get;
 			set;
 		} = null;
 
-		public Popup Popup
-		{
+		public Popup Popup {
 			get => _popup;
 			set => SetProperty(ref _popup, value);
 		}
 
-		public static bool CanCreatePopup()
-		{
+		public static bool CanCreatePopup() {
 			return Active != null && (Active._popup == null || !Active._popup.InProgress);
 		}
 
-		public static void ShowPopup(Popup popup)
-		{
+		public static void ShowPopup(Popup popup) {
 			popup.HostPageId = Active.GetId();
 			Active.Popup = popup;
 		}
 
-		public static async void ShowAndStartPopup(Popup popup)
-		{
+		public static async void ShowAndStartPopup(Popup popup) {
 			popup.HostPageId = Active.GetId();
 			Active.Popup = popup;
 
@@ -37,59 +30,47 @@ namespace SourceGit.ViewModels
 
 			popup.InProgress = true;
 			var task = popup.Sure();
-			if (task != null)
-			{
+			if (task != null) {
 				var finished = await task;
-				if (finished)
-				{
+				if (finished) {
 					Active.Popup = null;
 				}
-				else
-				{
+				else {
 					popup.InProgress = false;
 				}
 			}
-			else
-			{
+			else {
 				Active.Popup = null;
 			}
 		}
 
-		public virtual string GetId()
-		{
+		public virtual string GetId() {
 			return string.Empty;
 		}
 
-		public async void ProcessPopup()
-		{
-			if (_popup != null)
-			{
+		public async void ProcessPopup() {
+			if (_popup != null) {
 				if (!_popup.Check())
 					return;
 
 				_popup.InProgress = true;
 				var task = _popup.Sure();
-				if (task != null)
-				{
+				if (task != null) {
 					var finished = await task;
-					if (finished)
-					{
+					if (finished) {
 						Popup = null;
 					}
-					else
-					{
+					else {
 						_popup.InProgress = false;
 					}
 				}
-				else
-				{
+				else {
 					Popup = null;
 				}
 			}
 		}
 
-		public void CancelPopup()
-		{
+		public void CancelPopup() {
 			if (_popup == null)
 				return;
 			if (_popup.InProgress)
