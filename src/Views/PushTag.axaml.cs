@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 
 namespace SourceGit.Views {
-    public partial class PushTag : UserControl {
-        public PushTag() {
-            InitializeComponent();
-        }
-    }
+	public partial class PushTag : UserControl {
+		public PushTag() {
+			InitializeComponent();
+		}
+	}
 }
