@@ -50,8 +50,7 @@ namespace SourceGit.ViewModels {
 		public void OpenTerminal() {
 			if (!Preference.Instance.IsGitConfigured) {
 				App.RaiseException(PopupHost.Active.GetId(), App.Text("NotConfigured"));
-			}
-			else {
+			} else {
 				Native.OS.OpenTerminal(null);
 			}
 		}
@@ -73,8 +72,7 @@ namespace SourceGit.ViewModels {
 			if (string.IsNullOrWhiteSpace(_searchFilter)) {
 				foreach (var node in RepositoryNodes)
 					ResetVisibility(node);
-			}
-			else {
+			} else {
 				foreach (var node in RepositoryNodes)
 					SetVisibilityBySearch(node);
 			}
@@ -92,8 +90,7 @@ namespace SourceGit.ViewModels {
 					node.IsVisible = true;
 					foreach (var subNode in node.SubNodes)
 						ResetVisibility(subNode);
-				}
-				else {
+				} else {
 					bool hasVisibleSubNode = false;
 					foreach (var subNode in node.SubNodes) {
 						SetVisibilityBySearch(subNode);
@@ -101,8 +98,7 @@ namespace SourceGit.ViewModels {
 					}
 					node.IsVisible = hasVisibleSubNode;
 				}
-			}
-			else {
+			} else {
 				node.IsVisible = node.Name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase);
 			}
 		}

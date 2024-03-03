@@ -38,8 +38,7 @@ namespace SourceGit.Commands {
 				if (line.StartsWith(GPGSIG_END, StringComparison.Ordinal))
 					isSkipingGpgsig = false;
 				return;
-			}
-			else if (line.StartsWith(GPGSIG_START, StringComparison.Ordinal)) {
+			} else if (line.StartsWith(GPGSIG_START, StringComparison.Ordinal)) {
 				isSkipingGpgsig = true;
 				return;
 			}
@@ -56,8 +55,7 @@ namespace SourceGit.Commands {
 				var decoratorStart = line.IndexOf('(');
 				if (decoratorStart < 0) {
 					current.SHA = line.Trim();
-				}
-				else {
+				} else {
 					current.SHA = line.Substring(0, decoratorStart).Trim();
 					current.IsMerged = ParseDecorators(current.Decorators, line.Substring(decoratorStart + 1));
 					if (!isHeadFounded)
@@ -72,28 +70,23 @@ namespace SourceGit.Commands {
 
 			if (line.StartsWith("tree ", StringComparison.Ordinal)) {
 				return;
-			}
-			else if (line.StartsWith("parent ", StringComparison.Ordinal)) {
+			} else if (line.StartsWith("parent ", StringComparison.Ordinal)) {
 				current.Parents.Add(line.Substring("parent ".Length));
-			}
-			else if (line.StartsWith("author ", StringComparison.Ordinal)) {
+			} else if (line.StartsWith("author ", StringComparison.Ordinal)) {
 				Models.User user = Models.User.Invalid;
 				ulong time = 0;
 				Models.Commit.ParseUserAndTime(line.Substring(7), ref user, ref time);
 				current.Author = user;
 				current.AuthorTime = time;
-			}
-			else if (line.StartsWith("committer ", StringComparison.Ordinal)) {
+			} else if (line.StartsWith("committer ", StringComparison.Ordinal)) {
 				Models.User user = Models.User.Invalid;
 				ulong time = 0;
 				Models.Commit.ParseUserAndTime(line.Substring(10), ref user, ref time);
 				current.Committer = user;
 				current.CommitterTime = time;
-			}
-			else if (string.IsNullOrEmpty(current.Subject)) {
+			} else if (string.IsNullOrEmpty(current.Subject)) {
 				current.Subject = line.Trim();
-			}
-			else {
+			} else {
 				current.Message += (line.Trim() + "\n");
 			}
 		}
@@ -109,24 +102,20 @@ namespace SourceGit.Commands {
 						Type = Models.DecoratorType.Tag,
 						Name = d.Substring(15).Trim(),
 					});
-				}
-				else if (d.EndsWith("/HEAD", StringComparison.Ordinal)) {
+				} else if (d.EndsWith("/HEAD", StringComparison.Ordinal)) {
 					continue;
-				}
-				else if (d.StartsWith("HEAD -> refs/heads/", StringComparison.Ordinal)) {
+				} else if (d.StartsWith("HEAD -> refs/heads/", StringComparison.Ordinal)) {
 					isHeadOfCurrent = true;
 					decorators.Add(new Models.Decorator() {
 						Type = Models.DecoratorType.CurrentBranchHead,
 						Name = d.Substring(19).Trim(),
 					});
-				}
-				else if (d.StartsWith("refs/heads/", StringComparison.Ordinal)) {
+				} else if (d.StartsWith("refs/heads/", StringComparison.Ordinal)) {
 					decorators.Add(new Models.Decorator() {
 						Type = Models.DecoratorType.LocalBranchHead,
 						Name = d.Substring(11).Trim(),
 					});
-				}
-				else if (d.StartsWith("refs/remotes/", StringComparison.Ordinal)) {
+				} else if (d.StartsWith("refs/remotes/", StringComparison.Ordinal)) {
 					decorators.Add(new Models.Decorator() {
 						Type = Models.DecoratorType.RemoteBranchHead,
 						Name = d.Substring(13).Trim(),
@@ -137,8 +126,7 @@ namespace SourceGit.Commands {
 			decorators.Sort((l, r) => {
 				if (l.Type != r.Type) {
 					return (int)l.Type - (int)r.Type;
-				}
-				else {
+				} else {
 					return l.Name.CompareTo(r.Name);
 				}
 			});

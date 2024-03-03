@@ -24,17 +24,13 @@ namespace SourceGit.Views {
 				var data = view.Data;
 				if (data == null) {
 					view.Child = null;
-				}
-				else if (data is ViewModels.Histories) {
+				} else if (data is ViewModels.Histories) {
 					view.Child = new Histories { DataContext = data };
-				}
-				else if (data is ViewModels.WorkingCopy) {
+				} else if (data is ViewModels.WorkingCopy) {
 					view.Child = new WorkingCopy { DataContext = data };
-				}
-				else if (data is ViewModels.StashesPage) {
+				} else if (data is ViewModels.StashesPage) {
 					view.Child = new StashesPage { DataContext = data };
-				}
-				else {
+				} else {
 					view.Child = null;
 				}
 				GC.Collect();
@@ -131,8 +127,7 @@ namespace SourceGit.Views {
 					if (node.IsBranch) {
 						filter = (node.Backend as Models.Branch).FullName;
 					}
-				}
-				else if (toggle.DataContext is Models.Tag tag) {
+				} else if (toggle.DataContext is Models.Tag tag) {
 					filter = tag.Name;
 				}
 
@@ -166,8 +161,7 @@ namespace SourceGit.Views {
 					var menu = repo.CreateContextMenuForRemote(node.Backend as Models.Remote);
 					if (menu != null)
 						menu.Open(grid);
-				}
-				else if (node.IsBranch) {
+				} else if (node.IsBranch) {
 					var menu = repo.CreateContextMenuForRemoteBranch(node.Backend as Models.Branch);
 					if (menu != null)
 						menu.Open(grid);

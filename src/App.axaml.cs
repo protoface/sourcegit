@@ -17,8 +17,7 @@ namespace SourceGit {
 		public static void Main(string[] args) {
 			try {
 				BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				var builder = new StringBuilder();
 				builder.Append("Crash: ");
 				builder.Append(ex.Message);
@@ -49,8 +48,7 @@ namespace SourceGit {
 						new FontFallback { FontFamily = new FontFamily("Microsoft YaHei UI") }
 					]
 				});
-			}
-			else if (OperatingSystem.IsMacOS()) {
+			} else if (OperatingSystem.IsMacOS()) {
 				builder.With(new FontManagerOptions() {
 					FontFallbacks = [
 						new FontFallback { FontFamily = new FontFamily("PingFang SC") }
@@ -98,11 +96,9 @@ namespace SourceGit {
 		public static void SetTheme(string theme) {
 			if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase)) {
 				App.Current.RequestedThemeVariant = ThemeVariant.Light;
-			}
-			else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
+			} else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
 				App.Current.RequestedThemeVariant = ThemeVariant.Dark;
-			}
-			else {
+			} else {
 				App.Current.RequestedThemeVariant = ThemeVariant.Default;
 			}
 		}

@@ -48,13 +48,11 @@ namespace SourceGit.Models {
 					Add(new Point(x, y - halfHeight));
 					if (isEnd)
 						Add(new Point(x, y));
-				}
-				else if (x < LastX) {
+				} else if (x < LastX) {
 					if (y > LastY + halfHeight)
 						Add(new Point(LastX, LastY + halfHeight));
 					Add(new Point(x, y));
-				}
-				else if (isEnd) {
+				} else if (isEnd) {
 					Add(new Point(x, y));
 				}
 
@@ -119,21 +117,18 @@ namespace SourceGit.Models {
 								major.Next = commit.Parents[0];
 								if (!mapUnsolved.ContainsKey(major.Next))
 									mapUnsolved.Add(major.Next, major);
-							}
-							else {
+							} else {
 								major.Next = "ENDED";
 								ended.Add(l);
 							}
 
 							major.Add(offsetX, offsetY, HALF_HEIGHT);
-						}
-						else {
+						} else {
 							ended.Add(l);
 						}
 
 						isMerged = isMerged || l.IsMerged;
-					}
-					else {
+					} else {
 						if (!mapUnsolved.ContainsKey(l.Next))
 							mapUnsolved.Add(l.Next, l);
 						offsetX += UNIT_WIDTH;
@@ -156,8 +151,7 @@ namespace SourceGit.Models {
 					major.IsMerged = isMerged;
 					position = new Point(major.LastX, offsetY);
 					temp.Dots.Add(new Dot() { Center = position, Color = major.Path.Color });
-				}
-				else {
+				} else {
 					temp.Dots.Add(new Dot() { Center = position, Color = 0 });
 				}
 
@@ -173,8 +167,7 @@ namespace SourceGit.Models {
 						link.Control = new Point(link.End.X, link.Start.Y);
 						link.Color = l.Path.Color;
 						temp.Links.Add(link);
-					}
-					else {
+					} else {
 						offsetX += UNIT_WIDTH;
 
 						// Create new curve for parent commit that not includes before

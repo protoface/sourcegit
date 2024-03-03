@@ -34,12 +34,10 @@ namespace SourceGit.ViewModels {
 				var finished = await task;
 				if (finished) {
 					Active.Popup = null;
-				}
-				else {
+				} else {
 					popup.InProgress = false;
 				}
-			}
-			else {
+			} else {
 				Active.Popup = null;
 			}
 		}
@@ -59,12 +57,10 @@ namespace SourceGit.ViewModels {
 					var finished = await task;
 					if (finished) {
 						Popup = null;
-					}
-					else {
+					} else {
 						_popup.InProgress = false;
 					}
-				}
-				else {
+				} else {
 					Popup = null;
 				}
 			}

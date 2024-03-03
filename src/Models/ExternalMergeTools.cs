@@ -22,8 +22,7 @@ namespace SourceGit.Models {
 					new ExternalMergeTools(5, "Beyond Compare 4", "BComp.exe", "\"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
 					new ExternalMergeTools(6, "WinMerge", "WinMergeU.exe", "-u -e \"$REMOTE\" \"$LOCAL\" \"$MERGED\"", "-u -e \"$LOCAL\" \"$REMOTE\""),
 				};
-			}
-			else if (OperatingSystem.IsMacOS()) {
+			} else if (OperatingSystem.IsMacOS()) {
 				Supported = new List<ExternalMergeTools>() {
 					new ExternalMergeTools(0, "Custom", "", "", ""),
 					new ExternalMergeTools(1, "FileMerge", "/usr/bin/opendiff", "\"$BASE\" \"$LOCAL\" \"$REMOTE\" -ancestor \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
@@ -31,16 +30,14 @@ namespace SourceGit.Models {
 					new ExternalMergeTools(3, "KDiff3", "/Applications/kdiff3.app/Contents/MacOS/kdiff3", "\"$REMOTE\" -b \"$BASE\" \"$LOCAL\" -o \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
 					new ExternalMergeTools(4, "Beyond Compare 4", "/Applications/Beyond Compare.app/Contents/MacOS/bcomp", "\"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
 				};
-			}
-			else if (OperatingSystem.IsLinux()) {
+			} else if (OperatingSystem.IsLinux()) {
 				Supported = new List<ExternalMergeTools>() {
 					new ExternalMergeTools(0, "Custom", "", "", ""),
 					new ExternalMergeTools(1, "Visual Studio Code", "/usr/share/code/code", "-n --wait \"$MERGED\"", "-n --wait --diff \"$LOCAL\" \"$REMOTE\""),
 					new ExternalMergeTools(2, "KDiff3", "/usr/bin/kdiff3", "\"$REMOTE\" -b \"$BASE\" \"$LOCAL\" -o \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
 					new ExternalMergeTools(3, "Beyond Compare 4", "/usr/bin/bcomp", "\"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"", "\"$LOCAL\" \"$REMOTE\""),
 				};
-			}
-			else {
+			} else {
 				Supported = new List<ExternalMergeTools>() {
 					new ExternalMergeTools(0, "Custom", "", "", ""),
 				};

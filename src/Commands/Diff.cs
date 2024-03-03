@@ -18,14 +18,12 @@ namespace SourceGit.Commands {
 
 			if (_result.IsBinary || _result.IsLFS) {
 				_result.TextDiff = null;
-			}
-			else {
+			} else {
 				ProcessInlineHighlights();
 
 				if (_result.TextDiff.Lines.Count == 0) {
 					_result.TextDiff = null;
-				}
-				else {
+				} else {
 					_result.TextDiff.MaxLineNumber = Math.Max(_newLine, _oldLine);
 				}
 			}
@@ -43,21 +41,17 @@ namespace SourceGit.Commands {
 					line = line.Substring(1);
 					if (line.StartsWith("oid sha256:")) {
 						_result.LFSDiff.Old.Oid = line.Substring(11);
-					}
-					else if (line.StartsWith("size ")) {
+					} else if (line.StartsWith("size ")) {
 						_result.LFSDiff.Old.Size = long.Parse(line.Substring(5));
 					}
-				}
-				else if (ch == '+') {
+				} else if (ch == '+') {
 					line = line.Substring(1);
 					if (line.StartsWith("oid sha256:")) {
 						_result.LFSDiff.New.Oid = line.Substring(11);
-					}
-					else if (line.StartsWith("size ")) {
+					} else if (line.StartsWith("size ")) {
 						_result.LFSDiff.New.Size = long.Parse(line.Substring(5));
 					}
-				}
-				else if (line.StartsWith(" size ")) {
+				} else if (line.StartsWith(" size ")) {
 					_result.LFSDiff.New.Size = _result.LFSDiff.Old.Size = long.Parse(line.Substring(6));
 				}
 				return;
@@ -74,8 +68,7 @@ namespace SourceGit.Commands {
 				_oldLine = int.Parse(match.Groups[1].Value);
 				_newLine = int.Parse(match.Groups[2].Value);
 				_result.TextDiff.Lines.Add(new Models.TextDiffLine(Models.TextDiffLineType.Indicator, line, 0, 0));
-			}
-			else {
+			} else {
 				if (line.Length == 0) {
 					ProcessInlineHighlights();
 					_result.TextDiff.Lines.Add(new Models.TextDiffLine(Models.TextDiffLineType.Normal, "", _oldLine, _newLine));
@@ -88,20 +81,17 @@ namespace SourceGit.Commands {
 				if (ch == '-') {
 					_deleted.Add(new Models.TextDiffLine(Models.TextDiffLineType.Deleted, line.Substring(1), _oldLine, 0));
 					_oldLine++;
-				}
-				else if (ch == '+') {
+				} else if (ch == '+') {
 					_added.Add(new Models.TextDiffLine(Models.TextDiffLineType.Added, line.Substring(1), 0, _newLine));
 					_newLine++;
-				}
-				else if (ch != '\\') {
+				} else if (ch != '\\') {
 					ProcessInlineHighlights();
 					var match = REG_INDICATOR.Match(line);
 					if (match.Success) {
 						_oldLine = int.Parse(match.Groups[1].Value);
 						_newLine = int.Parse(match.Groups[2].Value);
 						_result.TextDiff.Lines.Add(new Models.TextDiffLine(Models.TextDiffLineType.Indicator, line, 0, 0));
-					}
-					else {
+					} else {
 						if (line.StartsWith(PREFIX_LFS)) {
 							_result.IsLFS = true;
 							_result.LFSDiff = new Models.LFSDiff();

@@ -25,8 +25,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedCommit, value)) {
 					if (value == null) {
 						DiffContext = null;
-					}
-					else {
+					} else {
 						DiffContext = new DiffContext(_repo, new Models.DiffOption(value, _file));
 					}
 				}

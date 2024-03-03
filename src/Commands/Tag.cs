@@ -13,8 +13,7 @@ namespace SourceGit.Commands {
 				string tmp = Path.GetTempFileName();
 				File.WriteAllText(tmp, message);
 				cmd.Args += $"-F \"{tmp}\"";
-			}
-			else {
+			} else {
 				cmd.Args += $"-m {name}";
 			}
 

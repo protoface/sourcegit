@@ -36,8 +36,7 @@ namespace SourceGit.Views {
 					child.SetValue(ColumnProperty, i);
 					child.SetValue(ColumnSpanProperty, 1);
 				}
-			}
-			else {
+			} else {
 				var colSpan = ColumnDefinitions.Count;
 				for (int i = 0; i < Children.Count; i++) {
 					var child = Children[i];
@@ -174,19 +173,16 @@ namespace SourceGit.Views {
 
 						if (cur.X > last.X) {
 							ctx.QuadraticBezierTo(new Point(cur.X, last.Y), cur);
-						}
-						else if (cur.X < last.X) {
+						} else if (cur.X < last.X) {
 							if (i < size - 1) {
 								var midY = (last.Y + cur.Y) / 2;
 								var midX = (last.X + cur.X) / 2;
 								ctx.QuadraticBezierTo(new Point(last.X, midY), new Point(midX, midY));
 								ctx.QuadraticBezierTo(new Point(cur.X, midY), cur);
-							}
-							else {
+							} else {
 								ctx.QuadraticBezierTo(new Point(last.X, cur.Y), cur);
 							}
-						}
-						else {
+						} else {
 							ctx.LineTo(cur);
 						}
 

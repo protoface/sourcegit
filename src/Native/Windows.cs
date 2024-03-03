@@ -86,15 +86,13 @@ namespace SourceGit.Native {
 			var fullpath = string.Empty;
 			if (File.Exists(path)) {
 				fullpath = new FileInfo(path).FullName;
-			}
-			else {
+			} else {
 				fullpath = new DirectoryInfo(path).FullName;
 			}
 
 			if (select) {
 				Process.Start("explorer", $"/select,\"{fullpath}\"");
-			}
-			else {
+			} else {
 				Process.Start("explorer", fullpath);
 			}
 		}

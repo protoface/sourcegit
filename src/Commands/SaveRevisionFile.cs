@@ -13,8 +13,7 @@ namespace SourceGit.Commands {
 					ExecCmd(repo, $"lfs smudge", saveTo, tmpFile);
 				}
 				File.Delete(tmpFile);
-			}
-			else {
+			} else {
 				ExecCmd(repo, $"show {revision}:\"{file}\"", saveTo);
 			}
 		}
@@ -53,8 +52,7 @@ namespace SourceGit.Commands {
 					proc.Close();
 
 					return rs;
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					Dispatcher.UIThread.Invoke(() => {
 						App.RaiseException(repo, "Save file failed: " + e.Message);
 					});

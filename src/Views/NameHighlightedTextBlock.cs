@@ -98,8 +98,7 @@ namespace SourceGit.Views {
 					context.DrawText(formatted, new Point(offsetX, 0));
 					context.DrawLine(underlinePen, new Point(offsetX, lineY), new Point(offsetX + formatted.Width, lineY));
 					offsetX += formatted.Width + 4;
-				}
-				else {
+				} else {
 					context.DrawText(formatted, new Point(offsetX, 0));
 					offsetX += formatted.Width;
 				}

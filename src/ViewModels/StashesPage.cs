@@ -24,8 +24,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedStash, value)) {
 					if (value == null) {
 						Changes = null;
-					}
-					else {
+					} else {
 						Task.Run(() => {
 							var changes = new Commands.QueryStashChanges(_repo.FullPath, value.SHA).Result();
 							Dispatcher.UIThread.Invoke(() => {
@@ -52,8 +51,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedChange, value)) {
 					if (value == null) {
 						DiffContext = null;
-					}
-					else {
+					} else {
 						DiffContext = new DiffContext(_repo.FullPath, new Models.DiffOption($"{_selectedStash.SHA}^", _selectedStash.SHA, value));
 					}
 				}

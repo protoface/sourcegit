@@ -20,8 +20,7 @@ namespace SourceGit.ViewModels {
 			return Task.Run(() => {
 				if (Target.IsLocal) {
 					Commands.Branch.Delete(_repo.FullPath, Target.Name);
-				}
-				else {
+				} else {
 					new Commands.Push(_repo.FullPath, Target.Remote, Target.Name).Exec();
 				}
 

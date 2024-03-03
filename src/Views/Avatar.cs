@@ -61,8 +61,7 @@ namespace SourceGit.Views {
 				var rect = new Rect(0, 0, Bounds.Width, Bounds.Height);
 				context.PushClip(new RoundedRect(rect, corner));
 				context.DrawImage(img, rect);
-			}
-			else {
+			} else {
 				Point textOrigin = new Point((Bounds.Width - _fallbackLabel.Width) * 0.5, (Bounds.Height - _fallbackLabel.Height) * 0.5);
 				context.DrawRectangle(_fallbackBrush, null, new Rect(0, 0, Bounds.Width, Bounds.Height), corner, corner);
 				context.DrawText(_fallbackLabel, textOrigin);

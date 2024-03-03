@@ -38,8 +38,7 @@ namespace SourceGit.ViewModels {
 						SetProgressDescription($"Fetching remote: {remote.Name}");
 						new Commands.Fetch(_repo.FullPath, remote.Name, Prune, SetProgressDescription).Exec();
 					}
-				}
-				else {
+				} else {
 					SetProgressDescription($"Fetching remote: {SelectedRemote.Name}");
 					new Commands.Fetch(_repo.FullPath, SelectedRemote.Name, Prune, SetProgressDescription).Exec();
 				}

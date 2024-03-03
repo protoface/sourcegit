@@ -21,8 +21,7 @@ namespace SourceGit.Commands {
 					Name = subs[0],
 					SHA = subs[1],
 				});
-			}
-			else if (subs.Length == 3) {
+			} else if (subs.Length == 3) {
 				_loaded.Add(new Models.Tag() {
 					Name = subs[0],
 					SHA = subs[2],

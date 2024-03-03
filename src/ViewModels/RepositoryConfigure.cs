@@ -59,8 +59,7 @@ namespace SourceGit.ViewModels {
 			bool changed = false;
 			if (_cached.ContainsKey(key)) {
 				changed = value != _cached[key];
-			}
-			else if (!string.IsNullOrEmpty(value)) {
+			} else if (!string.IsNullOrEmpty(value)) {
 				changed = true;
 			}
 

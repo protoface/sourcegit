@@ -27,8 +27,7 @@ namespace SourceGit.ViewModels {
 						IsFolder = false,
 						IsExpanded = false
 					});
-				}
-				else {
+				} else {
 					FileTreeNode lastFolder = null;
 					var start = 0;
 
@@ -36,8 +35,7 @@ namespace SourceGit.ViewModels {
 						var folder = c.Path.Substring(0, sepIdx);
 						if (folders.ContainsKey(folder)) {
 							lastFolder = folders[folder];
-						}
-						else if (lastFolder == null) {
+						} else if (lastFolder == null) {
 							lastFolder = new FileTreeNode() {
 								FullPath = folder,
 								Backend = null,
@@ -46,8 +44,7 @@ namespace SourceGit.ViewModels {
 							};
 							nodes.Add(lastFolder);
 							folders.Add(folder, lastFolder);
-						}
-						else {
+						} else {
 							var cur = new FileTreeNode() {
 								FullPath = folder,
 								Backend = null,
@@ -91,8 +88,7 @@ namespace SourceGit.ViewModels {
 						IsFolder = false,
 						IsExpanded = false
 					});
-				}
-				else {
+				} else {
 					FileTreeNode lastFolder = null;
 					var start = 0;
 
@@ -100,8 +96,7 @@ namespace SourceGit.ViewModels {
 						var folder = f.Path.Substring(0, sepIdx);
 						if (folders.ContainsKey(folder)) {
 							lastFolder = folders[folder];
-						}
-						else if (lastFolder == null) {
+						} else if (lastFolder == null) {
 							lastFolder = new FileTreeNode() {
 								FullPath = folder,
 								Backend = null,
@@ -110,8 +105,7 @@ namespace SourceGit.ViewModels {
 							};
 							nodes.Add(lastFolder);
 							folders.Add(folder, lastFolder);
-						}
-						else {
+						} else {
 							var cur = new FileTreeNode() {
 								FullPath = folder,
 								Backend = null,
@@ -162,8 +156,7 @@ namespace SourceGit.ViewModels {
 			nodes.Sort((l, r) => {
 				if (l.IsFolder == r.IsFolder) {
 					return l.FullPath.CompareTo(r.FullPath);
-				}
-				else {
+				} else {
 					return l.IsFolder ? -1 : 1;
 				}
 			});

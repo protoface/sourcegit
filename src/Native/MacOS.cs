@@ -27,8 +27,7 @@ namespace SourceGit.Native {
 		public void OpenInFileManager(string path, bool select) {
 			if (Directory.Exists(path)) {
 				Process.Start("open", path);
-			}
-			else if (File.Exists(path)) {
+			} else if (File.Exists(path)) {
 				Process.Start("open", $"\"{path}\" -R");
 			}
 		}

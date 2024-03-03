@@ -10,8 +10,7 @@ namespace SourceGit.Converters {
 			new FuncValueConverter<WindowState, Thickness>(state => {
 				if (state == WindowState.Maximized && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
 					return new Thickness(6);
-				}
-				else {
+				} else {
 					return new Thickness(0);
 				}
 			});
@@ -20,8 +19,7 @@ namespace SourceGit.Converters {
 			new FuncValueConverter<WindowState, GridLength>(state => {
 				if (state == WindowState.Maximized && RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
 					return new GridLength(30);
-				}
-				else {
+				} else {
 					return new GridLength(38);
 				}
 			});
@@ -30,8 +28,7 @@ namespace SourceGit.Converters {
 			new FuncValueConverter<WindowState, StreamGeometry>(state => {
 				if (state == WindowState.Maximized) {
 					return Application.Current?.FindResource("Icons.Window.Restore") as StreamGeometry;
-				}
-				else {
+				} else {
 					return Application.Current?.FindResource("Icons.Window.Maximize") as StreamGeometry;
 				}
 			});

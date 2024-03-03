@@ -15,8 +15,7 @@ namespace SourceGit.Commands {
 			foreach (var c in changes) {
 				if (c.WorkTree == Models.ChangeState.Untracked || c.WorkTree == Models.ChangeState.Added) {
 					needClean.Add(c.Path);
-				}
-				else {
+				} else {
 					needCheckout.Add(c.Path);
 				}
 			}

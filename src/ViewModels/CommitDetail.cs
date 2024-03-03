@@ -49,8 +49,7 @@ namespace SourceGit.ViewModels {
 					if (value == null) {
 						SelectedChangeNode = null;
 						DiffContext = null;
-					}
-					else {
+					} else {
 						SelectedChangeNode = FileTreeNode.SelectByPath(_changeTree, value.Path);
 						DiffContext = new DiffContext(_repo, new Models.DiffOption(_commit, value));
 					}
@@ -64,8 +63,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedChangeNode, value)) {
 					if (value == null) {
 						SelectedChange = null;
-					}
-					else {
+					} else {
 						SelectedChange = value.Backend as Models.Change;
 					}
 				}
@@ -91,8 +89,7 @@ namespace SourceGit.ViewModels {
 			set {
 				if (SetProperty(ref _selectedRevisionFileNode, value) && value != null && !value.IsFolder) {
 					RefreshViewRevisionFile(value.Backend as Models.Object);
-				}
-				else {
+				} else {
 					ViewRevisionFileContent = null;
 				}
 			}
@@ -333,8 +330,7 @@ namespace SourceGit.ViewModels {
 
 			if (string.IsNullOrEmpty(_searchChangeFilter)) {
 				VisibleChanges = _changes;
-			}
-			else {
+			} else {
 				var visible = new List<Models.Change>();
 				foreach (var c in _changes) {
 					if (c.Path.Contains(_searchChangeFilter, StringComparison.OrdinalIgnoreCase)) {
@@ -385,8 +381,7 @@ namespace SourceGit.ViewModels {
 								foreach (var line in lines) {
 									if (line.StartsWith("oid sha256:")) {
 										obj.Object.Oid = line.Substring(11);
-									}
-									else if (line.StartsWith("size ")) {
+									} else if (line.StartsWith("size ")) {
 										obj.Object.Size = long.Parse(line.Substring(5));
 									}
 								}

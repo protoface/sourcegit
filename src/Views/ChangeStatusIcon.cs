@@ -87,13 +87,11 @@ namespace SourceGit.Views {
 				if (Change.IsConflit) {
 					background = Brushes.OrangeRed;
 					indicator = "!";
-				}
-				else {
+				} else {
 					background = BACKGROUNDS[(int)Change.WorkTree];
 					indicator = INDICATOR[(int)Change.WorkTree];
 				}
-			}
-			else {
+			} else {
 				background = BACKGROUNDS[(int)Change.Index];
 				indicator = INDICATOR[(int)Change.Index];
 			}

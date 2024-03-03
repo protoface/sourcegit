@@ -71,8 +71,7 @@ namespace SourceGit.ViewModels {
 				var path = _parentFolder;
 				if (!string.IsNullOrEmpty(_local)) {
 					path = Path.GetFullPath(Path.Combine(path, _local));
-				}
-				else {
+				} else {
 					var name = Path.GetFileName(_remote);
 					if (name.EndsWith(".git"))
 						name = name.Substring(0, name.Length - 4);

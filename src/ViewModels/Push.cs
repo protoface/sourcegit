@@ -88,8 +88,7 @@ namespace SourceGit.ViewModels {
 			if (localBranch != null) {
 				_selectedLocalBranch = localBranch;
 				HasSpecifiedLocalBranch = true;
-			}
-			else {
+			} else {
 				_selectedLocalBranch = current;
 				HasSpecifiedLocalBranch = false;
 			}

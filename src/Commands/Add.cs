@@ -9,8 +9,7 @@ namespace SourceGit.Commands {
 
 			if (changes == null || changes.Count == 0) {
 				Args = "add .";
-			}
-			else {
+			} else {
 				var builder = new StringBuilder();
 				builder.Append("add --");
 				foreach (var c in changes) {

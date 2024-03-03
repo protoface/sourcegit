@@ -64,8 +64,7 @@ namespace SourceGit.ViewModels {
 
 			if (_detailContext is CommitDetail cd) {
 				cd.Cleanup();
-			}
-			else if (_detailContext is RevisionCompare rc) {
+			} else if (_detailContext is RevisionCompare rc) {
 				rc.Cleanup();
 			}
 
@@ -79,8 +78,7 @@ namespace SourceGit.ViewModels {
 
 				if (_detailContext is CommitDetail detail) {
 					detail.Commit = commit;
-				}
-				else {
+				} else {
 					var commitDetail = new CommitDetail(_repo.FullPath);
 					commitDetail.Commit = commit;
 					DetailContext = commitDetail;
@@ -91,26 +89,22 @@ namespace SourceGit.ViewModels {
 		public void Select(IList commits) {
 			if (commits.Count == 0) {
 				DetailContext = null;
-			}
-			else if (commits.Count == 1) {
+			} else if (commits.Count == 1) {
 				var commit = commits[0] as Models.Commit;
 				AutoSelectedCommit = commit;
 
 				if (_detailContext is CommitDetail detail) {
 					detail.Commit = commit;
-				}
-				else {
+				} else {
 					var commitDetail = new CommitDetail(_repo.FullPath);
 					commitDetail.Commit = commit;
 					DetailContext = commitDetail;
 				}
-			}
-			else if (commits.Count == 2) {
+			} else if (commits.Count == 2) {
 				var end = commits[0] as Models.Commit;
 				var start = commits[1] as Models.Commit;
 				DetailContext = new RevisionCompare(_repo.FullPath, start, end);
-			}
-			else {
+			} else {
 				DetailContext = new CountSelectedCommits() { Count = commits.Count };
 			}
 		}
@@ -132,16 +126,13 @@ namespace SourceGit.ViewModels {
 				foreach (var d in commit.Decorators) {
 					if (d.Type == Models.DecoratorType.CurrentBranchHead) {
 						FillCurrentBranchMenu(menu, current);
-					}
-					else if (d.Type == Models.DecoratorType.LocalBranchHead) {
+					} else if (d.Type == Models.DecoratorType.LocalBranchHead) {
 						var b = _repo.Branches.Find(x => x.IsLocal && d.Name == x.Name);
 						FillOtherLocalBranchMenu(menu, b, current, commit.IsMerged);
-					}
-					else if (d.Type == Models.DecoratorType.RemoteBranchHead) {
+					} else if (d.Type == Models.DecoratorType.RemoteBranchHead) {
 						var b = _repo.Branches.Find(x => !x.IsLocal && d.Name == $"{x.Remote}/{x.Name}");
 						FillRemoteBranchMenu(menu, b, current, commit.IsMerged);
-					}
-					else if (d.Type == Models.DecoratorType.Tag) {
+					} else if (d.Type == Models.DecoratorType.Tag) {
 						var t = _repo.Tags.Find(x => x.Name == d.Name);
 						if (t != null)
 							tags.Add(t);
@@ -168,8 +159,7 @@ namespace SourceGit.ViewModels {
 					e.Handled = true;
 				};
 				menu.Items.Add(reset);
-			}
-			else {
+			} else {
 				var reword = new MenuItem();
 				reword.Header = App.Text("CommitCM.Reword");
 				reword.Icon = App.CreateMenuIcon("Icons.Edit");
@@ -216,8 +206,7 @@ namespace SourceGit.ViewModels {
 					e.Handled = true;
 				};
 				menu.Items.Add(cherryPick);
-			}
-			else {
+			} else {
 				var revert = new MenuItem();
 				revert.Header = App.Text("CommitCM.Revert");
 				revert.Icon = App.CreateMenuIcon("Icons.Undo");

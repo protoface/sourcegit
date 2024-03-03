@@ -79,8 +79,7 @@ namespace SourceGit.Models {
 						continue;
 					builder.Append(selection.IsInRange(i) ? "\n+" : "\n ").Append(line.Content);
 				}
-			}
-			else {
+			} else {
 				builder.Append("@@ -0,0 +0,").Append(additions).Append(" @@");
 				for (int i = selection.StartLine - 1; i < selection.EndLine; i++) {
 					var line = Lines[i];
@@ -117,8 +116,7 @@ namespace SourceGit.Models {
 								tail = line.Content;
 								break;
 							}
-						}
-						else {
+						} else {
 							if (line.Type == TextDiffLineType.Normal || line.Type == TextDiffLineType.Deleted) {
 								tail = line.Content;
 								break;
@@ -145,8 +143,7 @@ namespace SourceGit.Models {
 					var line = Lines[i];
 					if (line.Type == TextDiffLineType.Added) {
 						ignoreAdds++;
-					}
-					else if (line.Type == TextDiffLineType.Deleted) {
+					} else if (line.Type == TextDiffLineType.Deleted) {
 						ignoreRemoves++;
 					}
 				}
@@ -155,16 +152,13 @@ namespace SourceGit.Models {
 					var line = Lines[i];
 					if (line.Type == TextDiffLineType.Indicator) {
 						ProcessIndicatorForPatch(builder, line, i, selection.StartLine, selection.EndLine, ignoreRemoves, ignoreAdds, revert, tail != null);
-					}
-					else if (line.Type == TextDiffLineType.Added) {
+					} else if (line.Type == TextDiffLineType.Added) {
 						if (revert)
 							builder.Append("\n ").Append(line.Content);
-					}
-					else if (line.Type == TextDiffLineType.Deleted) {
+					} else if (line.Type == TextDiffLineType.Deleted) {
 						if (!revert)
 							builder.Append("\n ").Append(line.Content);
-					}
-					else if (line.Type == TextDiffLineType.Normal) {
+					} else if (line.Type == TextDiffLineType.Normal) {
 						builder.Append("\n ").Append(line.Content);
 					}
 				}
@@ -177,14 +171,11 @@ namespace SourceGit.Models {
 					if (!ProcessIndicatorForPatch(builder, line, i, selection.StartLine, selection.EndLine, selection.IgnoredDeletes, selection.IgnoredAdds, revert, tail != null)) {
 						break;
 					}
-				}
-				else if (line.Type == TextDiffLineType.Normal) {
+				} else if (line.Type == TextDiffLineType.Normal) {
 					builder.Append("\n ").Append(line.Content);
-				}
-				else if (line.Type == TextDiffLineType.Added) {
+				} else if (line.Type == TextDiffLineType.Added) {
 					builder.Append("\n+").Append(line.Content);
-				}
-				else if (line.Type == TextDiffLineType.Deleted) {
+				} else if (line.Type == TextDiffLineType.Deleted) {
 					builder.Append("\n-").Append(line.Content);
 				}
 			}
@@ -217,8 +208,7 @@ namespace SourceGit.Models {
 								tail = line.Content;
 								break;
 							}
-						}
-						else {
+						} else {
 							if (line.Type == TextDiffLineType.Normal || line.Type == TextDiffLineType.Deleted) {
 								tail = line.Content;
 								break;
@@ -245,8 +235,7 @@ namespace SourceGit.Models {
 					var line = Lines[i];
 					if (line.Type == TextDiffLineType.Added) {
 						ignoreAdds++;
-					}
-					else if (line.Type == TextDiffLineType.Deleted) {
+					} else if (line.Type == TextDiffLineType.Deleted) {
 						ignoreRemoves++;
 					}
 				}
@@ -255,16 +244,13 @@ namespace SourceGit.Models {
 					var line = Lines[i];
 					if (line.Type == TextDiffLineType.Indicator) {
 						ProcessIndicatorForPatchSingleSide(builder, line, i, selection.StartLine, selection.EndLine, ignoreRemoves, ignoreAdds, revert, isOldSide, tail != null);
-					}
-					else if (line.Type == TextDiffLineType.Added) {
+					} else if (line.Type == TextDiffLineType.Added) {
 						if (revert)
 							builder.Append("\n ").Append(line.Content);
-					}
-					else if (line.Type == TextDiffLineType.Deleted) {
+					} else if (line.Type == TextDiffLineType.Deleted) {
 						if (!revert)
 							builder.Append("\n ").Append(line.Content);
-					}
-					else if (line.Type == TextDiffLineType.Normal) {
+					} else if (line.Type == TextDiffLineType.Normal) {
 						builder.Append("\n ").Append(line.Content);
 					}
 				}
@@ -277,32 +263,25 @@ namespace SourceGit.Models {
 					if (!ProcessIndicatorForPatchSingleSide(builder, line, i, selection.StartLine, selection.EndLine, selection.IgnoredDeletes, selection.IgnoredAdds, revert, isOldSide, tail != null)) {
 						break;
 					}
-				}
-				else if (line.Type == TextDiffLineType.Normal) {
+				} else if (line.Type == TextDiffLineType.Normal) {
 					builder.Append("\n ").Append(line.Content);
-				}
-				else if (line.Type == TextDiffLineType.Added) {
+				} else if (line.Type == TextDiffLineType.Added) {
 					if (isOldSide) {
 						if (revert) {
 							builder.Append("\n ").Append(line.Content);
-						}
-						else {
+						} else {
 							selection.IgnoredAdds++;
 						}
-					}
-					else {
+					} else {
 						builder.Append("\n+").Append(line.Content);
 					}
-				}
-				else if (line.Type == TextDiffLineType.Deleted) {
+				} else if (line.Type == TextDiffLineType.Deleted) {
 					if (isOldSide) {
 						builder.Append("\n-").Append(line.Content);
-					}
-					else {
+					} else {
 						if (!revert) {
 							builder.Append("\n ").Append(line.Content);
-						}
-						else {
+						} else {
 							selection.IgnoredDeletes++;
 						}
 					}
@@ -330,15 +309,13 @@ namespace SourceGit.Models {
 				if (test.Type == TextDiffLineType.Normal) {
 					oldCount++;
 					newCount++;
-				}
-				else if (test.Type == TextDiffLineType.Added) {
+				} else if (test.Type == TextDiffLineType.Added) {
 					if (i < start - 1) {
 						if (revert) {
 							newCount++;
 							oldCount++;
 						}
-					}
-					else {
+					} else {
 						newCount++;
 					}
 
@@ -346,15 +323,13 @@ namespace SourceGit.Models {
 						newCount++;
 						oldCount++;
 					}
-				}
-				else if (test.Type == TextDiffLineType.Deleted) {
+				} else if (test.Type == TextDiffLineType.Deleted) {
 					if (i < start - 1) {
 						if (!revert) {
 							newCount++;
 							oldCount++;
 						}
-					}
-					else {
+					} else {
 						oldCount++;
 					}
 
@@ -388,22 +363,19 @@ namespace SourceGit.Models {
 				if (test.Type == TextDiffLineType.Normal) {
 					oldCount++;
 					newCount++;
-				}
-				else if (test.Type == TextDiffLineType.Added) {
+				} else if (test.Type == TextDiffLineType.Added) {
 					if (i < start - 1) {
 						if (revert) {
 							newCount++;
 							oldCount++;
 						}
-					}
-					else {
+					} else {
 						if (isOldSide) {
 							if (revert) {
 								newCount++;
 								oldCount++;
 							}
-						}
-						else {
+						} else {
 							newCount++;
 						}
 					}
@@ -412,19 +384,16 @@ namespace SourceGit.Models {
 						newCount++;
 						oldCount++;
 					}
-				}
-				else if (test.Type == TextDiffLineType.Deleted) {
+				} else if (test.Type == TextDiffLineType.Deleted) {
 					if (i < start - 1) {
 						if (!revert) {
 							newCount++;
 							oldCount++;
 						}
-					}
-					else {
+					} else {
 						if (isOldSide) {
 							oldCount++;
-						}
-						else {
+						} else {
 							if (!revert) {
 								newCount++;
 								oldCount++;

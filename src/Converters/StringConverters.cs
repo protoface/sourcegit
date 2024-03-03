@@ -22,11 +22,9 @@ namespace SourceGit.Converters {
 				var theme = (string)value;
 				if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase)) {
 					return ThemeVariant.Light;
-				}
-				else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
+				} else if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase)) {
 					return ThemeVariant.Dark;
-				}
-				else {
+				} else {
 					return ThemeVariant.Default;
 				}
 			}

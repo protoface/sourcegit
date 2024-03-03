@@ -18,8 +18,7 @@ namespace SourceGit.Models {
 
 			if (_mapByCommitter.ContainsKey(committer)) {
 				_mapByCommitter[committer].Count++;
-			}
-			else {
+			} else {
 				var sample = new StatisticsSample() { Name = committer, Count = 1 };
 				_mapByCommitter.Add(committer, sample);
 				ByCommitter.Add(sample);

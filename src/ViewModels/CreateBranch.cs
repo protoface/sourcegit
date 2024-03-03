@@ -84,8 +84,7 @@ namespace SourceGit.ViewModels {
 							}
 
 							needPopStash = true;
-						}
-						else {
+						} else {
 							SetProgressDescription("Discard local changes...");
 							Commands.Discard.All(_repo.FullPath);
 						}
@@ -98,8 +97,7 @@ namespace SourceGit.ViewModels {
 						SetProgressDescription("Re-apply local changes...");
 						new Commands.Stash(_repo.FullPath).Pop("stash@{0}");
 					}
-				}
-				else {
+				} else {
 					Commands.Branch.Create(_repo.FullPath, _name, _baseOnRevision);
 				}
 

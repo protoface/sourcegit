@@ -74,8 +74,7 @@ namespace SourceGit.ViewModels {
 					if (option.Revisions.Count == 2) {
 						binaryDiff.OldSize = new Commands.QueryFileSize(repo, oldPath, option.Revisions[0]).Result();
 						binaryDiff.NewSize = new Commands.QueryFileSize(repo, _option.Path, option.Revisions[1]).Result();
-					}
-					else {
+					} else {
 						binaryDiff.OldSize = new Commands.QueryFileSize(repo, oldPath, "HEAD").Result();
 						binaryDiff.NewSize = new FileInfo(Path.Combine(repo, _option.Path)).Length;
 					}
@@ -84,16 +83,13 @@ namespace SourceGit.ViewModels {
 				Dispatcher.UIThread.InvokeAsync(() => {
 					if (latest.IsBinary) {
 						Content = binaryDiff;
-					}
-					else if (latest.IsLFS) {
+					} else if (latest.IsLFS) {
 						Content = latest.LFSDiff;
-					}
-					else if (latest.TextDiff != null) {
+					} else if (latest.TextDiff != null) {
 						latest.TextDiff.File = _option.Path;
 						Content = latest.TextDiff;
 						IsTextDiff = true;
-					}
-					else {
+					} else {
 						IsTextDiff = false;
 						IsNoChange = true;
 					}

@@ -40,14 +40,11 @@ namespace SourceGit.Views {
 
 				if (data == null) {
 					body.Child = null;
-				}
-				else if (data is ViewModels.Welcome) {
+				} else if (data is ViewModels.Welcome) {
 					body.Child = new Welcome { DataContext = data };
-				}
-				else if (data is ViewModels.Repository) {
+				} else if (data is ViewModels.Repository) {
 					body.Child = new Repository { DataContext = data };
-				}
-				else {
+				} else {
 					body.Child = null;
 				}
 			});
@@ -82,14 +79,12 @@ namespace SourceGit.Views {
 					vm.CloseTab(null);
 					e.Handled = true;
 					return;
-				}
-				else if (e.Key == Key.Tab) {
+				} else if (e.Key == Key.Tab) {
 					vm.GotoNextTab();
 					e.Handled = true;
 					return;
 				}
-			}
-			else if (e.Key == Key.Escape) {
+			} else if (e.Key == Key.Escape) {
 				vm.ActivePage.CancelPopup();
 				e.Handled = true;
 				return;
@@ -108,8 +103,7 @@ namespace SourceGit.Views {
 		private void MaximizeOrRestoreWindow(object sender, TappedEventArgs e) {
 			if (WindowState == WindowState.Maximized) {
 				WindowState = WindowState.Normal;
-			}
-			else {
+			} else {
 				WindowState = WindowState.Maximized;
 			}
 			e.Handled = true;
@@ -143,8 +137,7 @@ namespace SourceGit.Views {
 			if (launcherTabsBar.Bounds.Width > launcherTabsContainer.Bounds.Width) {
 				leftScrollIndicator.IsVisible = true;
 				rightScrollIndicator.IsVisible = true;
-			}
-			else {
+			} else {
 				leftScrollIndicator.IsVisible = false;
 				rightScrollIndicator.IsVisible = false;
 			}

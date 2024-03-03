@@ -23,8 +23,7 @@ namespace SourceGit.Converters {
 
 				if (selected != null && collections != null && (self == selected || collections.IndexOf(self) + 1 == collections.IndexOf(selected))) {
 					return false;
-				}
-				else {
+				} else {
 					return true;
 				}
 			});

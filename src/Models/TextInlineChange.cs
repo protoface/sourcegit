@@ -140,25 +140,20 @@ namespace SourceGit.Models {
 
 				if (rs.State == Edit.DeletedRight && rs.DeleteStart - 1 > startOld) {
 					chunksOld[--rs.DeleteStart].Modified = true;
-				}
-				else if (rs.State == Edit.DeletedLeft && rs.DeleteEnd < endOld) {
+				} else if (rs.State == Edit.DeletedLeft && rs.DeleteEnd < endOld) {
 					chunksOld[rs.DeleteEnd++].Modified = true;
-				}
-				else if (rs.State == Edit.AddedRight && rs.AddStart - 1 > startNew) {
+				} else if (rs.State == Edit.AddedRight && rs.AddStart - 1 > startNew) {
 					chunksNew[--rs.AddStart].Modified = true;
-				}
-				else if (rs.State == Edit.AddedLeft && rs.AddEnd < endNew) {
+				} else if (rs.State == Edit.AddedLeft && rs.AddEnd < endNew) {
 					chunksNew[rs.AddEnd++].Modified = true;
 				}
 
 				CheckModified(chunksOld, startOld, rs.DeleteStart, chunksNew, startNew, rs.AddStart, forward, reverse);
 				CheckModified(chunksOld, rs.DeleteEnd, endOld, chunksNew, rs.AddEnd, endNew, forward, reverse);
-			}
-			else if (lenOld > 0) {
+			} else if (lenOld > 0) {
 				for (int i = startOld; i < endOld; i++)
 					chunksOld[i].Modified = true;
-			}
-			else if (lenNew > 0) {
+			} else if (lenNew > 0) {
 				for (int i = startNew; i < endNew; i++)
 					chunksNew[i].Modified = true;
 			}
@@ -184,8 +179,7 @@ namespace SourceGit.Models {
 					if (j == -i || (j != i && forward[idx - 1] < forward[idx + 1])) {
 						o = forward[idx + 1];
 						rs.State = Edit.AddedRight;
-					}
-					else {
+					} else {
 						o = forward[idx - 1] + 1;
 						rs.State = Edit.DeletedRight;
 					}
@@ -208,8 +202,7 @@ namespace SourceGit.Models {
 						if (revOld <= o && revNew <= n) {
 							if (i == 0) {
 								rs.State = Edit.None;
-							}
-							else {
+							} else {
 								rs.DeleteStart = startX + startOld;
 								rs.DeleteEnd = o + startOld;
 								rs.AddStart = startY + startNew;
@@ -226,8 +219,7 @@ namespace SourceGit.Models {
 					if (j == -i || (j != i && reverse[idx + 1] <= reverse[idx - 1])) {
 						o = reverse[idx + 1] - 1;
 						rs.State = Edit.DeletedLeft;
-					}
-					else {
+					} else {
 						o = reverse[idx - 1];
 						rs.State = Edit.AddedLeft;
 					}
@@ -250,8 +242,7 @@ namespace SourceGit.Models {
 						if (forOld >= o && forNew >= n) {
 							if (i == 0) {
 								rs.State = Edit.None;
-							}
-							else {
+							} else {
 								rs.DeleteStart = o + startOld;
 								rs.DeleteEnd = endX + startOld;
 								rs.AddStart = n + startNew;
@@ -271,8 +262,7 @@ namespace SourceGit.Models {
 			int hash;
 			if (hashes.TryGetValue(data, out hash)) {
 				chunks.Add(new Chunk(hash, start, data.Length));
-			}
-			else {
+			} else {
 				hash = hashes.Count;
 				hashes.Add(data, hash);
 				chunks.Add(new Chunk(hash, start, data.Length));

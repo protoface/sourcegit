@@ -34,8 +34,7 @@ namespace SourceGit.Views {
 				_pressedTreeNode = true;
 				_startDragTreeNode = false;
 				_pressedTreeNodePosition = e.GetPosition(sender as Grid);
-			}
-			else {
+			} else {
 				_pressedTreeNode = false;
 				_startDragTreeNode = false;
 			}
@@ -70,8 +69,7 @@ namespace SourceGit.Views {
 			if (e.Data.Contains("MovedRepositoryTreeNode") || e.Data.Contains(DataFormats.Files)) {
 				e.DragEffects = DragDropEffects.Move;
 				e.Handled = true;
-			}
-			else {
+			} else {
 				e.DragEffects = DragDropEffects.None;
 				e.Handled = true;
 			}
@@ -85,8 +83,7 @@ namespace SourceGit.Views {
 				if (moved != null && DataContext is ViewModels.Welcome vm) {
 					vm.MoveNode(moved, null);
 				}
-			}
-			else if (e.Data.Contains(DataFormats.Files)) {
+			} else if (e.Data.Contains(DataFormats.Files)) {
 				e.Handled = true;
 
 				var items = e.Data.GetFiles();
@@ -113,8 +110,7 @@ namespace SourceGit.Views {
 				if (to.IsRepository) {
 					e.DragEffects = DragDropEffects.None;
 					e.Handled = true;
-				}
-				else {
+				} else {
 					e.DragEffects = DragDropEffects.Move;
 					e.Handled = true;
 				}
@@ -139,8 +135,7 @@ namespace SourceGit.Views {
 				if (to != null && moved != null && to != moved && DataContext is ViewModels.Welcome vm) {
 					vm.MoveNode(moved, to);
 				}
-			}
-			else if (e.Data.Contains(DataFormats.Files)) {
+			} else if (e.Data.Contains(DataFormats.Files)) {
 				e.Handled = true;
 
 				var items = e.Data.GetFiles();

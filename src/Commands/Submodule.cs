@@ -16,8 +16,7 @@ namespace SourceGit.Commands {
 			if (recursive) {
 				Args = $"submodule update --init --recursive -- {relativePath}";
 				return Exec();
-			}
-			else {
+			} else {
 				Args = $"submodule update --init -- {relativePath}";
 				return true;
 			}

@@ -11,8 +11,7 @@ namespace SourceGit.Commands {
 
 			if (string.IsNullOrEmpty(sshKey)) {
 				Args = "-c credential.helper=manager ";
-			}
-			else {
+			} else {
 				Args = $"-c core.sshCommand=\"ssh -i '{sshKey}'\" ";
 			}
 

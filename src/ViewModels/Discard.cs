@@ -27,11 +27,9 @@ namespace SourceGit.ViewModels {
 
 			if (_changes == null) {
 				Mode = new DiscardModeAll();
-			}
-			else if (_changes.Count == 1) {
+			} else if (_changes.Count == 1) {
 				Mode = new DiscardModeSingle() { File = _changes[0].Path };
-			}
-			else {
+			} else {
 				Mode = new DiscardModeMulti() { Count = _changes.Count };
 			}
 
@@ -45,11 +43,9 @@ namespace SourceGit.ViewModels {
 			return Task.Run(() => {
 				if (_changes == null) {
 					Commands.Discard.All(_repo.FullPath);
-				}
-				else if (_isUnstaged) {
+				} else if (_isUnstaged) {
 					Commands.Discard.ChangesInWorkTree(_repo.FullPath, _changes);
-				}
-				else {
+				} else {
 					Commands.Discard.ChangesInStaged(_repo.FullPath, _changes);
 				}
 

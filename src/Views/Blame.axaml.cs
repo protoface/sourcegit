@@ -219,8 +219,7 @@ namespace SourceGit.Views {
 
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
-			}
-			else {
+			} else {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
@@ -247,16 +246,13 @@ namespace SourceGit.Views {
 				if (BlameData != null) {
 					Text = BlameData.Content;
 					UpdateGrammar();
-				}
-				else {
+				} else {
 					Text = string.Empty;
 				}
-			}
-			else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
+			} else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
 				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.DarkPlus));
-				}
-				else {
+				} else {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.LightPlus));
 				}
 			}
@@ -303,8 +299,7 @@ namespace SourceGit.Views {
 			var ext = Path.GetExtension(BlameData.File);
 			if (ext == ".h") {
 				_textMate.SetGrammar(_registryOptions.GetScopeByLanguageId("cpp"));
-			}
-			else {
+			} else {
 				_textMate.SetGrammar(_registryOptions.GetScopeByExtension(ext));
 			}
 		}

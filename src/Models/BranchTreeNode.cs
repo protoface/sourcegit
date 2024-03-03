@@ -63,8 +63,7 @@ namespace SourceGit.Models {
 					var isFiltered = _filters.Contains(branch.FullName);
 					if (branch.IsLocal) {
 						MakeBranchNode(branch, _locals, "local", isFiltered);
-					}
-					else {
+					} else {
 						var remote = _remotes.Find(x => x.Name == branch.Remote);
 						if (remote != null)
 							MakeBranchNode(branch, remote.Children, $"remote/{remote.Name}", isFiltered);
@@ -113,8 +112,7 @@ namespace SourceGit.Models {
 					path = string.Concat(path, "/", subs[i]);
 					if (_maps.ContainsKey(path)) {
 						lastFolder = _maps[path];
-					}
-					else if (lastFolder == null) {
+					} else if (lastFolder == null) {
 						lastFolder = new BranchTreeNode() {
 							Name = subs[i],
 							Type = BranchTreeNodeType.Folder,
@@ -122,8 +120,7 @@ namespace SourceGit.Models {
 						};
 						roots.Add(lastFolder);
 						_maps.Add(path, lastFolder);
-					}
-					else {
+					} else {
 						var folder = new BranchTreeNode() {
 							Name = subs[i],
 							Type = BranchTreeNodeType.Folder,
@@ -149,8 +146,7 @@ namespace SourceGit.Models {
 				nodes.Sort((l, r) => {
 					if (l.Type == r.Type) {
 						return l.Name.CompareTo(r.Name);
-					}
-					else {
+					} else {
 						return (int)(l.Type) - (int)(r.Type);
 					}
 				});

@@ -14,12 +14,10 @@ namespace SourceGit.ViewModels {
 				if (_instance == null) {
 					if (!File.Exists(_savePath)) {
 						_instance = new Preference();
-					}
-					else {
+					} else {
 						try {
 							_instance = JsonSerializer.Deserialize(File.ReadAllText(_savePath), JsonSerializationCodeGen.Default.Preference);
-						}
-						catch {
+						} catch {
 							_instance = new Preference();
 						}
 					}
@@ -190,8 +188,7 @@ namespace SourceGit.ViewModels {
 			list.Sort((l, r) => {
 				if (l.IsRepository != r.IsRepository) {
 					return l.IsRepository ? 1 : -1;
-				}
-				else {
+				} else {
 					return l.Name.CompareTo(r.Name);
 				}
 			});

@@ -43,8 +43,7 @@
 				if (idx >= 0) {
 					OriginalPath = Path.Substring(0, idx);
 					Path = Path.Substring(idx + 1);
-				}
-				else {
+				} else {
 					idx = Path.IndexOf(" -> ");
 					if (idx > 0) {
 						OriginalPath = Path.Substring(0, idx);

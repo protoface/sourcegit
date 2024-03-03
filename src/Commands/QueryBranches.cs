@@ -33,8 +33,7 @@ namespace SourceGit.Commands {
 			if (refName.StartsWith(PREFIX_LOCAL, StringComparison.Ordinal)) {
 				branch.Name = refName.Substring(PREFIX_LOCAL.Length);
 				branch.IsLocal = true;
-			}
-			else if (refName.StartsWith(PREFIX_REMOTE, StringComparison.Ordinal)) {
+			} else if (refName.StartsWith(PREFIX_REMOTE, StringComparison.Ordinal)) {
 				var name = refName.Substring(PREFIX_REMOTE.Length);
 				var shortNameIdx = name.IndexOf('/');
 				if (shortNameIdx < 0)
@@ -43,8 +42,7 @@ namespace SourceGit.Commands {
 				branch.Remote = name.Substring(0, shortNameIdx);
 				branch.Name = name.Substring(branch.Remote.Length + 1);
 				branch.IsLocal = false;
-			}
-			else {
+			} else {
 				branch.Name = refName;
 				branch.IsLocal = true;
 			}

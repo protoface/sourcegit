@@ -87,8 +87,7 @@ namespace SourceGit.Commands {
 
 			try {
 				proc.Start();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (RaiseError) {
 					Dispatcher.UIThread.Invoke(() => {
 						App.RaiseException(Context, e.Message);
@@ -111,8 +110,7 @@ namespace SourceGit.Commands {
 					});
 				}
 				return false;
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
@@ -134,8 +132,7 @@ namespace SourceGit.Commands {
 			var proc = new Process() { StartInfo = start };
 			try {
 				proc.Start();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				return new ReadToEndResult() {
 					IsSuccess = false,
 					StdOut = string.Empty,

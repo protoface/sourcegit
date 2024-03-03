@@ -23,8 +23,7 @@ namespace SourceGit.Models {
 		public static User FindOrAdd(string data) {
 			if (Caches.ContainsKey(data)) {
 				return Caches[data];
-			}
-			else {
+			} else {
 				var nameEndIdx = data.IndexOf('<');
 				var name = nameEndIdx >= 2 ? data.Substring(0, nameEndIdx - 1) : string.Empty;
 				var email = data.Substring(nameEndIdx + 1);

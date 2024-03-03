@@ -84,21 +84,18 @@ namespace SourceGit.ViewModels {
 			if (removeIdx == activeIdx) {
 				if (removeIdx == Pages.Count - 1) {
 					ActivePage = Pages[removeIdx - 1];
-				}
-				else {
+				} else {
 					ActivePage = Pages[removeIdx + 1];
 				}
 
 				CloseRepositoryInTab(page);
 				Pages.RemoveAt(removeIdx);
 				OnPropertyChanged(nameof(Pages));
-			}
-			else if (removeIdx + 1 == activeIdx) {
+			} else if (removeIdx + 1 == activeIdx) {
 				CloseRepositoryInTab(page);
 				Pages.RemoveAt(removeIdx);
 				OnPropertyChanged(nameof(Pages));
-			}
-			else {
+			} else {
 				CloseRepositoryInTab(page);
 				Pages.RemoveAt(removeIdx);
 			}
@@ -168,14 +165,12 @@ namespace SourceGit.ViewModels {
 				if (ActivePage == null || ActivePage.Node.IsRepository) {
 					page = new LauncherPage(node, repo);
 					Pages.Add(page);
-				}
-				else {
+				} else {
 					page = ActivePage;
 					page.Node = node;
 					page.Data = repo;
 				}
-			}
-			else {
+			} else {
 				page.Node = node;
 				page.Data = repo;
 			}

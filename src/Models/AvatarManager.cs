@@ -58,8 +58,7 @@ namespace SourceGit.Models {
 								img = Bitmap.DecodeToWidth(reader, 128);
 							}
 						}
-					}
-					catch { }
+					} catch { }
 
 					lock (_synclock) {
 						_requesting.Remove(md5);
@@ -94,8 +93,7 @@ namespace SourceGit.Models {
 					File.Delete(localFile);
 
 				NotifyResourceChanged(md5);
-			}
-			else {
+			} else {
 				if (_resources.ContainsKey(md5))
 					return _resources[md5];
 
@@ -107,8 +105,7 @@ namespace SourceGit.Models {
 							_resources.Add(md5, img);
 							return img;
 						}
-					}
-					catch { }
+					} catch { }
 				}
 			}
 

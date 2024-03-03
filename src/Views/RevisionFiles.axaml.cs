@@ -34,8 +34,7 @@ namespace SourceGit.Views {
 			TextArea.TextView.ContextRequested += OnTextViewContextRequested;
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
-			}
-			else {
+			} else {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
@@ -69,8 +68,7 @@ namespace SourceGit.Views {
 			if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
 				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.DarkPlus));
-				}
-				else {
+				} else {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.LightPlus));
 				}
 			}
@@ -112,8 +110,7 @@ namespace SourceGit.Views {
 			var ext = Path.GetExtension(src.FileName);
 			if (ext == ".h") {
 				_textMate.SetGrammar(_registryOptions.GetScopeByLanguageId("cpp"));
-			}
-			else {
+			} else {
 				_textMate.SetGrammar(_registryOptions.GetScopeByExtension(ext));
 			}
 		}

@@ -60,8 +60,7 @@ namespace SourceGit.Views {
 			protected override Size MeasureOverride(Size availableSize) {
 				if (_editor.DiffData == null || TextView == null) {
 					return new Size(32, 0);
-				}
-				else {
+				} else {
 					var typeface = TextView.CreateTypeface();
 					var test = new FormattedText(
 							$"{_editor.DiffData.MaxLineNumber}",
@@ -232,8 +231,7 @@ namespace SourceGit.Views {
 
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
-			}
-			else {
+			} else {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
@@ -295,22 +293,18 @@ namespace SourceGit.Views {
 
 					UpdateGrammar();
 					Text = builder.ToString();
-				}
-				else {
+				} else {
 					Text = string.Empty;
 				}
-			}
-			else if (change.Property == SyncScrollOffsetProperty) {
+			} else if (change.Property == SyncScrollOffsetProperty) {
 				if (TextArea.TextView.ScrollOffset != SyncScrollOffset) {
 					IScrollable scrollable = TextArea.TextView;
 					scrollable.Offset = SyncScrollOffset;
 				}
-			}
-			else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
+			} else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
 				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.DarkPlus));
-				}
-				else {
+				} else {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.LightPlus));
 				}
 			}
@@ -323,8 +317,7 @@ namespace SourceGit.Views {
 			var ext = Path.GetExtension(DiffData.File);
 			if (ext == ".h") {
 				_textMate.SetGrammar(_registryOptions.GetScopeByLanguageId("cpp"));
-			}
-			else {
+			} else {
 				_textMate.SetGrammar(_registryOptions.GetScopeByExtension(ext));
 			}
 		}
@@ -374,8 +367,7 @@ namespace SourceGit.Views {
 			protected override Size MeasureOverride(Size availableSize) {
 				if (_editor.DiffData == null || TextView == null) {
 					return new Size(32, 0);
-				}
-				else {
+				} else {
 					var typeface = TextView.CreateTypeface();
 					var test = new FormattedText(
 							$"{_editor.DiffData.MaxLineNumber}",
@@ -552,8 +544,7 @@ namespace SourceGit.Views {
 
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
-			}
-			else {
+			} else {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
@@ -613,8 +604,7 @@ namespace SourceGit.Views {
 						foreach (var line in DiffData.Old) {
 							builder.AppendLine(line.Content);
 						}
-					}
-					else {
+					} else {
 						foreach (var line in DiffData.New) {
 							builder.AppendLine(line.Content);
 						}
@@ -622,22 +612,18 @@ namespace SourceGit.Views {
 
 					UpdateGrammar();
 					Text = builder.ToString();
-				}
-				else {
+				} else {
 					Text = string.Empty;
 				}
-			}
-			else if (change.Property == SyncScrollOffsetProperty) {
+			} else if (change.Property == SyncScrollOffsetProperty) {
 				if (TextArea.TextView.ScrollOffset != SyncScrollOffset) {
 					IScrollable scrollable = TextArea.TextView;
 					scrollable.Offset = SyncScrollOffset;
 				}
-			}
-			else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
+			} else if (change.Property.Name == "ActualThemeVariant" && change.NewValue != null && _textMate != null) {
 				if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.DarkPlus));
-				}
-				else {
+				} else {
 					_textMate.SetTheme(_registryOptions.LoadTheme(ThemeName.LightPlus));
 				}
 			}
@@ -650,8 +636,7 @@ namespace SourceGit.Views {
 			var ext = Path.GetExtension(DiffData.File);
 			if (ext == ".h") {
 				_textMate.SetGrammar(_registryOptions.GetScopeByLanguageId("cpp"));
-			}
-			else {
+			} else {
 				_textMate.SetGrammar(_registryOptions.GetScopeByExtension(ext));
 			}
 		}
@@ -732,8 +717,7 @@ namespace SourceGit.Views {
 
 					menu.Items.Add(stage);
 					menu.Items.Add(discard);
-				}
-				else {
+				} else {
 					var unstage = new MenuItem();
 					unstage.Header = App.Text("FileCM.UnstageSelectedLines");
 					unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
@@ -755,8 +739,7 @@ namespace SourceGit.Views {
 					menu.Items.Add(unstage);
 					menu.Items.Add(discard);
 				}
-			}
-			else {
+			} else {
 				var repoView = this.FindAncestorOfType<Repository>();
 				if (repoView == null)
 					return;
@@ -772,12 +755,10 @@ namespace SourceGit.Views {
 						var tmpFile = Path.GetTempFileName();
 						if (change.WorkTree == Models.ChangeState.Untracked) {
 							TextDiff.GenerateNewPatchFromSelection(change, null, selection, false, tmpFile);
-						}
-						else if (UseCombined) {
+						} else if (UseCombined) {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelection(change, treeGuid, selection, false, tmpFile);
-						}
-						else {
+						} else {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelectionSingleSide(change, treeGuid, selection, false, isOldSide, tmpFile);
 						}
@@ -800,12 +781,10 @@ namespace SourceGit.Views {
 						var tmpFile = Path.GetTempFileName();
 						if (change.WorkTree == Models.ChangeState.Untracked) {
 							TextDiff.GenerateNewPatchFromSelection(change, null, selection, true, tmpFile);
-						}
-						else if (UseCombined) {
+						} else if (UseCombined) {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelection(change, treeGuid, selection, true, tmpFile);
-						}
-						else {
+						} else {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelectionSingleSide(change, treeGuid, selection, true, isOldSide, tmpFile);
 						}
@@ -820,8 +799,7 @@ namespace SourceGit.Views {
 
 					menu.Items.Add(stage);
 					menu.Items.Add(discard);
-				}
-				else {
+				} else {
 					var unstage = new MenuItem();
 					unstage.Header = App.Text("FileCM.UnstageSelectedLines");
 					unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
@@ -833,11 +811,9 @@ namespace SourceGit.Views {
 						var tmpFile = Path.GetTempFileName();
 						if (change.Index == Models.ChangeState.Added) {
 							TextDiff.GenerateNewPatchFromSelection(change, treeGuid, selection, true, tmpFile);
-						}
-						else if (UseCombined) {
+						} else if (UseCombined) {
 							TextDiff.GeneratePatchFromSelection(change, treeGuid, selection, true, tmpFile);
-						}
-						else {
+						} else {
 							TextDiff.GeneratePatchFromSelectionSingleSide(change, treeGuid, selection, true, isOldSide, tmpFile);
 						}
 
@@ -859,12 +835,10 @@ namespace SourceGit.Views {
 						var tmpFile = Path.GetTempFileName();
 						if (change.WorkTree == Models.ChangeState.Untracked) {
 							TextDiff.GenerateNewPatchFromSelection(change, null, selection, true, tmpFile);
-						}
-						else if (UseCombined) {
+						} else if (UseCombined) {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelection(change, treeGuid, selection, true, tmpFile);
-						}
-						else {
+						} else {
 							var treeGuid = new Commands.QueryStagedFileBlobGuid(ctx.RepositoryPath, change.Path).Result();
 							TextDiff.GeneratePatchFromSelectionSingleSide(change, treeGuid, selection, true, isOldSide, tmpFile);
 						}
@@ -892,11 +866,9 @@ namespace SourceGit.Views {
 			if (change.Property == TextDiffProperty || change.Property == UseCombinedProperty) {
 				if (TextDiff == null) {
 					Content = null;
-				}
-				else if (UseCombined) {
+				} else if (UseCombined) {
 					Content = TextDiff;
-				}
-				else {
+				} else {
 					Content = new ViewModels.TwoSideTextDiff(TextDiff);
 				}
 			}
@@ -947,8 +919,7 @@ namespace SourceGit.Views {
 				if (line.Type == Models.TextDiffLineType.Added) {
 					rs.HasLeftChanges = true;
 					rs.IgnoredAdds++;
-				}
-				else if (line.Type == Models.TextDiffLineType.Deleted) {
+				} else if (line.Type == Models.TextDiffLineType.Deleted) {
 					rs.HasLeftChanges = true;
 					rs.IgnoredDeletes++;
 				}
@@ -960,23 +931,18 @@ namespace SourceGit.Views {
 					if (UseCombined) {
 						rs.HasChanges = true;
 						break;
-					}
-					else if (isOldSide) {
+					} else if (isOldSide) {
 						rs.HasLeftChanges = true;
-					}
-					else {
+					} else {
 						rs.HasChanges = true;
 					}
-				}
-				else if (line.Type == Models.TextDiffLineType.Deleted) {
+				} else if (line.Type == Models.TextDiffLineType.Deleted) {
 					if (UseCombined) {
 						rs.HasChanges = true;
 						break;
-					}
-					else if (isOldSide) {
+					} else if (isOldSide) {
 						rs.HasChanges = true;
-					}
-					else {
+					} else {
 						rs.HasLeftChanges = true;
 					}
 				}

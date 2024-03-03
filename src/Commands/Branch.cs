@@ -22,8 +22,7 @@
 			cmd.Context = repo;
 			if (string.IsNullOrEmpty(upstream)) {
 				cmd.Args = $"branch {name} --unset-upstream";
-			}
-			else {
+			} else {
 				cmd.Args = $"branch {name} -u {upstream}";
 			}
 			return cmd.Exec();

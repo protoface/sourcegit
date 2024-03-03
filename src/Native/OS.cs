@@ -27,16 +27,13 @@ namespace SourceGit.Native {
 			if (OperatingSystem.IsMacOS()) {
 				_backend = new MacOS();
 				VSCodeExecutableFile = _backend.FindVSCode();
-			}
-			else if (OperatingSystem.IsWindows()) {
+			} else if (OperatingSystem.IsWindows()) {
 				_backend = new Windows();
 				VSCodeExecutableFile = _backend.FindVSCode();
-			}
-			else if (OperatingSystem.IsLinux()) {
+			} else if (OperatingSystem.IsLinux()) {
 				_backend = new Linux();
 				VSCodeExecutableFile = _backend.FindVSCode();
-			}
-			else {
+			} else {
 				throw new Exception("Platform unsupported!!!");
 			}
 		}

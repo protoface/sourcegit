@@ -56,8 +56,7 @@ namespace SourceGit.ViewModels {
 				_selectedRemote = repo.Remotes.Find(x => x.Name == specifiedRemoteBranch.Remote);
 				_selectedBranch = specifiedRemoteBranch;
 				HasSpecifiedRemoteBranch = true;
-			}
-			else {
+			} else {
 				if (!string.IsNullOrEmpty(_current.Upstream)) {
 					foreach (var branch in repo.Branches) {
 						if (!branch.IsLocal && _current.Upstream == branch.FullName) {

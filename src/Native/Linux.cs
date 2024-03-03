@@ -34,8 +34,7 @@ namespace SourceGit.Native {
 
 			if (Directory.Exists(path)) {
 				Process.Start("xdg-open", $"\"{path}\"");
-			}
-			else {
+			} else {
 				var dir = Path.GetDirectoryName(path);
 				if (Directory.Exists(dir)) {
 					Process.Start("xdg-open", $"\"{dir}\"");
@@ -47,14 +46,11 @@ namespace SourceGit.Native {
 			var dir = string.IsNullOrEmpty(workdir) ? "~" : workdir;
 			if (File.Exists("/usr/bin/gnome-ternimal")) {
 				Process.Start("/usr/bin/gnome-ternimal", $"--working-directory=\"{dir}\"");
-			}
-			else if (File.Exists("/usr/bin/konsole")) {
+			} else if (File.Exists("/usr/bin/konsole")) {
 				Process.Start("/usr/bin/konsole", $"--workdir \"{dir}\"");
-			}
-			else if (File.Exists("/usr/bin/xfce4-terminal")) {
+			} else if (File.Exists("/usr/bin/xfce4-terminal")) {
 				Process.Start("/usr/bin/xfce4-terminal", $"--working-directory=\"{dir}\"");
-			}
-			else {
+			} else {
 				App.RaiseException("", $"Only supports gnome-ternimal/konsole/xfce4-terminal!");
 				return;
 			}

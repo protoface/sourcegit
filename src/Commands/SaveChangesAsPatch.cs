@@ -36,8 +36,7 @@ namespace SourceGit.Commands {
 				proc.Close();
 
 				return rs;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				Dispatcher.UIThread.Invoke(() => {
 					App.RaiseException(repo, "Save change to patch failed: " + e.Message);
 				});

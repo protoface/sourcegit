@@ -49,8 +49,7 @@ namespace SourceGit.Models {
 			if (enabled) {
 				if (_lockCount > 0)
 					_lockCount--;
-			}
-			else {
+			} else {
 				_lockCount++;
 			}
 		}
@@ -96,8 +95,7 @@ namespace SourceGit.Models {
 						_repo.RefreshBranches();
 						_repo.RefreshCommits();
 					});
-				}
-				else {
+				} else {
 					Task.Run(() => {
 						_repo.RefreshBranches();
 						_repo.RefreshCommits();
@@ -136,20 +134,16 @@ namespace SourceGit.Models {
 			var name = e.Name.Replace("\\", "/");
 			if (name.StartsWith("modules", StringComparison.Ordinal)) {
 				_updateSubmodules = DateTime.Now.AddSeconds(1).ToFileTime();
-			}
-			else if (name.StartsWith("refs/tags", StringComparison.Ordinal)) {
+			} else if (name.StartsWith("refs/tags", StringComparison.Ordinal)) {
 				_updateTags = DateTime.Now.AddSeconds(.5).ToFileTime();
-			}
-			else if (name.StartsWith("refs/stash", StringComparison.Ordinal)) {
+			} else if (name.StartsWith("refs/stash", StringComparison.Ordinal)) {
 				_updateStashes = DateTime.Now.AddSeconds(.5).ToFileTime();
-			}
-			else if (name.Equals("HEAD", StringComparison.Ordinal) ||
-				name.StartsWith("refs/heads/", StringComparison.Ordinal) ||
-				name.StartsWith("refs/remotes/", StringComparison.Ordinal) ||
-				name.StartsWith("worktrees/")) {
+			} else if (name.Equals("HEAD", StringComparison.Ordinal) ||
+					name.StartsWith("refs/heads/", StringComparison.Ordinal) ||
+					name.StartsWith("refs/remotes/", StringComparison.Ordinal) ||
+					name.StartsWith("worktrees/")) {
 				_updateBranch = DateTime.Now.AddSeconds(.5).ToFileTime();
-			}
-			else if (name.StartsWith("objects/", StringComparison.Ordinal) || name.Equals("index", StringComparison.Ordinal)) {
+			} else if (name.StartsWith("objects/", StringComparison.Ordinal) || name.Equals("index", StringComparison.Ordinal)) {
 				_updateWC = DateTime.Now.AddSeconds(.5).ToFileTime();
 			}
 		}

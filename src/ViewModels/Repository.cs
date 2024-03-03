@@ -16,8 +16,7 @@ namespace SourceGit.ViewModels {
 				if (value != null) {
 					var normalized = value.Replace('\\', '/');
 					SetProperty(ref _fullpath, normalized);
-				}
-				else {
+				} else {
 					SetProperty(ref _fullpath, null);
 				}
 			}
@@ -329,8 +328,7 @@ namespace SourceGit.ViewModels {
 					Filters.Add(filter);
 					changed = true;
 				}
-			}
-			else {
+			} else {
 				changed = Filters.Remove(filter);
 			}
 
@@ -362,17 +360,13 @@ namespace SourceGit.ViewModels {
 			var mode = "";
 			if (File.Exists(cherryPickMerge)) {
 				mode = "cherry-pick";
-			}
-			else if (File.Exists(rebaseMerge) && Directory.Exists(rebaseMergeFolder)) {
+			} else if (File.Exists(rebaseMerge) && Directory.Exists(rebaseMergeFolder)) {
 				mode = "rebase";
-			}
-			else if (File.Exists(revertMerge)) {
+			} else if (File.Exists(revertMerge)) {
 				mode = "revert";
-			}
-			else if (File.Exists(otherMerge)) {
+			} else if (File.Exists(otherMerge)) {
 				mode = "merge";
-			}
-			else {
+			} else {
 				await Task.Run(RefreshWorkingCopyChanges);
 				return;
 			}
@@ -406,17 +400,13 @@ namespace SourceGit.ViewModels {
 
 			if (File.Exists(Path.Combine(_gitDir, "CHERRY_PICK_HEAD"))) {
 				cmd.Args = "cherry-pick --abort";
-			}
-			else if (File.Exists(Path.Combine(_gitDir, "REBASE_HEAD"))) {
+			} else if (File.Exists(Path.Combine(_gitDir, "REBASE_HEAD"))) {
 				cmd.Args = "rebase --abort";
-			}
-			else if (File.Exists(Path.Combine(_gitDir, "REVERT_HEAD"))) {
+			} else if (File.Exists(Path.Combine(_gitDir, "REVERT_HEAD"))) {
 				cmd.Args = "revert --abort";
-			}
-			else if (File.Exists(Path.Combine(_gitDir, "MERGE_HEAD"))) {
+			} else if (File.Exists(Path.Combine(_gitDir, "MERGE_HEAD"))) {
 				cmd.Args = "merge --abort";
-			}
-			else {
+			} else {
 				await Task.Run(RefreshWorkingCopyChanges);
 				return;
 			}
@@ -465,16 +455,14 @@ namespace SourceGit.ViewModels {
 				if (filter.StartsWith("refs/")) {
 					if (_branches.FindIndex(x => x.FullName == filter) >= 0)
 						validFilters.Add(filter);
-				}
-				else {
+				} else {
 					if (_tags.FindIndex(t => t.Name == filter) >= 0)
 						validFilters.Add(filter);
 				}
 			}
 			if (validFilters.Count > 0) {
 				limits += string.Join(" ", validFilters);
-			}
-			else {
+			} else {
 				limits += "--branches --remotes --tags";
 			}
 
@@ -612,8 +600,7 @@ namespace SourceGit.ViewModels {
 				menu.Items.Add(startFeature);
 				menu.Items.Add(startRelease);
 				menu.Items.Add(startHotfix);
-			}
-			else {
+			} else {
 				var init = new MenuItem();
 				init.Header = App.Text("GitFlow.Init");
 				init.Click += (o, e) => {
@@ -679,8 +666,7 @@ namespace SourceGit.ViewModels {
 				}
 
 				menu.Items.Add(push);
-			}
-			else {
+			} else {
 				var current = Branches.Find(x => x.IsCurrent);
 
 				var checkout = new MenuItem();

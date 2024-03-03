@@ -86,8 +86,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedUnstagedTreeNode, value)) {
 					if (value == null) {
 						SelectedUnstagedChange = null;
-					}
-					else {
+					} else {
 						SelectedUnstagedChange = value.Backend as Models.Change;
 						SelectedStagedTreeNode = null;
 						SelectedStagedChange = null;
@@ -106,8 +105,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedStagedTreeNode, value)) {
 					if (value == null) {
 						SelectedStagedChange = null;
-					}
-					else {
+					} else {
 						SelectedStagedChange = value.Backend as Models.Change;
 						SelectedUnstagedTreeNode = null;
 						SelectedUnstagedChange = null;
@@ -161,8 +159,7 @@ namespace SourceGit.ViewModels {
 			if (_selectedUnstagedChange != null) {
 				viewFile = _selectedUnstagedChange.Path;
 				lastSelectedIsUnstaged = true;
-			}
-			else if (_selectedStagedChange != null) {
+			} else if (_selectedStagedChange != null) {
 				viewFile = _selectedStagedChange.Path;
 			}
 
@@ -209,16 +206,14 @@ namespace SourceGit.ViewModels {
 					if (lastSelectedIsUnstaged) {
 						SelectedUnstagedChange = viewChange;
 						SelectedUnstagedTreeNode = FileTreeNode.SelectByPath(_unstagedTree, viewFile);
-					}
-					else {
+					} else {
 						SelectedStagedChange = viewChange;
 						SelectedStagedTreeNode = FileTreeNode.SelectByPath(_stagedTree, viewFile);
 					}
 
 					if (_detailContext is DiffContext cur)
 						cur.SyncScrollOffset = scrollOffset;
-				}
-				else {
+				} else {
 					SelectedUnstagedChange = null;
 					SelectedUnstagedTreeNode = null;
 					SelectedStagedChange = null;
@@ -236,11 +231,9 @@ namespace SourceGit.ViewModels {
 
 			if (change == null) {
 				DetailContext = null;
-			}
-			else if (change.IsConflit) {
+			} else if (change.IsConflit) {
 				DetailContext = new ConflictContext() { Change = change };
-			}
-			else {
+			} else {
 				DetailContext = new DiffContext(_repo.FullPath, new Models.DiffOption(change, isUnstaged));
 			}
 		}
@@ -254,8 +247,7 @@ namespace SourceGit.ViewModels {
 			_repo.SetWatcherEnabled(false);
 			if (changes.Count == _unstaged.Count) {
 				await Task.Run(() => new Commands.Add(_repo.FullPath).Exec());
-			}
-			else {
+			} else {
 				for (int i = 0; i < changes.Count; i += 10) {
 					var count = Math.Min(10, changes.Count - i);
 					var step = changes.GetRange(i, count);
@@ -276,8 +268,7 @@ namespace SourceGit.ViewModels {
 			_repo.SetWatcherEnabled(false);
 			if (changes.Count == _staged.Count) {
 				await Task.Run(() => new Commands.Reset(_repo.FullPath).Exec());
-			}
-			else {
+			} else {
 				for (int i = 0; i < changes.Count; i += 10) {
 					var count = Math.Min(10, changes.Count - i);
 					var step = changes.GetRange(i, count);
@@ -294,16 +285,13 @@ namespace SourceGit.ViewModels {
 				if (isUnstaged) {
 					if (changes.Count == _unstaged.Count && _staged.Count == 0) {
 						PopupHost.ShowPopup(new Discard(_repo));
-					}
-					else {
+					} else {
 						PopupHost.ShowPopup(new Discard(_repo, changes, true));
 					}
-				}
-				else {
+				} else {
 					if (changes.Count == _staged.Count && _unstaged.Count == 0) {
 						PopupHost.ShowPopup(new Discard(_repo));
-					}
-					else {
+					} else {
 						PopupHost.ShowPopup(new Discard(_repo, changes, false));
 					}
 				}
@@ -502,8 +490,7 @@ namespace SourceGit.ViewModels {
 				menu.Items.Add(assumeUnchanged);
 				menu.Items.Add(new MenuItem() { Header = "-" });
 				menu.Items.Add(copy);
-			}
-			else {
+			} else {
 				var stage = new MenuItem();
 				stage.Header = App.Text("FileCM.StageMulti", changes.Count);
 				stage.Icon = App.CreateMenuIcon("Icons.File.Add");
@@ -655,8 +642,7 @@ namespace SourceGit.ViewModels {
 				menu.Items.Add(patch);
 				menu.Items.Add(new MenuItem() { Header = "-" });
 				menu.Items.Add(copyPath);
-			}
-			else {
+			} else {
 				var unstage = new MenuItem();
 				unstage.Header = App.Text("FileCM.UnstageMulti", changes.Count);
 				unstage.Icon = App.CreateMenuIcon("Icons.File.Remove");
@@ -751,8 +737,7 @@ namespace SourceGit.ViewModels {
 			var existIdx = _repo.CommitMessages.IndexOf(CommitMessage);
 			if (existIdx == 0) {
 				return;
-			}
-			else if (existIdx > 0) {
+			} else if (existIdx > 0) {
 				_repo.CommitMessages.Move(existIdx, 0);
 				return;
 			}

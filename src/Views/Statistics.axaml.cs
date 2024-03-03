@@ -58,23 +58,17 @@ namespace SourceGit.Views {
 
 			if (maxV < 5) {
 				maxV = 5;
-			}
-			else if (maxV < 10) {
+			} else if (maxV < 10) {
 				maxV = 10;
-			}
-			else if (maxV < 50) {
+			} else if (maxV < 50) {
 				maxV = 50;
-			}
-			else if (maxV < 100) {
+			} else if (maxV < 100) {
 				maxV = 100;
-			}
-			else if (maxV < 200) {
+			} else if (maxV < 200) {
 				maxV = 200;
-			}
-			else if (maxV < 500) {
+			} else if (maxV < 500) {
 				maxV = 500;
-			}
-			else {
+			} else {
 				maxV = (int)Math.Ceiling(maxV / 500.0) * 500;
 			}
 
@@ -148,8 +142,7 @@ namespace SourceGit.Views {
 					using (context.PushTransform(matrix)) {
 						context.DrawText(hLabel, new Point(0, 0));
 					}
-				}
-				else {
+				} else {
 					context.DrawText(hLabel, new Point(xLabel, yLabel));
 				}
 			}

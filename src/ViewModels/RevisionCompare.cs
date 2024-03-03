@@ -35,8 +35,7 @@ namespace SourceGit.ViewModels {
 					if (value == null) {
 						SelectedNode = null;
 						DiffContext = null;
-					}
-					else {
+					} else {
 						SelectedNode = FileTreeNode.SelectByPath(_changeTree, value.Path);
 						DiffContext = new DiffContext(_repo, new Models.DiffOption(StartPoint.SHA, EndPoint.SHA, value));
 					}
@@ -50,8 +49,7 @@ namespace SourceGit.ViewModels {
 				if (SetProperty(ref _selectedNode, value)) {
 					if (value == null) {
 						SelectedChange = null;
-					}
-					else {
+					} else {
 						SelectedChange = value.Backend as Models.Change;
 					}
 				}
@@ -164,8 +162,7 @@ namespace SourceGit.ViewModels {
 
 			if (string.IsNullOrEmpty(_searchFilter)) {
 				VisibleChanges = _changes;
-			}
-			else {
+			} else {
 				var visible = new List<Models.Change>();
 				foreach (var c in _changes) {
 					if (c.Path.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase)) {

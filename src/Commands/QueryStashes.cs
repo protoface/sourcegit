@@ -34,11 +34,9 @@ namespace SourceGit.Commands {
 				var match = REG_STASH.Match(line);
 				if (match.Success)
 					_current.Name = match.Groups[1].Value;
-			}
-			else if (line.StartsWith("Reflog message: ", StringComparison.Ordinal)) {
+			} else if (line.StartsWith("Reflog message: ", StringComparison.Ordinal)) {
 				_current.Message = line.Substring(16);
-			}
-			else if (line.StartsWith("author ", StringComparison.Ordinal)) {
+			} else if (line.StartsWith("author ", StringComparison.Ordinal)) {
 				Models.User user = Models.User.Invalid;
 				ulong time = 0;
 				Models.Commit.ParseUserAndTime(line.Substring(7), ref user, ref time);

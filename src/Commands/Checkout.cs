@@ -26,8 +26,7 @@ namespace SourceGit.Commands {
 		public bool File(string file, bool useTheirs) {
 			if (useTheirs) {
 				Args = $"checkout --theirs -- \"{file}\"";
-			}
-			else {
+			} else {
 				Args = $"checkout --ours -- \"{file}\"";
 			}
 

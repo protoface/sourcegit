@@ -267,8 +267,7 @@ namespace SourceGit.Views {
 			if (node.IsFolder) {
 				foreach (var child in node.Children)
 					CollectChangesFromNode(outs, child);
-			}
-			else {
+			} else {
 				var change = node.Backend as Models.Change;
 				if (change != null && !outs.Contains(change))
 					outs.Add(change);

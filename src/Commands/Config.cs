@@ -23,8 +23,7 @@ namespace SourceGit.Commands {
 						var val = line.Substring(idx + 1).Trim();
 						if (rs.ContainsKey(key)) {
 							rs[key] = val;
-						}
-						else {
+						} else {
 							rs.Add(key, val);
 						}
 					}
@@ -43,16 +42,13 @@ namespace SourceGit.Commands {
 			if (!allowEmpty && string.IsNullOrWhiteSpace(value)) {
 				if (string.IsNullOrEmpty(WorkingDirectory)) {
 					Args = $"config --global --unset {key}";
-				}
-				else {
+				} else {
 					Args = $"config --unset {key}";
 				}
-			}
-			else {
+			} else {
 				if (string.IsNullOrWhiteSpace(WorkingDirectory)) {
 					Args = $"config --global {key} \"{value}\"";
-				}
-				else {
+				} else {
 					Args = $"config {key} \"{value}\"";
 				}
 			}

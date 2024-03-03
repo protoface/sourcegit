@@ -31,8 +31,7 @@ namespace SourceGit.Models {
 						_orgPath = change.OriginalPath;
 						break;
 				}
-			}
-			else {
+			} else {
 				_extra = "--cached";
 				_path = change.Path;
 				_orgPath = change.OriginalPath;
