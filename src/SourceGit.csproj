@@ -5,10 +5,11 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>App.manifest</ApplicationManifest>
     <ApplicationIcon>App.ico</ApplicationIcon>
-    <Version>8.1</Version>
+    <Version>8.2</Version>
     <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <Product>SourceGit</Product>
     <Description>OpenSource GIT client</Description>
