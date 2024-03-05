@@ -43,9 +43,10 @@ namespace SourceGit.Views {
 			InitializeComponent();
 		}
 
-        private void OnLocalBranchTreeLostFocus(object sender, RoutedEventArgs e) {
-            if (sender is TreeView tree) tree.UnselectAll();
-        }
+		private void OnLocalBranchTreeLostFocus(object sender, RoutedEventArgs e) {
+			if (sender is TreeView tree)
+				tree.UnselectAll();
+		}
 
 		private void OnRemoteBranchTreeLostFocus(object sender, RoutedEventArgs e) {
 			if (sender is TreeView tree)

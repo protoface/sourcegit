@@ -72,41 +72,41 @@ namespace SourceGit.Views {
 			}
 		}
 
-        protected override void OnKeyDown(KeyEventArgs e) {
-            var vm = DataContext as ViewModels.Launcher;
-            if (e.KeyModifiers.HasFlag(KeyModifiers.Control)) {
-                if (e.Key == Key.W) {
-                    vm.CloseTab(null);
-                    e.Handled = true;
-                    return;
-                } else if (e.Key == Key.Tab) {
-                    vm.GotoNextTab();
-                    e.Handled = true;
-                    return;
-                } else if (vm.ActivePage.Data is ViewModels.Repository repo) {
-                    if (e.Key == Key.D1 || e.Key == Key.NumPad1) {
-                        repo.SelectedViewIndex = 0;
-                        e.Handled = true;
-                        return;
-                    } else if (e.Key == Key.D2 || e.Key == Key.NumPad2) {
-                        repo.SelectedViewIndex = 1;
-                        e.Handled = true;
-                        return;
-                    } else if (e.Key == Key.D3 || e.Key == Key.NumPad3) {
-                        repo.SelectedViewIndex = 2;
-                        e.Handled = true;
-                        return;
-                    } else if (e.Key == Key.F) {
-                        repo.IsSearching = !repo.IsSearching;
-                        e.Handled = true;
-                        return;
-                    }
-                }                
-            } else if (e.Key == Key.Escape) {
-                vm.ActivePage.CancelPopup();
-                e.Handled = true;
-                return;
-            }
+		protected override void OnKeyDown(KeyEventArgs e) {
+			var vm = DataContext as ViewModels.Launcher;
+			if (e.KeyModifiers.HasFlag(KeyModifiers.Control)) {
+				if (e.Key == Key.W) {
+					vm.CloseTab(null);
+					e.Handled = true;
+					return;
+				} else if (e.Key == Key.Tab) {
+					vm.GotoNextTab();
+					e.Handled = true;
+					return;
+				} else if (vm.ActivePage.Data is ViewModels.Repository repo) {
+					if (e.Key == Key.D1 || e.Key == Key.NumPad1) {
+						repo.SelectedViewIndex = 0;
+						e.Handled = true;
+						return;
+					} else if (e.Key == Key.D2 || e.Key == Key.NumPad2) {
+						repo.SelectedViewIndex = 1;
+						e.Handled = true;
+						return;
+					} else if (e.Key == Key.D3 || e.Key == Key.NumPad3) {
+						repo.SelectedViewIndex = 2;
+						e.Handled = true;
+						return;
+					} else if (e.Key == Key.F) {
+						repo.IsSearching = !repo.IsSearching;
+						e.Handled = true;
+						return;
+					}
+				}
+			} else if (e.Key == Key.Escape) {
+				vm.ActivePage.CancelPopup();
+				e.Handled = true;
+				return;
+			}
 
 			base.OnKeyDown(e);
 		}
@@ -235,17 +235,17 @@ namespace SourceGit.Views {
 			e.Handled = true;
 		}
 
-        private async void OpenHotkeys(object sender, RoutedEventArgs e) {
-            var dialog = new Hotkeys();
-            await dialog.ShowDialog(this);
-            e.Handled = true;
-        }
+		private async void OpenHotkeys(object sender, RoutedEventArgs e) {
+			var dialog = new Hotkeys();
+			await dialog.ShowDialog(this);
+			e.Handled = true;
+		}
 
-        private async void OpenAboutDialog(object sender, RoutedEventArgs e) {
-            var dialog = new About();
-            await dialog.ShowDialog(this);
-            e.Handled = true;
-        }
+		private async void OpenAboutDialog(object sender, RoutedEventArgs e) {
+			var dialog = new About();
+			await dialog.ShowDialog(this);
+			e.Handled = true;
+		}
 
 		private bool _pressedTab = false;
 		private Point _pressedTabPosition = new Point();

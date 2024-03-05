@@ -21,12 +21,12 @@ namespace SourceGit.ViewModels {
 			Active.Popup = popup;
 		}
 
-        public static void ShowAndStartPopup(Popup popup) {
-            var dumpPage = Active;
-            popup.HostPageId = dumpPage.GetId();
-            dumpPage.Popup = popup;
-            dumpPage.ProcessPopup();
-        }
+		public static void ShowAndStartPopup(Popup popup) {
+			var dumpPage = Active;
+			popup.HostPageId = dumpPage.GetId();
+			dumpPage.Popup = popup;
+			dumpPage.ProcessPopup();
+		}
 
 		public virtual string GetId() {
 			return string.Empty;

@@ -63,15 +63,15 @@ namespace SourceGit.Views {
 			set => SetValue(ChangeProperty, value);
 		}
 
-        static ChangeStatusIcon() {
-            AffectsRender<ChangeStatusIcon>(IsWorkingCopyChangeProperty, ChangeProperty);
-        }
+		static ChangeStatusIcon() {
+			AffectsRender<ChangeStatusIcon>(IsWorkingCopyChangeProperty, ChangeProperty);
+		}
 
 		public override void Render(DrawingContext context) {
 			if (Change == null || Bounds.Width <= 0)
 				return;
 
-            var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
+			var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
 
 			IBrush background = null;
 			string indicator;

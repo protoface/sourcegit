@@ -17,17 +17,17 @@ namespace SourceGit.Views {
 			new GradientStops() { new GradientStop(Colors.Tomato, 0), new GradientStop(Color.FromRgb(252, 165, 150), 1) },
 		];
 
-        public static readonly StyledProperty<Models.User> UserProperty =
-            AvaloniaProperty.Register<Avatar, Models.User>(nameof(User));
+		public static readonly StyledProperty<Models.User> UserProperty =
+			AvaloniaProperty.Register<Avatar, Models.User>(nameof(User));
 
 		public Models.User User {
 			get => GetValue(UserProperty);
 			set => SetValue(UserProperty, value);
 		}
 
-        static Avatar() {
-            UserProperty.Changed.AddClassHandler<Avatar>(OnUserPropertyChanged);
-        }
+		static Avatar() {
+			UserProperty.Changed.AddClassHandler<Avatar>(OnUserPropertyChanged);
+		}
 
 		public Avatar() {
 			var refetch = new MenuItem() { Header = App.Text("RefetchAvatar") };
@@ -101,7 +101,7 @@ namespace SourceGit.Views {
 				EndPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
 			};
 
-            var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
+			var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
 
 			avatar._fallbackLabel = new FormattedText(
 				placeholder,
