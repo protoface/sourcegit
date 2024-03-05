@@ -8,17 +8,9 @@ using System.Collections.Generic;
 using System.Globalization;
 
 namespace SourceGit.Views {
-	public class Chart : Control {
-		public static readonly StyledProperty<FontFamily> FontFamilyProperty =
-			AvaloniaProperty.Register<Chart, FontFamily>(nameof(FontFamily));
-
-		public FontFamily FontFamily {
-			get => GetValue(FontFamilyProperty);
-			set => SetValue(FontFamilyProperty, value);
-		}
-
-		public static readonly StyledProperty<IBrush> LineBrushProperty =
-			AvaloniaProperty.Register<Chart, IBrush>(nameof(LineBrush), Brushes.Gray);
+    public class Chart : Control {
+        public static readonly StyledProperty<IBrush> LineBrushProperty =
+            AvaloniaProperty.Register<Chart, IBrush>(nameof(LineBrush), Brushes.Gray);
 
 		public IBrush LineBrush {
 			get => GetValue(LineBrushProperty);
@@ -76,10 +68,10 @@ namespace SourceGit.Views {
 				maxV = (int)Math.Ceiling(maxV / 500.0) * 500;
 			}
 
-			var typeface = new Typeface(FontFamily);
-			var pen = new Pen(LineBrush, 1);
-			var width = Bounds.Width;
-			var height = Bounds.Height;
+            var typeface = new Typeface("fonts:SourceGit#JetBrains Mono");
+            var pen = new Pen(LineBrush, 1);
+            var width = Bounds.Width;
+            var height = Bounds.Height;
 
 			// Transparent background to block mouse move events.
 			context.DrawRectangle(Brushes.Transparent, null, new Rect(0, 0, Bounds.Width, Bounds.Height));

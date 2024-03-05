@@ -145,13 +145,11 @@ namespace SourceGit.Views {
 			private static readonly Brush HL_ADDED = new SolidColorBrush(Color.FromArgb(90, 0, 255, 0));
 			private static readonly Brush HL_DELETED = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0));
 
-			public LineStyleTransformer(CombinedTextDiffPresenter editor, IBrush indicatorFG) {
-				_editor = editor;
-				_indicatorFG = indicatorFG;
-
-				var font = App.Current.FindResource("JetBrainsMonoItalic") as FontFamily;
-				_indicatorTypeface = new Typeface(font, FontStyle.Italic, FontWeight.Regular);
-			}
+            public LineStyleTransformer(CombinedTextDiffPresenter editor, IBrush indicatorFG) {
+                _editor = editor;
+                _indicatorFG = indicatorFG;
+                _indicatorTypeface = new Typeface("fonts:SourceGit#JetBrains Mono", FontStyle.Italic);
+            }
 
 			protected override void ColorizeLine(DocumentLine line) {
 				var idx = line.LineNumber;
@@ -223,11 +221,10 @@ namespace SourceGit.Views {
 			TextArea.LeftMargins.Add(new LineNumberMargin(this, false) { Margin = new Thickness(8, 0) });
 			TextArea.LeftMargins.Add(new VerticalSeperatorMargin(this));
 
-			TextArea.TextView.Margin = new Thickness(4, 0);
-			TextArea.TextView.BackgroundRenderers.Add(new LineBackgroundRenderer(this));
-			TextArea.TextView.LineTransformers.Add(new LineStyleTransformer(this, SecondaryFG));
-			TextArea.TextView.ContextRequested += OnTextViewContextRequested;
-			TextArea.TextView.ScrollOffsetChanged += OnTextViewScrollOffsetChanged;
+            TextArea.TextView.Margin = new Thickness(4, 0);
+            TextArea.TextView.BackgroundRenderers.Add(new LineBackgroundRenderer(this));
+            TextArea.TextView.ContextRequested += OnTextViewContextRequested;
+            TextArea.TextView.ScrollOffsetChanged += OnTextViewScrollOffsetChanged;
 
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
@@ -235,9 +232,12 @@ namespace SourceGit.Views {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
-			_textMate = this.InstallTextMate(_registryOptions);
-			UpdateGrammar();
-		}
+            _textMate = this.InstallTextMate(_registryOptions);
+            UpdateGrammar();
+
+            // This line must after InstallTextMate.
+            TextArea.TextView.LineTransformers.Add(new LineStyleTransformer(this, SecondaryFG));
+        }
 
 		protected override void OnUnloaded(RoutedEventArgs e) {
 			base.OnUnloaded(e);
@@ -452,13 +452,11 @@ namespace SourceGit.Views {
 			private static readonly Brush HL_ADDED = new SolidColorBrush(Color.FromArgb(90, 0, 255, 0));
 			private static readonly Brush HL_DELETED = new SolidColorBrush(Color.FromArgb(80, 255, 0, 0));
 
-			public LineStyleTransformer(SingleSideTextDiffPresenter editor, IBrush indicatorFG) {
-				_editor = editor;
-				_indicatorFG = indicatorFG;
-
-				var font = App.Current.FindResource("JetBrainsMonoItalic") as FontFamily;
-				_indicatorTypeface = new Typeface(font, FontStyle.Italic, FontWeight.Regular);
-			}
+            public LineStyleTransformer(SingleSideTextDiffPresenter editor, IBrush indicatorFG) {
+                _editor = editor;
+                _indicatorFG = indicatorFG;
+                _indicatorTypeface = new Typeface("fonts:SourceGit#JetBrains Mono", FontStyle.Italic);
+            }
 
 			protected override void ColorizeLine(DocumentLine line) {
 				var infos = _editor.IsOld ? _editor.DiffData.Old : _editor.DiffData.New;
@@ -534,13 +532,12 @@ namespace SourceGit.Views {
 		protected override void OnLoaded(RoutedEventArgs e) {
 			base.OnLoaded(e);
 
-			TextArea.LeftMargins.Add(new LineNumberMargin(this) { Margin = new Thickness(8, 0) });
-			TextArea.LeftMargins.Add(new VerticalSeperatorMargin(this));
-			TextArea.TextView.Margin = new Thickness(4, 0);
-			TextArea.TextView.BackgroundRenderers.Add(new LineBackgroundRenderer(this));
-			TextArea.TextView.LineTransformers.Add(new LineStyleTransformer(this, SecondaryFG));
-			TextArea.TextView.ContextRequested += OnTextViewContextRequested;
-			TextArea.TextView.ScrollOffsetChanged += OnTextViewScrollOffsetChanged;
+            TextArea.LeftMargins.Add(new LineNumberMargin(this) { Margin = new Thickness(8, 0) });
+            TextArea.LeftMargins.Add(new VerticalSeperatorMargin(this));
+            TextArea.TextView.Margin = new Thickness(4, 0);
+            TextArea.TextView.BackgroundRenderers.Add(new LineBackgroundRenderer(this));
+            TextArea.TextView.ContextRequested += OnTextViewContextRequested;
+            TextArea.TextView.ScrollOffsetChanged += OnTextViewScrollOffsetChanged;
 
 			if (App.Current?.ActualThemeVariant == ThemeVariant.Dark) {
 				_registryOptions = new RegistryOptions(ThemeName.DarkPlus);
@@ -548,9 +545,12 @@ namespace SourceGit.Views {
 				_registryOptions = new RegistryOptions(ThemeName.LightPlus);
 			}
 
-			_textMate = this.InstallTextMate(_registryOptions);
-			UpdateGrammar();
-		}
+            _textMate = this.InstallTextMate(_registryOptions);
+            UpdateGrammar();
+
+            // This line must after InstallTextMate
+            TextArea.TextView.LineTransformers.Add(new LineStyleTransformer(this, SecondaryFG));
+        }
 
 		protected override void OnUnloaded(RoutedEventArgs e) {
 			base.OnUnloaded(e);

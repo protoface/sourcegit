@@ -34,28 +34,33 @@
 				<v:CaptionButtonsMacOS VerticalAlignment="Bottom"/>
 			</Border>
 
-			<!-- Menu (Windows) -->
-			<Button Grid.Column="0"
-					Classes="icon_button"
-					Margin="4,0,2,3"
-					VerticalAlignment="Bottom"
-					IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=UseMacOSStyle, Converter={x:Static BoolConverters.Not}}">
-				<Button.Flyout>
-					<MenuFlyout Placement="BottomEdgeAlignedLeft" VerticalOffset="-8">
-						<MenuItem Header="{DynamicResource Text.Preference}" Click="OpenPreference">
-							<MenuItem.Icon>
-								<Path Width="14" Height="14" Data="{StaticResource Icons.Settings2}"/>
-							</MenuItem.Icon>
-						</MenuItem>
-						<MenuItem Header="{DynamicResource Text.About}" Click="OpenAboutDialog">
-							<MenuItem.Icon>
-								<Path Width="14" Height="14" Data="{StaticResource Icons.Info}"/>
-							</MenuItem.Icon>
-						</MenuItem>
-					</MenuFlyout>
-				</Button.Flyout>
-				<Path Width="12" Height="12" Data="{StaticResource Icons.Menu}"/>
-			</Button>
+      <!-- Menu (Windows) -->
+      <Button Grid.Column="0"
+              Classes="icon_button"
+              Margin="4,0,2,3"
+              VerticalAlignment="Bottom"
+              IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=UseMacOSStyle, Converter={x:Static BoolConverters.Not}}">
+        <Button.Flyout>
+          <MenuFlyout Placement="BottomEdgeAlignedLeft" VerticalOffset="-8">
+            <MenuItem Header="{DynamicResource Text.Preference}" Click="OpenPreference">
+              <MenuItem.Icon>
+                <Path Width="14" Height="14" Data="{StaticResource Icons.Settings2}"/>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Text.Hotkeys}" Click="OpenHotkeys">
+              <MenuItem.Icon>
+                <Path Width="14" Height="14" Data="{StaticResource Icons.Hotkeys}"/>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Text.About}" Click="OpenAboutDialog">
+              <MenuItem.Icon>
+                <Path Width="14" Height="14" Data="{StaticResource Icons.Info}"/>
+              </MenuItem.Icon>
+            </MenuItem>
+          </MenuFlyout>
+        </Button.Flyout>
+        <Path Width="12" Height="12" Data="{StaticResource Icons.Menu}"/>
+      </Button>
 
 			<!-- Pages Tabs-->
 			<Grid x:Name="launcherTabsContainer" Grid.Column="1" Height="30" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Bottom" SizeChanged="UpdateScrollIndicator">
@@ -138,57 +143,57 @@
 											</ContextMenu>
 										</Border.ContextMenu>
 
-										<v:LauncherTab UseFixedTabWidth="{Binding Source={x:Static vm:Preference.Instance}, Path=UseFixedTabWidth}" Height="30" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
-											<Path Grid.Column="0"
-												  Width="12" Height="12" Margin="12,0"
-												  Fill="{Binding Node.Bookmark, Converter={x:Static c:BookmarkConverters.ToBrush}}"
-												  StrokeThickness="{Binding Node.Bookmark, Converter={x:Static c:BookmarkConverters.ToStrokeThickness}}"
-												  Stroke="{DynamicResource Brush.FG1}"
-												  Data="{StaticResource Icons.Bookmark}"
-												  IsVisible="{Binding Node.IsRepository}"
-												  IsHitTestVisible="False"/>
-											<Path Grid.Column="0"
-												  Width="12" Height="12" Margin="12,0"
-												  Fill="{DynamicResource Brush.FG1}"
-												  Data="{StaticResource Icons.Repositories}"
-												  IsVisible="{Binding !Node.IsRepository}"
-												  IsHitTestVisible="False"/>
-											<TextBlock Grid.Column="1"
-													   HorizontalAlignment="Stretch" VerticalAlignment="Center"
-													   TextAlignment="Center"
-													   Text="{Binding Node.Name}"
-													   IsVisible="{Binding Node.IsRepository}"
-													   FontFamily="{StaticResource JetBrainsMono}"
-													   IsHitTestVisible="False"/>
-											<TextBlock Grid.Column="1"
-													   HorizontalAlignment="Stretch" VerticalAlignment="Center"
-													   TextAlignment="Center"
-													   Text="{DynamicResource Text.PageTabBar.Welcome.Title}"
-													   IsVisible="{Binding !Node.IsRepository}"
-													   FontFamily="{StaticResource JetBrainsMono}"
-													   IsHitTestVisible="False"/>
-											<Button Grid.Column="2"
-													Classes="icon_button"
-													Width="16" Height="16" Margin="12,0"
-													Command="{Binding #me.DataContext.(vm:Launcher).CloseTab}"
-													CommandParameter="{Binding}"
-													ToolTip.Tip="{DynamicResource Text.PageTabBar.Tab.Close}">
-												<Path Width="8" Height="8" Data="{StaticResource Icons.Window.Close}"/>
-											</Button>
-											<Rectangle Grid.Column="2" Width=".5" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="{DynamicResource Brush.FG2}">
-												<Rectangle.IsVisible>
-													<MultiBinding Converter="{x:Static c:LauncherPageConverters.ToTabSeperatorVisible}">
-														<Binding/>
-														<Binding Path="$parent[ListBox].SelectedItem"/>
-														<Binding Path="#me.DataContext.(vm:Launcher).Pages"/>
-													</MultiBinding>
-												</Rectangle.IsVisible>
-											</Rectangle>
-										</v:LauncherTab>
-									</Border>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
+                    <v:LauncherTab UseFixedTabWidth="{Binding Source={x:Static vm:Preference.Instance}, Path=UseFixedTabWidth}" Height="30" ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
+                      <Path Grid.Column="0"
+                            Width="12" Height="12" Margin="12,0"
+                            Fill="{Binding Node.Bookmark, Converter={x:Static c:BookmarkConverters.ToBrush}}"
+                            StrokeThickness="{Binding Node.Bookmark, Converter={x:Static c:BookmarkConverters.ToStrokeThickness}}"
+                            Stroke="{DynamicResource Brush.FG1}"
+                            Data="{StaticResource Icons.Bookmark}"
+                            IsVisible="{Binding Node.IsRepository}"
+                            IsHitTestVisible="False"/>
+                      <Path Grid.Column="0"
+                            Width="12" Height="12" Margin="12,0"
+                            Fill="{DynamicResource Brush.FG1}"
+                            Data="{StaticResource Icons.Repositories}"
+                            IsVisible="{Binding !Node.IsRepository}"
+                            IsHitTestVisible="False"/>
+                      <TextBlock Grid.Column="1"
+                                 Classes="monospace"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{Binding Node.Name}"
+                                 IsVisible="{Binding Node.IsRepository}"
+                                 IsHitTestVisible="False"/>
+                      <TextBlock Grid.Column="1"
+                                 Classes="monospace"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                 TextAlignment="Center"
+                                 Text="{DynamicResource Text.PageTabBar.Welcome.Title}"
+                                 IsVisible="{Binding !Node.IsRepository}"
+                                 IsHitTestVisible="False"/>
+                      <Button Grid.Column="2"
+                              Classes="icon_button"
+                              Width="16" Height="16" Margin="12,0"
+                              Command="{Binding #me.DataContext.(vm:Launcher).CloseTab}"
+                              CommandParameter="{Binding}"
+                              ToolTip.Tip="{DynamicResource Text.PageTabBar.Tab.Close}">
+                        <Path Width="8" Height="8" Data="{StaticResource Icons.Window.Close}"/>
+                      </Button>
+                      <Rectangle Grid.Column="2" Width=".5" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="{DynamicResource Brush.FG2}">
+                        <Rectangle.IsVisible>
+                          <MultiBinding Converter="{x:Static c:LauncherPageConverters.ToTabSeperatorVisible}">
+                            <Binding/>
+                            <Binding Path="$parent[ListBox].SelectedItem"/>
+                            <Binding Path="#me.DataContext.(vm:Launcher).Pages"/>
+                          </MultiBinding>
+                        </Rectangle.IsVisible>
+                      </Rectangle>
+                    </v:LauncherTab>
+                  </Border>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
 
 						<Button Classes="icon_button"
 								Width="16" Height="16"
@@ -212,10 +217,14 @@
 					<Path Width="16" Height="16" Data="{StaticResource Icons.Settings2}"/>
 				</Button>
 
-				<Button Classes="icon_button" Width="32" Height="28" Click="OpenAboutDialog" ToolTip.Tip="{DynamicResource Text.About}">
-					<Path Width="16" Height="16" Data="{StaticResource Icons.Info}"/>
-				</Button>
-			</StackPanel>
+        <Button Classes="icon_button" Width="32" Height="28" Click="OpenHotkeys" ToolTip.Tip="{DynamicResource Text.Hotkeys}">
+          <Path Width="16" Height="16" Data="{StaticResource Icons.Hotkeys}"/>
+        </Button>
+
+        <Button Classes="icon_button" Width="32" Height="28" Click="OpenAboutDialog" ToolTip.Tip="{DynamicResource Text.About}">
+          <Path Width="16" Height="16" Data="{StaticResource Icons.Info}"/>
+        </Button>
+      </StackPanel>
 
 			<!-- Caption Buttons (Windows)-->
 			<Border Grid.Column="2" Margin="32,0,0,0" IsVisible="{Binding Source={x:Static vm:Preference.Instance}, Path=UseMacOSStyle, Converter={x:Static BoolConverters.Not}}">
@@ -264,29 +273,30 @@
 											Click="OnPopupCancel"/>
 								</StackPanel>
 
-								<!-- Running -->
-								<StackPanel Orientation="Vertical" Margin="8" IsVisible="{Binding InProgress}">
-									<Rectangle Height="1" Margin="-8,0" HorizontalAlignment="Stretch" Fill="{DynamicResource Brush.Border1}" />
-									<StackPanel Orientation="Horizontal" Margin="0,8">
-										<Path Width="12" Height="12" Classes="waiting" Data="{StaticResource Icons.Waiting}" IsVisible="{Binding InProgress}"/>
-										<TextBlock Margin="6,0,0,0" FontSize="14" FontWeight="Bold" Text="{DynamicResource Text.Running}"/>
-									</StackPanel>
-									<TextBlock HorizontalAlignment="Stretch"
-											   TextWrapping="Wrap"
-											   FontStyle="Italic"
-											   Text="{Binding ProgressDescription}"/>
-									<ProgressBar Margin="0,8,0,0"
-												 HorizontalAlignment="Stretch"
-												 IsIndeterminate="True"
-												 Background="{DynamicResource Brush.FG2}" Foreground="{DynamicResource Brush.Accent1}"
-												 Minimum="0" Maximum="100"/>
-								</StackPanel>
-							</StackPanel>
-						</DataTemplate>
-					</ContentControl.DataTemplates>
-				</ContentControl>
-			</Border>
-		</Grid>
+                <!-- Running -->
+                <StackPanel Orientation="Vertical" Margin="8" IsVisible="{Binding InProgress}">                  
+                  <Rectangle Height="1" Margin="-8,0" HorizontalAlignment="Stretch" Fill="{DynamicResource Brush.Border1}" />
+                  <StackPanel Orientation="Horizontal" Margin="0,8">
+                    <Path Width="12" Height="12" Classes="waiting" Data="{StaticResource Icons.Waiting}" IsVisible="{Binding InProgress}"/>
+                    <TextBlock Margin="6,0,0,0" FontSize="14" FontWeight="Bold" Text="{DynamicResource Text.Running}"/>
+                  </StackPanel>
+                  <TextBlock HorizontalAlignment="Stretch"
+                             TextWrapping="Wrap"
+                             FontSize="12"
+                             FontStyle="Italic"
+                             Text="{Binding ProgressDescription}"/>
+                  <ProgressBar Margin="0,8,0,0"
+                               HorizontalAlignment="Stretch"
+                               IsIndeterminate="True"
+                               Background="{DynamicResource Brush.FG2}" Foreground="{DynamicResource Brush.Accent1}"
+                               Minimum="0" Maximum="100"/>
+                </StackPanel>
+              </StackPanel>
+            </DataTemplate>
+          </ContentControl.DataTemplates>
+        </ContentControl>
+      </Border>
+    </Grid>
 
 		<!-- Notification container -->
 		<Grid Grid.Row="1" Width="360" Margin="0,36,0,0" HorizontalAlignment="Right" VerticalAlignment="Top">

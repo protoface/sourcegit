@@ -378,39 +378,38 @@
 					</Button>
 				</Grid>
 
-				<DataGrid Grid.Row="1"
-						  ItemsSource="{Binding SearchedCommits}"
-						  SelectionMode="Single"
-						  CanUserReorderColumns="False"
-						  CanUserResizeColumns="False"
-						  CanUserSortColumns="False"
-						  IsReadOnly="True"
-						  HeadersVisibility="None"
-						  Focusable="False"
-						  RowHeight="50"
-						  BorderThickness="1"
-						  BorderBrush="{DynamicResource Brush.Border2}"
-						  Background="{DynamicResource Brush.Contents}"
-						  Margin="4,0,4,4"
-						  HorizontalScrollBarVisibility="Disabled"
-						  VerticalScrollBarVisibility="Auto"
-						  SelectionChanged="OnSearchResultDataGridSelectionChanged">
-					<DataGrid.Columns>
-						<DataGridTemplateColumn Width="*">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate DataType="m:Commit">
-									<Border BorderBrush="{DynamicResource Brush.Border2}" BorderThickness="0,0,0,1" Padding="4">
-										<Grid RowDefinitions="Auto,*">
-											<Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
-												<v:Avatar Width="16" Height="16"
-														  VerticalAlignment="Center"
-														  IsHitTestVisible="False"
-														  User="{Binding Author}"
-														  FallbackFontFamily="{StaticResource JetBrainsMono}"/>
-												<TextBlock Grid.Column="1" FontSize="12" Text="{Binding Author.Name}" Margin="8,0,0,0"/>
-												<TextBlock Grid.Column="2" FontSize="12" Text="{Binding SHA, Converter={x:Static c:StringConverters.ToShortSHA}}" Foreground="DarkOrange" Margin="8,0,0,0" FontFamily="{StaticResource JetBrainsMono}"/>
-												<TextBlock Grid.Column="3" FontSize="12" Text="{Binding AuthorTimeShortStr}" Foreground="{DynamicResource Brush.FG2}" Margin="8,0,0,0" FontFamily="{StaticResource JetBrainsMono}"/>
-											</Grid>
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding SearchedCommits}"
+                  SelectionMode="Single"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="None"
+                  Focusable="False"
+                  RowHeight="50"
+                  BorderThickness="1"
+                  BorderBrush="{DynamicResource Brush.Border2}"
+                  Background="{DynamicResource Brush.Contents}"
+                  Margin="4,0,4,4"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  SelectionChanged="OnSearchResultDataGridSelectionChanged">
+          <DataGrid.Columns>
+            <DataGridTemplateColumn Width="*">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate DataType="m:Commit">
+                  <Border BorderBrush="{DynamicResource Brush.Border2}" BorderThickness="0,0,0,1" Padding="4">
+                    <Grid RowDefinitions="Auto,*">
+                      <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto">
+                        <v:Avatar Width="16" Height="16"
+                                  VerticalAlignment="Center"
+                                  IsHitTestVisible="False"
+                                  User="{Binding Author}"/>
+                        <TextBlock Grid.Column="1" FontSize="12" Classes="monospace" Text="{Binding Author.Name}" Margin="8,0,0,0"/>
+                        <TextBlock Grid.Column="2" FontSize="12" Classes="monospace" Text="{Binding SHA, Converter={x:Static c:StringConverters.ToShortSHA}}" Foreground="DarkOrange" Margin="8,0,0,0"/>
+                        <TextBlock Grid.Column="3" FontSize="12" Classes="monospace" Text="{Binding AuthorTimeShortStr}" Foreground="{DynamicResource Brush.FG2}" Margin="8,0,0,0"/>
+                      </Grid>
 
 											<TextBlock Grid.Row="1" Text="{Binding Subject}" FontSize="12" VerticalAlignment="Bottom"/>
 										</Grid>
