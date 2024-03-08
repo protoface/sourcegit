@@ -5,8 +5,8 @@ using Avalonia.VisualTree;
 using System.Collections.Generic;
 
 namespace SourceGit.Views {
-	public partial class WorkingCopy : UserControl {
-		public WorkingCopy() {
+	public partial class WorkingCopyVertical : WorkingCopy {
+		public WorkingCopyVertical() {
 			InitializeComponent();
 		}
 

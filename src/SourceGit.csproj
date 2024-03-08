@@ -49,6 +49,6 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'" >
-    <Exec Command="dotnet format SourceGit.sln -v d" />
+    <Exec Command="dotnet format SourceGit.sln -v d --no-restore" />
   </Target>
 </Project>

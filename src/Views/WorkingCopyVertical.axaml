@@ -7,7 +7,7 @@
 			 xmlns:v="using:SourceGit.Views"
 			 xmlns:c="using:SourceGit.Converters"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
-			 x:Class="SourceGit.Views.WorkingCopy"
+			 x:Class="SourceGit.Views.WorkingCopyVertical"
 			 x:DataType="vm:WorkingCopy">
 	<Grid>
 
@@ -322,48 +322,50 @@
 			</Border>
 
 			<!--Commit-->
-			<Border Grid.Column="2" Grid.Row="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource Brush.Border0}">
-				<Grid RowDefinitions="*,Auto">
-					<!-- Commit Message -->
-					<TextBox Grid.Row="0"
-							 BorderThickness="0"
-							 AcceptsReturn="True" AcceptsTab="True"
-							 TextWrapping="Wrap"
-							 VerticalContentAlignment="Top"
-							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-							 ScrollViewer.VerticalScrollBarVisibility="Auto"
-							 Background="{DynamicResource Brush.Contents}"
-							 BorderBrush="{DynamicResource Brush.Border2}"
-							 Watermark="{DynamicResource Text.WorkingCopy.CommitMessageTip}"
-							 Text="{Binding CommitMessage, Mode=TwoWay}"/>
+			<Border Grid.Column="2" Grid.Row="1" Margin="4" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource Brush.Border0}">
+				<Border BorderBrush="{DynamicResource Brush.Border2}" BorderThickness="1">
+					<Grid RowDefinitions="*,Auto">
+						<!-- Commit Message -->
+						<TextBox Grid.Row="0"
+								 BorderThickness="0"
+								 AcceptsReturn="True" AcceptsTab="True"
+								 TextWrapping="Wrap"
+								 VerticalContentAlignment="Top"
+								 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+								 ScrollViewer.VerticalScrollBarVisibility="Auto"
+								 Background="{DynamicResource Brush.Contents}"
+								 BorderBrush="{DynamicResource Brush.Border2}"
+								 Watermark="{DynamicResource Text.WorkingCopy.CommitMessageTip}"
+								 Text="{Binding CommitMessage, Mode=TwoWay}"/>
 
-					<!-- Commit Options -->
-					<Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto">
-						<Button Grid.Column="1"
-						Classes="flat primary"
-								Content="{DynamicResource Text.WorkingCopy.Commit}"
-								Height="24"
-								Margin="8,0,0,0"
-								Padding="8,0"
-								HorizontalAlignment="Right"
-								Click="Commit"/>
+						<!-- Commit Options -->
+						<Grid Grid.Row="1" Margin="4" ColumnDefinitions="*,Auto,Auto">
+							<Button Grid.Column="1"
+							Classes="flat primary"
+									Content="{DynamicResource Text.WorkingCopy.Commit}"
+									Height="24"
+									Margin="8,0,0,0"
+									Padding="8,0"
+									HorizontalAlignment="Right"
+									Click="Commit"/>
 
-						<Button Grid.Column="2"
-								Classes="flat"
-								Content="{DynamicResource Text.WorkingCopy.CommitAndPush}"
-								Height="24"
-								Margin="8,0,0,0"
-								Padding="8,0"
-								Click="CommitWithPush">
-							<Button.IsVisible>
-								<MultiBinding Converter="{x:Static BoolConverters.And}">
-									<Binding Path="$parent[v:Repository].DataContext.(vm:Repository).CanCommitWithPush"/>
-									<Binding Path="!UseAmend"/>
-								</MultiBinding>
-							</Button.IsVisible>
-						</Button>
+							<Button Grid.Column="2"
+									Classes="flat"
+									Content="{DynamicResource Text.WorkingCopy.CommitAndPush}"
+									Height="24"
+									Margin="8,0,0,0"
+									Padding="8,0"
+									Click="CommitWithPush">
+								<Button.IsVisible>
+									<MultiBinding Converter="{x:Static BoolConverters.And}">
+										<Binding Path="$parent[v:Repository].DataContext.(vm:Repository).CanCommitWithPush"/>
+										<Binding Path="!UseAmend"/>
+									</MultiBinding>
+								</Button.IsVisible>
+							</Button>
+						</Grid>
 					</Grid>
-				</Grid>
+				</Border>
 			</Border>
 		</Grid>
 

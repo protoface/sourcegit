@@ -81,6 +81,11 @@ namespace SourceGit.ViewModels {
 			set => SetProperty(ref _useTwoColumnsLayoutInHistories, value);
 		}
 
+		public bool UseTwoColumnsLayoutInChanges {
+			get => _useTwoColumnsLayoutInChanges;
+			set => SetProperty(ref _useTwoColumnsLayoutInChanges, value);
+		}
+
 		public bool UseCombinedTextDiff {
 			get => _useCombinedTextDiff;
 			set => SetProperty(ref _useCombinedTextDiff, value);
@@ -290,6 +295,7 @@ namespace SourceGit.ViewModels {
 		private bool _restoreTabs = false;
 		private bool _useFixedTabWidth = true;
 		private bool _useTwoColumnsLayoutInHistories = false;
+		private bool _useTwoColumnsLayoutInChanges = true;
 		private bool _useCombinedTextDiff = true;
 
 		private Models.ChangeViewMode _unstagedChangeViewMode = Models.ChangeViewMode.List;

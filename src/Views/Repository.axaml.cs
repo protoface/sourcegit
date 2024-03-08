@@ -27,7 +27,7 @@ namespace SourceGit.Views {
 				} else if (data is ViewModels.Histories) {
 					view.Child = new Histories { DataContext = data };
 				} else if (data is ViewModels.WorkingCopy) {
-					view.Child = new WorkingCopy { DataContext = data };
+					view.Child = ViewModels.Preference.Instance.UseTwoColumnsLayoutInChanges ? new WorkingCopyHorizontal { DataContext = data } : new WorkingCopyVertical { DataContext = data };
 				} else if (data is ViewModels.StashesPage) {
 					view.Child = new StashesPage { DataContext = data };
 				} else {
