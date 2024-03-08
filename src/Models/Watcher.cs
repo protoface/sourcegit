@@ -54,8 +54,12 @@ namespace SourceGit.Models {
 			}
 		}
 
-		public void MarkWorkingCopyRefreshed() {
-			_updateWC = 0;
+		public void MarkBranchDirtyManually() {
+			_updateBranch = DateTime.Now.ToFileTime() - 1;
+		}
+
+		public void MarkWorkingCopyDirtyManually() {
+			_updateWC = DateTime.Now.ToFileTime() - 1;
 		}
 
 		public void Dispose() {

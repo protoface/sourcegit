@@ -316,6 +316,16 @@ namespace SourceGit.ViewModels {
 				_watcher.SetEnabled(enabled);
 		}
 
+		public void MarkBranchesDirtyManually() {
+			if (_watcher != null)
+				_watcher.MarkBranchDirtyManually();
+		}
+
+		public void MarkWorkingCopyDirtyManually() {
+			if (_watcher != null)
+				_watcher.MarkWorkingCopyDirtyManually();
+		}
+
 		public void NavigateToCommit(string sha) {
 			if (_histories != null) {
 				SelectedViewIndex = 0;
@@ -369,7 +379,7 @@ namespace SourceGit.ViewModels {
 			} else if (File.Exists(otherMerge)) {
 				mode = "merge";
 			} else {
-				await Task.Run(RefreshWorkingCopyChanges);
+				MarkWorkingCopyDirtyManually();
 				return;
 			}
 
@@ -409,7 +419,7 @@ namespace SourceGit.ViewModels {
 			} else if (File.Exists(Path.Combine(_gitDir, "MERGE_HEAD"))) {
 				cmd.Args = "merge --abort";
 			} else {
-				await Task.Run(RefreshWorkingCopyChanges);
+				MarkWorkingCopyDirtyManually();
 				return;
 			}
 
@@ -511,8 +521,6 @@ namespace SourceGit.ViewModels {
 				HasUnsolvedConflict = hasUnsolvedConflict;
 				OnPropertyChanged(nameof(WorkingCopyChangesCount));
 			});
-
-			_watcher.MarkWorkingCopyRefreshed();
 		}
 
 		public void RefreshStashes() {
