@@ -41,12 +41,12 @@ namespace SourceGit.ViewModels {
 		public bool UseRebase {
 			get;
 			set;
-		}
+		} = true;
 
 		public bool AutoStash {
 			get;
 			set;
-		}
+		} = true;
 
 		public Pull(Repository repo, Models.Branch specifiedRemoteBranch) {
 			_repo = repo;

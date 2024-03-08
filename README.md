@@ -4,7 +4,7 @@ Opensouce Git GUI client.
 
 ## High-lights
 
-* Supports Windows/macOS
+* Supports Windows/macOS/Linux
 * Opensource/Free
 * Fast
 * English/简体中文
@@ -30,16 +30,23 @@ Opensouce Git GUI client.
 
 **To use this tool, you need to install Git first.**
 
-Download pre-build binaries：[Releases](https://github.com/protoface/sourcegit/releases)
+You can download the latest stable from [Releases](https://github.com/protoface/sourcegit/releases/latest) or download workflow artifacts from [Github Actions](https://github.com/protoface/sourcegit/actions) to try this app based on each commits.
+
 
 For **macOS** users:
 
-* This version of SourceGit isnt pre-built for macOS.
-* Please use the [original version](https://github.com/sourcegit-scm/sourcegit) of SourceGit or compile it yourself.
+* This version of SourceGit doesnt release stable builds for macOS
+* Please use the [original version](https://github.com/sourcegit-scm/sourcegit) or download workflow artifacts from [Github Actions](https://github.com/protoface/sourcegit/actions)
+
+For **Linux** users:
+* This version of SourceGit doesnt release stable builds for Linux
+* Please use the [original version](https://github.com/sourcegit-scm/sourcegit) or download workflow artifacts from [Github Actions](https://github.com/protoface/sourcegit/actions)
+* `xdg-open` must be installed to support open native file manager.
+* Only tested on `Ubuntu 22.04`.
 
 ## Screen Shots
 
-* Drak Theme
+* Dark Theme
 
 ![Theme Dark](./screenshots/theme_dark.png)
 

@@ -6,17 +6,27 @@ namespace SourceGit.Commands {
 	public class QueryBranches : Command {
 		private static readonly string PREFIX_LOCAL = "refs/heads/";
 		private static readonly string PREFIX_REMOTE = "refs/remotes/";
-		private static readonly Regex REG_AHEAD = new Regex(@"ahead (\d+)");
-		private static readonly Regex REG_BEHIND = new Regex(@"behind (\d+)");
+		private static readonly Regex REG_AHEAD_BEHIND = new Regex(@"^(\d+)\s(\d+)$");
 
 		public QueryBranches(string repo) {
 			WorkingDirectory = repo;
 			Context = repo;
-			Args = "branch -l --all -v --format=\"%(refname)$%(objectname)$%(HEAD)$%(upstream)$%(upstream:track)\"";
+			Args = "branch -l --all -v --format=\"%(refname)$%(objectname)$%(HEAD)$%(upstream)$%(upstream:trackshort)\"";
 		}
 
 		public List<Models.Branch> Result() {
 			Exec();
+
+			foreach (var b in _branches) {
+				if (b.IsLocal && !string.IsNullOrEmpty(b.UpstreamTrackStatus)) {
+					if (b.UpstreamTrackStatus == "=") {
+						b.UpstreamTrackStatus = string.Empty;
+					} else {
+						b.UpstreamTrackStatus = ParseTrackStatus(b.Name, b.Upstream);
+					}
+				}
+			}
+
 			return _branches;
 		}
 
@@ -51,27 +61,31 @@ namespace SourceGit.Commands {
 			branch.Head = parts[1];
 			branch.IsCurrent = parts[2] == "*";
 			branch.Upstream = parts[3];
-			branch.UpstreamTrackStatus = ParseTrackStatus(parts[4]);
-
+			branch.UpstreamTrackStatus = parts[4];
 			_branches.Add(branch);
 		}
 
-		private string ParseTrackStatus(string data) {
-			if (string.IsNullOrEmpty(data))
+		private string ParseTrackStatus(string local, string upstream) {
+			var cmd = new Command();
+			cmd.WorkingDirectory = WorkingDirectory;
+			cmd.Context = Context;
+			cmd.Args = $"rev-list --left-right --count {local}...{upstream}";
+
+			var rs = cmd.ReadToEnd();
+			if (!rs.IsSuccess)
 				return string.Empty;
 
-			string track = string.Empty;
+			var match = REG_AHEAD_BEHIND.Match(rs.StdOut);
+			if (!match.Success)
+				return string.Empty;
 
-			var ahead = REG_AHEAD.Match(data);
-			if (ahead.Success) {
-				track += ahead.Groups[1].Value + "↑ ";
-			}
-
-			var behind = REG_BEHIND.Match(data);
-			if (behind.Success) {
-				track += behind.Groups[1].Value + "↓";
-			}
-
+			var ahead = int.Parse(match.Groups[1].Value);
+			var behind = int.Parse(match.Groups[2].Value);
+			var track = "";
+			if (ahead > 0)
+				track += $"{ahead}↑";
+			if (behind > 0)
+				track += $" {behind}↓";
 			return track.Trim();
 		}
 
